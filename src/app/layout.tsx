@@ -1,8 +1,9 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Lexend } from "next/font/google";
+
 import { ReactQueryClientProvider } from "@/utils/react-query";
 
-const inter = Inter({ subsets: ["latin"] });
+const lexend = Lexend({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -16,7 +17,7 @@ type LayoutProps = {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={lexend.className}>
         <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
       </body>
     </html>
