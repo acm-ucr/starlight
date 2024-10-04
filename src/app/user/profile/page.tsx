@@ -1,8 +1,11 @@
+import Protected from "@/components/Protected";
+import Profile from "@/components/user/Profile";
+
 const Page = () => {
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      User Profile
-    </div>
+    <Protected>
+      <Profile />
+    </Protected>
   );
 };
 
