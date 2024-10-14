@@ -1,4 +1,4 @@
-import Navigation from "./Navigation";
+import Navigation from "./navigation";
 
 type props = {
   children: React.ReactNode;

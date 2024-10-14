@@ -1,5 +1,5 @@
-import Protected from "@/components/Protected";
-import Profile from "@/components/user/Profile";
+import Protected from "@/components/global/protected";
+import Profile from "@/components/user/profile";
 
 const Page = () => {
   return (
