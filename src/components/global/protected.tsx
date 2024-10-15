@@ -5,9 +5,9 @@ type props = {
 };
 const Protected = ({ children }: props) => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen flex-col">
       <Navigation />
-      <div className="w-5/6">{children}</div>
+      <div>{children}</div>
     </div>
   );
 };
