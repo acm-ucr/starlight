@@ -7,6 +7,7 @@ const apply = () => {
       <div className="flex h-full items-center justify-evenly">
         <Card />
         <Card />
+        <Card />
       </div>
     </div>
   );
