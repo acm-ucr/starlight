@@ -1,15 +1,16 @@
 import Button from "@/components/global/button";
-import { questions } from "@/forms/Ignite-F24";
 import Radio from "@/components/global/inputs/radio";
 import Textarea from "@/components/global/inputs/textarea";
 import Select from "@/components/global/inputs/select";
 import Text from "@/components/global/inputs/text";
+import { Questions } from "@/types/questions";
 
 interface props {
   title: string;
+  questions: Questions[];
 }
 
-const Application = ({ title }: props) => {
+const Application = ({ title, questions }: props) => {
   return (
     <div className="rounded-md border-2 border-black">
       <p>Apply to {title}</p>
