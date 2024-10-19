@@ -1,7 +1,10 @@
 import Navigation from "@/components/global/navigation";
-import React from "react";
 
-const Layout = ({ children }) => {
+interface props {
+  children: React.ReactElement;
+}
+
+const Layout = ({ children }: props) => {
   return (
     <div>
       <Navigation />
