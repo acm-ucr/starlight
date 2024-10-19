@@ -1,5 +1,4 @@
 import Navigation from "@/components/global/navigation";
-import React from "react";
 
 type LayoutProps = {
   children: React.ReactNode;
