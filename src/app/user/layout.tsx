@@ -1,7 +1,7 @@
 import Navigation from "@/components/global/navigation";
 
 interface props {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 const Layout = ({ children }: props) => {
