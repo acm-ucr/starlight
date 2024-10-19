@@ -1,5 +1,5 @@
-import Header from "./header";
-import Information from "./information";
+import Header from "./Header";
+import Information from "./Information";
 
 const Profile = () => {
   return (
