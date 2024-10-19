@@ -1,8 +1,11 @@
+import Protected from "@/components/global/protected";
+import Apply from "@/components/user/applications/apply";
+
 const Page = () => {
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      User Application
-    </div>
+    <Protected>
+      <Apply />
+    </Protected>
   );
 };
 

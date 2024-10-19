@@ -1,7 +1,7 @@
-import Select from "../global/inputs/select";
-import Input from "../global/inputs/input";
-import Radio from "../global/inputs/radio";
-import Textarea from "../global/inputs/textarea";
+import Select from "../../global/inputs/select";
+import Input from "../../global/inputs/input";
+import Radio from "../../global/inputs/radio";
+import Textarea from "../../global/inputs/textarea";
 
 const Information = () => {
   return (
