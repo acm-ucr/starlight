@@ -3,7 +3,7 @@ import Information from "./information";
 
 const Profile = () => {
   return (
-    <div className="h-full">
+    <div className="h-full px-12">
       <Header />
       <Information />
     </div>

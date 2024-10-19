@@ -1,12 +1,12 @@
 import Navigation from "@/components/global/navigation";
 
-interface props {
+type LayoutProps = {
   children: React.ReactNode;
-}
+};
 
-const Layout = ({ children }: props) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <div className="h-full">
       <Navigation />
       {children}
     </div>
