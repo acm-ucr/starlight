@@ -1,9 +1,13 @@
 import Navigation from "@/components/global/navigation";
 import React from "react";
 
-const Layout = ({ children }) => {
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <div className="h-full">
       <Navigation />
       {children}
     </div>
