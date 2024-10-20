@@ -11,7 +11,7 @@
 
 ## Figma
 
-[Starlight Figma Design File](https://www.figma.com/design/jaAC6PsdyqWbJN9psDNRUg/Starlight?node-id=0-1&t=TfJHdXqSlZcHyqj1-1)
+[Starlight Figma Design File](https://www.figma.com/design/jaAC6PsdyqWbJN9psDNRUg/Starlight?node-id=615-6499&t=guOm2t7GLRnqNYqh-1)
 
 ## Node.js
 
