@@ -6,7 +6,7 @@ const Card = () => {
       {/* logo image */}
       {/* program name */}
       {/* information stuff */}
-      <Button />
+      {/* Button */}
     </div>
   );
 };
