@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
-import logo from "@/public/Assets/ACMStarlightLogo.webp";
+import logo from "@/public/ACMStarlightLogo.webp";
 
 const Navigation = () => {
   const pathname = usePathname();
