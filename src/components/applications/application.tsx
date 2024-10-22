@@ -4,6 +4,8 @@ import Textarea from "@/components/global/inputs/textarea";
 import Select from "@/components/global/inputs/select";
 import Text from "@/components/global/inputs/text";
 import { Questions } from "@/types/questions";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface props {
   title: string;
@@ -26,16 +28,10 @@ const Application = ({ title, questions }: props) => {
         }}
       />
 
-      <Text
-        meta={{
-          type: "text",
-          title: "Email",
-          placeholder: "Enter an Email",
-          maxLength: 250,
-          value: "SAMPLE EMAIL",
-          disabled: true,
-        }}
-      />
+      <div>
+        <Label htmlFor="email">Email</Label>
+        <Input type="email" id="email" placeholder="Email" />
+      </div>
 
       {questions.map((question, index) => {
         const { type } = question;
