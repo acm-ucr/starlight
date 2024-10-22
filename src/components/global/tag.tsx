@@ -11,7 +11,7 @@ const mappings: Record<string, string> = {
 const Tag = ({ children }: props) => {
   return (
     <div
-      className={`${mappings[children]} m-1 w-32 rounded-md p-1.5 text-center font-semibold text-white`}
+      className={`${mappings[children]} w-1/12 rounded-md p-1.5 text-center font-semibold text-white`}
     >
       {children}
     </div>
