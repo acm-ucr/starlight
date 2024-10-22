@@ -1,7 +1,7 @@
-import Button from "@/components/global/button";
 import Add from "@/components/programs/add";
 import Project from "@/components/programs/project";
 import { Project as ProjectType } from "@/types/projects";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 const projects: ProjectType[] = [
   {
@@ -24,7 +24,10 @@ const projects: ProjectType[] = [
 const Page = () => {
   return (
     <div className="">
-      <Button>Add Project</Button>
+      <AlertDialog>
+        <AlertDialogTrigger>Add Project</AlertDialogTrigger>
+        <Add />
+      </AlertDialog>
 
       <div className="grid grid-cols-3 gap-4">
         {projects.map(({ title, description, tags }, index) => (
@@ -36,8 +39,6 @@ const Page = () => {
           />
         ))}
       </div>
-
-      <Add />
     </div>
   );
 };
