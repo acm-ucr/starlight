@@ -32,4 +32,4 @@ export interface TextInput {
   disabled: boolean;
 }
 
-export type Questions = RadioInput | TextareaInput | SelectInput;
+export type Questions = RadioInput | TextareaInput | SelectInput | TextInput;
