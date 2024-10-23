@@ -3,7 +3,11 @@ interface props {
 }
 
 const Button = ({ children }: props) => {
-  return <div className="bg-starlight-blue text-white">{children}</div>;
+  return (
+    <div className="rounded-sm bg-starlight-blue text-center text-white">
+      {children}
+    </div>
+  );
 };
 
 export default Button;
