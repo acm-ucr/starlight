@@ -59,3 +59,14 @@ module.exports = {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 };
+
+// // @filename tailwind.config.js
+// module.exports = {
+// 	theme: {
+// 		// ...
+// 	},
+// 	plugins: [
+// 		require("tailwindcss-animate"),
+// 		// ...
+// 	],
+// }
