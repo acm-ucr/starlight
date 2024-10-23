@@ -1,4 +1,4 @@
-import { project } from "@/types/projects";
+import { Project } from "@/types/projects";
 import { Questions } from "@/types/questions";
 
 const title = "ACM Create Fall 2024";
@@ -39,7 +39,7 @@ const questions: Questions[] = [
   },
 ];
 
-const projects: project[] = [
+const projects: Project[] = [
   {
     title: "Organization 1",
     description: "This is a very cool organization!",
