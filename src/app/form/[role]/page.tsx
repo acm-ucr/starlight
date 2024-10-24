@@ -14,7 +14,7 @@ const Page = ({ params }: props) => {
   const { title, description } = roles(role);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center gap-2">
       <p className="text-2xl font-bold text-starlight-blue">{title}</p>
       <p>{description}</p>
 
