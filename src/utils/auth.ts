@@ -5,12 +5,12 @@ import { cert } from "firebase-admin/app";
 import { NextAuthOptions, Session } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 
-export const getAuthOptions = (): NextAuthOptions => ({
+export const getAuthOptions: NextAuthOptions = {
   adapter: FirestoreAdapter({
     credential: cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      privateKey: process.env.FIREBASE_PRIVATE_KEY,
     }),
   }) as Adapter,
 
@@ -43,12 +43,12 @@ export const getAuthOptions = (): NextAuthOptions => ({
       return session;
     },
   },
-});
+};
 
 type Restrictions = Record<string, number[]>;
 
 export const authenticate = async (restrictions: Restrictions = {}) => {
-  const session: Session | null = await getServerSession(getAuthOptions());
+  const session: Session | null = await getServerSession(getAuthOptions);
 
   if (!session?.user) {
     return { message: "Invalid Authentication Credentials.", auth: 401 };
@@ -74,6 +74,6 @@ export const authenticate = async (restrictions: Restrictions = {}) => {
 };
 
 export const getSession = async () => {
-  const session = await getServerSession(getAuthOptions());
+  const session = await getServerSession(getAuthOptions);
   return session;
 };
