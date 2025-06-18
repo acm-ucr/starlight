@@ -1,9 +1,13 @@
 import NextAuth from "next-auth";
 import { getAuthOptions } from "@/utils/auth";
+import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
-const handler = async (req: Request, res: Response) => {
-  return NextAuth(getAuthOptions())(req, res);
+
+export const GET = (req: NextRequest) => {
+  return NextAuth(getAuthOptions())(req);
 };
 
-export { handler as GET, handler as POST };
+export const POST = (req: NextRequest) => {
+  return NextAuth(getAuthOptions())(req);
+};
