@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Starlight from "@/public/starlight.svg";
 import Navigation from "./navigation";
@@ -8,22 +8,6 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Landing = () => {
   const { data: session } = useSession();
-
-  if (session?.user) {
-    return (
-      <div className="p-4">
-        <p className="text-xl font-bold">Welcome, {session.user.firstName}!</p>
-        <p>Email: {session.user.email}</p>
-
-        <button
-          className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
-          onClick={() => signOut()}
-        >
-          Sign out
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-starlight-gray-primary flex h-screen flex-col">
@@ -55,12 +39,23 @@ const Landing = () => {
           <p className="text-xl font-bold text-white">
             Apply to ACM's Programs below!
           </p>
-          <button
-            className="bg-starlight-blue-primary mt-4 rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
-            onClick={() => signIn("google")}
-          >
-            Apply
-          </button>
+          {session?.user ? (
+            <div className="mt-8">
+              <Link
+                className="bg-starlight-blue-primary rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
+                href="/apply"
+              >
+                Apply
+              </Link>
+            </div>
+          ) : (
+            <button
+              className="bg-starlight-blue-primary mt-8 rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
+              onClick={() => signIn("google")}
+            >
+              Sign In
+            </button>
+          )}
         </div>
         <div className="flex justify-center">
           <Image
