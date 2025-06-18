@@ -3,16 +3,15 @@ import GoogleProvider from "next-auth/providers/google";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import { NextAuthOptions, Session } from "next-auth";
-import type { Adapter } from "next-auth/adapters";
 
-export const authOptions = (): NextAuthOptions => ({
+export const authOptions: NextAuthOptions = {
   adapter: FirestoreAdapter({
     credential: cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_PRIVATE_KEY,
     }),
-  }) as Adapter,
+  }),
 
   providers: [
     GoogleProvider({
@@ -43,12 +42,12 @@ export const authOptions = (): NextAuthOptions => ({
       return session;
     },
   },
-});
+};
 
 type Restrictions = Record<string, number[]>;
 
 export const authenticate = async (restrictions: Restrictions = {}) => {
-  const session: Session | null = await getServerSession(authOptions());
+  const session: Session | null = await getServerSession(authOptions);
 
   if (!session?.user) {
     return { message: "Invalid Authentication Credentials.", auth: 401 };
@@ -74,6 +73,6 @@ export const authenticate = async (restrictions: Restrictions = {}) => {
 };
 
 export const getSession = async () => {
-  const session = await getServerSession(authOptions());
+  const session = await getServerSession(authOptions);
   return session;
 };
