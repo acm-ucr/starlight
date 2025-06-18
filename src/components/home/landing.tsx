@@ -14,10 +14,10 @@ const Landing = () => {
       <Navigation />
       <div className="mx-auto grid w-5/6 flex-grow grid-cols-1 items-center md:grid-cols-2">
         <div className="order-2 md:order-1">
-          <p className="to-starlight-yellow-primary bg-gradient-to-r from-white to-30% bg-clip-text text-center text-6xl font-bold text-transparent md:text-left md:text-7xl">
+          <p className="to-starlight-yellow-primary bg-gradient-to-r from-white to-[70%] bg-clip-text text-center text-6xl font-bold text-transparent md:to-30% md:text-left md:text-7xl">
             ACM
           </p>
-          <p className="to-starlight-yellow-primary bg-gradient-to-r from-white to-30% bg-clip-text pb-2 text-center text-6xl font-bold text-transparent md:text-left md:text-7xl">
+          <p className="to-starlight-yellow-primary bg-gradient-to-r from-white to-[70%] bg-clip-text pb-2 text-center text-6xl font-bold text-transparent md:to-30% md:text-left md:text-7xl">
             Starlight
           </p>
           <div className="flex justify-center gap-x-4 pt-4 pb-6 text-6xl text-white md:justify-start">
