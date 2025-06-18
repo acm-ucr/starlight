@@ -6,5 +6,12 @@ export const dynamic = "force-dynamic";
 
 const handler = NextAuth(getAuthOptions());
 
-export const GET = (req: NextRequest) => handler(req);
-export const POST = (req: NextRequest) => handler(req);
+export const GET = (
+  req: NextRequest,
+  context: { params: { nextauth: string[] } },
+) => handler(req, context);
+
+export const POST = (
+  req: NextRequest,
+  context: { params: { nextauth: string[] } },
+) => handler(req, context);
