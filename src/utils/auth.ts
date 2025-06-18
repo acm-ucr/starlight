@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import { NextAuthOptions, Session } from "next-auth";
-import type { Adapter } from "next-auth/adapters";
 
 export const getAuthOptions: NextAuthOptions = {
   adapter: FirestoreAdapter({
@@ -12,7 +11,7 @@ export const getAuthOptions: NextAuthOptions = {
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_PRIVATE_KEY,
     }),
-  }) as Adapter,
+  }),
 
   providers: [
     GoogleProvider({
