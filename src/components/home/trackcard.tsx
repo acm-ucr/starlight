@@ -8,7 +8,7 @@ interface TrackCardProps {
 
 const TrackCard = ({ name, logo, focus, color }: TrackCardProps) => {
   return (
-    <div className="flex flex-col items-center pb-8">
+    <div className="flex flex-col items-center pb-12 md:pb-8">
       <Image
         src={logo}
         alt="logo"

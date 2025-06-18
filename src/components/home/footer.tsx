@@ -8,7 +8,7 @@ const Footer = () => {
       <Image
         src={Starlight}
         alt="Starlight"
-        className="drop-shadow-yellow-primary w-1/12 pt-12 pb-6"
+        className="drop-shadow-yellow-primary w-3/12 pt-12 pb-6 md:w-1/12"
       />
       <p>ACM @ UCR</p>
       <div className="flex gap-x-4 pt-4 pb-8">
