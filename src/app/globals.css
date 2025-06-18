@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+  --color-starlight-yellow-primary: #ffe899;
+
+  --color-starlight-blue-primary: #173967;
+
+  --color-starlight-gray-primary: #18181e;
+
+  --drop-shadow-yellow-primary: 0 0 15px rgba(255, 232, 153, 1);
+  --drop-shadow-yellow-secondary: 0 0 5px rgba(255, 232, 153, 1);
+}
