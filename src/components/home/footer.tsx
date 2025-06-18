@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import Starlight from "@/public/starlight.svg";
+import Starlight from "@/public/logos/starlight.svg";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
-    <div className="bg-starlight-gray-primary border-starlight-blue-primary flex flex-col items-center border-t-8 text-3xl text-white">
+    <div className="border-starlight-blue-primary flex flex-col items-center border-t-8 text-3xl text-white">
       <Image
         src={Starlight}
         alt="Starlight"

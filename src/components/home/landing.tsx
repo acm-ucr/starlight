@@ -1,7 +1,7 @@
 "use client";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
-import Starlight from "@/public/starlight.svg";
+import Starlight from "@/public/logos/starlight.svg";
 import Navigation from "./navigation";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -10,7 +10,7 @@ const Landing = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="bg-starlight-gray-primary flex h-screen flex-col">
+    <div className="flex h-screen flex-col">
       <Navigation />
       <div className="mx-auto grid w-5/6 flex-grow grid-cols-2 items-center">
         <div>
