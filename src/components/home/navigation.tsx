@@ -27,7 +27,7 @@ const Navigation = () => {
   }
 
   return (
-    <div className="bg-starlight-gray-primary flex text-white">
+    <div className="bg-starlight-gray-primary sticky flex text-white">
       <Image
         src={Starlight}
         alt="Starlight"
