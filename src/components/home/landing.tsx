@@ -22,7 +22,7 @@ const Landing = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold">You are not signed in</h1>
+      <p className="text-xl font-bold">You are not signed in</p>
       <button
         className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:cursor-pointer"
         onClick={() => signIn("google")}
