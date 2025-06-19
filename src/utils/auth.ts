@@ -26,7 +26,9 @@ export const getAuthOptions: NextAuthOptions = {
           firstName: profile.given_name,
           lastName: profile.family_name,
           image: profile.picture,
-          roles: {},
+          roles: {
+            members: 1,
+          },
         };
       },
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,

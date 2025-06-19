@@ -5,7 +5,7 @@ const lexend = Lexend({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ACM Starlight",
-  description: "ACM's Official Program Application & Management Portal",
+  description: "ACM@UCR's Official Program Application & Management Portal",
 };
 
 interface LayoutProps {
