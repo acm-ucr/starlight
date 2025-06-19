@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "postcss.config.mjs"
-  ],
+, "src/components/form/form/index.jsx", "src/components/form/form/questions.jsx", "src/components/select.jsx"  ],
   "exclude": ["node_modules"]
 }
