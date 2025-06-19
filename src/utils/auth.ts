@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import { NextAuthOptions, Session } from "next-auth";
+import type { Adapter } from "next-auth/adapters";
 
 export const getAuthOptions: NextAuthOptions = {
   adapter: FirestoreAdapter({
@@ -14,7 +15,7 @@ export const getAuthOptions: NextAuthOptions = {
         "\n",
       ),
     }),
-  }),
+  }) as Adapter,
 
   providers: [
     GoogleProvider({
@@ -26,7 +27,7 @@ export const getAuthOptions: NextAuthOptions = {
           lastName: profile.family_name,
           image: profile.picture,
           roles: {
-            member: 1,
+            members: 1,
           },
         };
       },
@@ -56,11 +57,8 @@ export const authenticate = async (restrictions: Restrictions = {}) => {
     return { message: "Invalid Authentication Credentials.", auth: 401 };
   }
 
-  const roles =
-    (session.user.roles as Record<string, number | undefined>) || {};
-
   const authorized = Object.entries(restrictions).some(([key, allowedValues]) =>
-    allowedValues.includes(roles[key] ?? -90205),
+    allowedValues.includes(+session?.user?.roles[key]),
   );
 
   if (!authorized && Object.keys(restrictions).length > 0) {
