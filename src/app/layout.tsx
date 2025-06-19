@@ -1,27 +1,21 @@
 import "./globals.css";
 import { Lexend } from "next/font/google";
-import { ReactQueryClientProvider } from "@/utils/react-query";
-import Session from "@/components/session";
 
 const lexend = Lexend({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ACM Starlight",
-  description: "ACM's project application portal",
+  description: "ACM@UCR's Official Program Application & Management Portal",
 };
 
-type LayoutProps = {
+interface LayoutProps {
   children: React.ReactNode;
-};
+}
 
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
-      <body className={lexend.className}>
-        <Session>
-          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
-        </Session>
-      </body>
+      <body className={lexend.className}>{children}</body>
     </html>
   );
 }
