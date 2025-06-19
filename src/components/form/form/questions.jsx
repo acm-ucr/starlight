@@ -121,7 +121,7 @@ const Questions = ({
                 </Label>
               </div>
               <Textarea
-                className="border-1 w-full resize-none border-black pl-3 placeholder:text-hackathon-gray-200 focus:outline-none"
+                className="placeholder:text-hackathon-gray-200 w-full resize-none border-1 border-black pl-3 focus:outline-none"
                 maxLength={500}
                 value={object[field.name]}
                 onChange={(e) =>

@@ -3,7 +3,7 @@ import TracksData from "@/data/tracks";
 import Link from "next/link";
 const Tracks = () => {
   return (
-    <div className="bg-starlight-gray-primary flex w-screen flex-col items-center justify-evenly md:h-full">
+    <div className="bg-starlight-gray-primary flex h-screen w-screen flex-col items-center justify-evenly">
       <p className="pb-2 text-center text-5xl font-bold text-white">
         Select an Application
       </p>

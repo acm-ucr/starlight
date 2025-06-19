@@ -1,6 +1,7 @@
+import Tracks from "@/components/apply/tracks";
 
 const Page = () => {
-  return <div>Congrats you have access!</div>;
+  return <Tracks />;
 };
 
 export default Page;

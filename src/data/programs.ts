@@ -1,7 +1,1 @@
-export const PROGRAMS = [
-    "Spark",
-    "Forge",
-    "DAS",
-    "Create",
-    "ACM Board"
-];
+export const PROGRAMS = ["Spark", "Forge", "DAS", "Create", "ACM Board"];

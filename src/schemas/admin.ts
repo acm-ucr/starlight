@@ -1,7 +1,5 @@
 import { z } from "zod";
-import {
-  PROGRAMS
-} from "@/data/programs";
+import { PROGRAMS } from "@/data/programs";
 
 export const schema = z.object({
   firstName: z.string().min(1, { message: "Last name is invalid" }),

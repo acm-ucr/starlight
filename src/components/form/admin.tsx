@@ -30,7 +30,7 @@ const Admin = () => {
     await submit({
       data: admin,
       schema,
-      url: "/apply",
+      url: "/api/placeholder",
       setLoading,
       setState,
     });
