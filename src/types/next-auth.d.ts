@@ -2,15 +2,12 @@ import "next-auth";
 
 declare module "next-auth" {
   interface User {
+    id: string;
+    email: string;
     firstName?: string;
     lastName?: string;
-    roles?: {
-      member: number;
-      programDirector?: number;
-      sparkLead?: number;
-      createLead?: number;
-      forgeLead?: number;
-      dasLead?: number;
+    roles: {
+      [key: string]: number;
     };
   }
 

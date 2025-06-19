@@ -1,5 +1,4 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Starlight from "@/public/logos/starlight.svg";
 import Navigation from "./navigation";
@@ -7,8 +6,6 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Landing = () => {
-  const { data: session } = useSession();
-
   return (
     <div className="flex h-screen flex-col">
       <Navigation />
@@ -39,25 +36,14 @@ const Landing = () => {
           <p className="text-center text-xl font-bold text-white md:text-left">
             Apply to ACM's Programs below!
           </p>
-          {session?.user ? (
-            <div className="mt-8 flex justify-center md:justify-start">
-              <Link
-                className="bg-starlight-blue-primary rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
-                href="/apply"
-              >
-                Apply
-              </Link>
-            </div>
-          ) : (
-            <div className="flex justify-center md:justify-start">
-              <button
-                className="bg-starlight-blue-primary mt-8 rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
-                onClick={() => signIn("google")}
-              >
-                Sign In
-              </button>
-            </div>
-          )}
+          <div className="mt-8 flex justify-center md:justify-start">
+            <Link
+              className="bg-starlight-blue-primary rounded px-8 py-2 text-2xl text-white hover:cursor-pointer"
+              href="/apply"
+            >
+              Apply
+            </Link>
+          </div>
         </div>
         <div className="order-1 flex justify-center md:order-2">
           <Image
