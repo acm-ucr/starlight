@@ -3,7 +3,7 @@ import Fault from "@/utils/error";
 import { headers } from "next/headers";
 import SignIn from "@/utils/signin";
 import { Session as SessionType } from "next-auth";
-
+import Navigation from "@/components/navigation";
 interface ProtectedPageProps {
   children: React.ReactNode;
   restrictions: Record<string, number[]>;
@@ -43,9 +43,16 @@ const ProtectedPage = async ({
     throw new Fault(403, "Unauthorized", "You do not have access to this page");
   }
 
-  /* const navigation = RegExp(/user\/|admin\//).test(pathName); We do not have a sidebar yet*/
+  const navigation = RegExp(/user\/|admin\//).test(pathName);
 
-  return <>{children}</>;
+  return (
+    <>
+      {navigation && <Navigation />}
+      <div className="relative z-0 flex h-screen w-full items-start overflow-x-hidden md:px-6">
+        <div className="h-full w-full">{children}</div>
+      </div>
+    </>
+  );
 };
 
 export default ProtectedPage;
