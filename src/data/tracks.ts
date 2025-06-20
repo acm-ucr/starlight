@@ -16,25 +16,25 @@ const Tracks: Track[] = [
     name: "Spark",
     logo: Spark,
     focus: "Web Development",
-    color: "text-yellow-500",
+    color: "text-starlight-spark",
   },
   {
     name: "Create",
     logo: Create,
     focus: "UI/UX",
-    color: "text-blue-500",
+    color: "text-starlight-create",
   },
   {
     name: "Forge",
     logo: Forge,
     focus: "Embedded & Mechanics",
-    color: "text-gray-500",
+    color: "text-starlight-forge",
   },
   {
     name: "DAS",
     logo: DAS,
     focus: "Data Science & Statistics",
-    color: "text-purple-500",
+    color: "text-starlight-das",
   },
 ];
 export default Tracks;
