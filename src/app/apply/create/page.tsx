@@ -1,3 +1,3 @@
-import Create from "@/components/form/admin";
+import Create from "@/components/form/create";
 
 export default Create;

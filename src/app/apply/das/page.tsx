@@ -1,3 +1,3 @@
-import DAS from "@/components/form/admin";
+import DAS from "@/components/form/das";
 
 export default DAS;

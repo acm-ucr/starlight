@@ -1,3 +1,3 @@
-import Spark from "@/components/form/admin";
+import Spark from "@/components/form/spark";
 
 export default Spark;

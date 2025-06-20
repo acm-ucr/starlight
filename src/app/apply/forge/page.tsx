@@ -1,3 +1,3 @@
-import Forge from "@/components/form/admin";
+import Forge from "@/components/form/forge";
 
 export default Forge;
