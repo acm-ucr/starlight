@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, updateDoc, Timestamp } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
+import { ATTRIBUTES } from "@/data/idkwhattocallthisrn.ts";
 
-export const POST = async (req) => {
+const types = new Set(["admin", "spark", "create", "forge", "das"]);
+
+export const POST = async (req, { params }) => {
   const res = NextResponse;
   const { auth, message, user } = await authenticate();
 
@@ -13,21 +16,20 @@ export const POST = async (req) => {
       { status: auth },
     );
   }
-
+  const body = await req.json();
   try {
-    const body = await req.json();
-    await setDoc(
-      doc(db, "users", user.id),
-      {
-        ...body,
+    if (types.has(params.type)) {
+      const element = {};
+      ATTRIBUTES[params.type].forEach((attribute) => {
+        element[attribute] = body[attribute];
+      });
+
+      updateDoc(doc(db, "users", user.id), {
+        ...element,
         timestamp: Timestamp.now(),
-        roles: {
-          ...user.roles,
-          admins: 0,
-        },
-      },
-      { merge: true },
-    );
+        [`roles.${params.type}`]: 0,
+      });
+    }
 
     return res.json({ message: "OK" }, { status: 200 });
   } catch (err) {

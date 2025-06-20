@@ -4,7 +4,6 @@ import { useState } from "react";
 import Questions from "./questions";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import LOGO from "@/public/logos/starlight.svg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -17,6 +16,7 @@ const Form = ({
   statuses = {},
   bypass = false,
   packet = false,
+  LOGO,
 }) => {
   const [loading, setLoading] = useState(false);
 

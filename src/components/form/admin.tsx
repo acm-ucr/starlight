@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { STATUSES } from "@/data/statuses";
 import { schema } from "@/schemas/admin";
 import { submit } from "@/utils/form";
+import StarlightLogo from "@/public/logos/starlight.svg";
 
 const Admin = () => {
   const { data: session } = useSession();
@@ -17,7 +18,7 @@ const Admin = () => {
     lastName: session?.user.lastName || "",
     email: session?.user.email || "",
     roles: session?.user.roles || {},
-    form: "admins",
+    form: "admin",
   });
 
   if (!session?.user) return null;
@@ -30,7 +31,7 @@ const Admin = () => {
     await submit({
       data: admin,
       schema,
-      url: "/api/placeholder",
+      url: "/api/placeholder/admin",
       setLoading,
       setState,
     });
@@ -43,6 +44,7 @@ const Admin = () => {
       header="ADMIN PORTAL REQUEST"
       onSubmit={onSubmit}
       statuses={STATUSES}
+      LOGO={StarlightLogo}
     />
   );
 };
