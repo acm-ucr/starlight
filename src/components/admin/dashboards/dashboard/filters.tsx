@@ -17,7 +17,7 @@ const Filters = ({ statuses, filters, setFilters }: FiltersProps) => {
     <div className="flex w-full gap-2 lg:w-4/12">
       <ToggleGroup
         type="multiple"
-        value={selectedFilters} // ✅ controlled
+        value={selectedFilters}
         onValueChange={(newValues) => {
           setFilters((prev) =>
             prev.map((f) =>

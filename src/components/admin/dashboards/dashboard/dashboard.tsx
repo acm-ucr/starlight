@@ -2,6 +2,7 @@ import { Label } from "@/components/ui/label";
 import { SearchParams } from "@/types/dashboard";
 import { useState } from "react";
 import Filters from "@/components/admin/dashboards/dashboard/filters";
+import Table from "@/components/admin/dashboards/dashboard/table";
 
 interface DashboardProps {
   title: string;
@@ -30,6 +31,7 @@ const Dashboard = ({ title, searchParams, statuses }: DashboardProps) => {
           filters={filters}
           setFilters={setFilters}
         />
+        <Table searchParams={searchParams} />
       </div>
     </div>
   );
