@@ -16,7 +16,7 @@ export interface Filter {
 
 const Dashboard = ({ title, searchParams, statuses }: DashboardProps) => {
   const [filters, setFilters] = useState<Filter[]>([
-    { id: "status", value: ["-1", "0", "1"] },
+    { id: "status", value: Object.keys(statuses) },
   ]);
 
   return (

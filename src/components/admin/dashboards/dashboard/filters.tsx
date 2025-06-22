@@ -13,39 +13,23 @@ const Filters = ({ statuses, filters, setFilters }: FiltersProps) => {
   const selectedFilters =
     filters.find(({ id }) => id === "status")?.value || [];
 
-  const onClick = (value: number, isActive: boolean) => {
-    setFilters((prev) => {
-      const statuses = prev.find(({ id }) => id === "status")?.value;
-      if (!statuses) {
-        return prev.concat({
-          id: "status",
-          value: [value],
-        });
-      }
-
-      return prev.map((f) =>
-        f.id === "status"
-          ? {
-              id: "status",
-              value: isActive
-                ? statuses.filter((s) => s !== value)
-                : statuses.concat(value),
-            }
-          : f,
-      );
-    });
-  };
-
   return (
     <div className="flex w-full gap-2 lg:w-4/12">
-      <ToggleGroup type="multiple">
+      <ToggleGroup
+        type="multiple"
+        value={selectedFilters} // ✅ controlled
+        onValueChange={(newValues) => {
+          setFilters((prev) =>
+            prev.map((f) =>
+              f.id === "status" ? { ...f, value: newValues } : f,
+            ),
+          );
+        }}
+      >
         {Object.entries(statuses).map(([key, value]) => (
           <ToggleGroupItem
             key={key}
             value={key}
-            onClick={() =>
-              onClick(parseInt(key), selectedFilters.includes(parseInt(key)))
-            }
             className={cn(
               COLORS["gray"]?.background,
               COLORS["gray"]?.text,
