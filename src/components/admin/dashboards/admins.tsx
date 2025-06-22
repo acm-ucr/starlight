@@ -1,15 +1,18 @@
 "use client";
-import { SearchParams } from "@/types/dashboard";
+/* import { SearchParams } from "@/types/dashboard"; */
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
 
-interface AdminProps {
+/* interface AdminProps {
   searchParams: SearchParams;
-}
+} */
 
-const Admins = ({ searchParams }: AdminProps) => {
+const Admins = (/* { searchParams }: AdminProps */) => {
   return (
-    <Dashboard searchParams={searchParams} statuses={STATUSES} title="Admins" />
+    <Dashboard
+      /* searchParams={searchParams} */ statuses={STATUSES}
+      title="Admins"
+    />
   );
 };
 

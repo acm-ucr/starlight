@@ -1,10 +1,11 @@
-import { SearchParams } from "@/types/dashboard";
+/* 
+import {SearchParams} from "@/types/dashboard";
 
 interface TableProps {
-  searchParams: SearchParams;
-}
+    searchParams: SearchParams;
+} */
 
-const Table = ({ searchParams }: TableProps) => {
+const Table = (/* {searchParams}: TableProps */) => {
   return <div></div>;
 };
 
