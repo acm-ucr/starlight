@@ -8,7 +8,7 @@ export type SearchParams = {
 
 export type Tags = {
   text: string;
-  value: -1 | 0 | 1;
+  value: "-1" | "0" | "1";
 };
 
 export type Column = {

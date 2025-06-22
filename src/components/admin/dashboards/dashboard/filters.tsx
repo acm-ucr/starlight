@@ -4,7 +4,7 @@ import { cn } from "@/utils/tailwind";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 interface FiltersProps {
-  statuses: Record<string, number | string>;
+  statuses: Record<string, string>;
   filters: Filter[];
   setFilters: React.Dispatch<React.SetStateAction<Filter[]>>;
 }

@@ -27,7 +27,7 @@ export const getAuthOptions: NextAuthOptions = {
           lastName: profile.family_name,
           image: profile.picture,
           roles: {
-            member: 1,
+            member: "1",
           },
         };
       },

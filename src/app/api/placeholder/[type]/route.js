@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
 import { doc, updateDoc, Timestamp } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
-import { ATTRIBUTES } from "@/data/idkwhattocallthisrn.ts";
+import { ATTRIBUTES } from "@/data/admin/dashboard";
 
 const types = new Set(["admin", "spark", "create", "forge", "das"]);
 
@@ -27,7 +27,7 @@ export const POST = async (req, { params }) => {
       updateDoc(doc(db, "users", user.id), {
         ...element,
         timestamp: Timestamp.now(),
-        [`roles.${params.type}`]: 0,
+        [`roles.${params.type}`]: "0",
       });
     }
 
