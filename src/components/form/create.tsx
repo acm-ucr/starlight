@@ -31,7 +31,7 @@ const Create = () => {
     await submit({
       data: create,
       schema,
-      url: "/api/placeholder/create",
+      url: "/api/dashboard/create",
       setLoading,
       setState,
     });

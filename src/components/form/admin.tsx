@@ -32,7 +32,7 @@ const Admin = () => {
     await submit({
       data: admin,
       schema,
-      url: "/api/placeholder/admin",
+      url: "/api/dashboard/admin",
       setLoading,
       setState,
     });

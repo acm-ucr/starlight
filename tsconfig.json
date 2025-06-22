@@ -32,7 +32,7 @@
     "src/components/form/form/index.jsx",
     "src/components/form/form/questions.jsx",
     "src/components/select.jsx",
-    "src/app/api/placeholder.js"
+    "src/app/api/dashboard.js"
   ],
   "exclude": ["node_modules"]
 }

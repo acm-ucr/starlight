@@ -31,7 +31,7 @@ const Spark = () => {
     await submit({
       data: spark,
       schema,
-      url: "/api/placeholder/spark",
+      url: "/api/dashboard/spark",
       setLoading,
       setState,
     });

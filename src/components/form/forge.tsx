@@ -31,7 +31,7 @@ const Forge = () => {
     await submit({
       data: forge,
       schema,
-      url: "/api/placeholder/forge",
+      url: "/api/dashboard/forge",
       setLoading,
       setState,
     });
