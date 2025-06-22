@@ -1,7 +1,7 @@
 import { Table, Row, CellContext } from "@tanstack/react-table";
 import Checkbox from "@/components/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { COLORS } from "@/data/tags";
+import type { ColorKeys } from "@/data/tags";
 
 export const generateSelect = <TData extends object>() => ({
   id: "select",
@@ -43,7 +43,7 @@ export const generateStatus = <TData extends object>(
     },
 
     cell: ({ row }: CellContext<TData, string>) => (
-      <Badge type={row.getValue("status") as keyof typeof COLORS}>
+      <Badge type={row.getValue("status") as ColorKeys}>
         {statuses[row.getValue("status") as keyof typeof statuses]}
       </Badge>
     ),

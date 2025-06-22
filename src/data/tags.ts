@@ -1,4 +1,9 @@
-export const mappings = {
+export interface TagColor {
+  background: string;
+  text: string;
+  hover: string;
+}
+export const mappings: Record<string, TagColor> = {
   red: {
     background: "bg-starlight-tags-red-bg",
     text: "text-starlight-tags-red-text",
@@ -71,7 +76,7 @@ export const mappings = {
   },
 };
 
-export const COLORS = {
+export const COLORS: Record<string, TagColor> = {
   pending: mappings["yellow"],
   accept: mappings["green"],
   reject: mappings["red"],
@@ -94,3 +99,5 @@ export const COLORS = {
   "-1": mappings["red"],
   none: mappings["none"],
 };
+
+export type ColorKeys = keyof typeof COLORS;
