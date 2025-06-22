@@ -6,8 +6,10 @@ import { ATTRIBUTES } from "@/data/admin/dashboard";
 
 const types = new Set(["admin", "spark", "create", "forge", "das"]);
 
-export const POST = async (req, { params }) => {
+export const POST = async (req, context) => {
   const res = NextResponse;
+  const { params } = context;
+
   const { auth, message, user } = await authenticate();
 
   if (auth !== 200) {
@@ -16,7 +18,9 @@ export const POST = async (req, { params }) => {
       { status: auth },
     );
   }
+
   const body = await req.json();
+
   try {
     if (types.has(params.type)) {
       const element = {};
@@ -24,7 +28,7 @@ export const POST = async (req, { params }) => {
         element[attribute] = body[attribute];
       });
 
-      updateDoc(doc(db, "users", user.id), {
+      await updateDoc(doc(db, "users", user.id), {
         ...element,
         timestamp: Timestamp.now(),
         [`roles.${params.type}`]: "0",

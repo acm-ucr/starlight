@@ -2,6 +2,7 @@ import { Column, Tags } from "@/types/dashboard";
 import { Admin } from "@/types/users";
 import { ColumnDef } from "@tanstack/react-table";
 import { generateSelect, generateStatus } from "./columns";
+import { STATUSES } from "@/data/statuses";
 export const TAGS: Tags[] = [
   {
     text: "accept",
