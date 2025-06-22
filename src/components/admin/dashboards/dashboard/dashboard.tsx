@@ -1,0 +1,38 @@
+import { Label } from "@/components/ui/label";
+import { SearchParams } from "@/types/dashboard";
+import { useState } from "react";
+import Filters from "@/components/admin/dashboards/dashboard/filters";
+
+interface DashboardProps {
+  title: string;
+  searchParams: SearchParams;
+  statuses: Record<string, number | string>;
+}
+
+export interface Filter {
+  id: string;
+  value: number[];
+}
+
+const Dashboard = ({ title, searchParams, statuses }: DashboardProps) => {
+  const [filters, setFilters] = useState<Filter[]>([
+    { id: "status", value: [-1, 0, 1] },
+  ]);
+
+  return (
+    <div className="bg-starlight-gray-secondary w-10/12">
+      <div className="mt-8 ml-5 flex items-center gap-x-8">
+        <Label className="text-starlight-tags-white text-2xl font-bold">
+          {title}
+        </Label>
+        <Filters
+          statuses={statuses}
+          filters={filters}
+          setFilters={setFilters}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

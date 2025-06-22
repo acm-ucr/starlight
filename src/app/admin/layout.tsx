@@ -9,7 +9,7 @@ const AdminLayout = async ({ children }: FormProps) => {
   const session = await getSession();
   return (
     <Providers session={session}>
-      <ProtectedPage session={session} restrictions={{ members: [1] }}>
+      <ProtectedPage session={session} restrictions={{ admin: [1] }}>
         {children}
       </ProtectedPage>
     </Providers>

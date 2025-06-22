@@ -8,11 +8,12 @@ import { STATUSES } from "@/data/statuses";
 import { schema } from "@/schemas/admin";
 import { submit } from "@/utils/form";
 import StarlightLogo from "@/public/logos/starlight.svg";
+import type { Attributes } from "@/types/forms"; // reuse the same!
 
 const Admin = () => {
   const { data: session } = useSession();
 
-  const [admin, setAdmin] = useState({
+  const [admin, setAdmin] = useState<Attributes>({
     ...ATTRIBUTES,
     firstName: session?.user.firstName || "",
     lastName: session?.user.lastName || "",
@@ -36,6 +37,7 @@ const Admin = () => {
       setState,
     });
   };
+
   return (
     <Form
       fields={FIELDS}

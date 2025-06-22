@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import SignIn from "@/utils/signin";
 import { Session as SessionType } from "next-auth";
 import Navigation from "@/components/navigation";
+import { SidebarProvider } from "./ui/sidebar";
 interface ProtectedPageProps {
   children: React.ReactNode;
   restrictions: Record<string, number[]>;
@@ -46,12 +47,14 @@ const ProtectedPage = async ({
   const navigation = RegExp(/user\/|admin\//).test(pathName);
 
   return (
-    <>
-      {navigation && <Navigation />}
-      <div className="relative z-0 flex h-screen w-full items-start overflow-x-hidden md:px-6">
-        <div className="h-full w-full">{children}</div>
-      </div>
-    </>
+    <div className="flex">
+      {navigation && (
+        <SidebarProvider>
+          <Navigation />
+        </SidebarProvider>
+      )}
+      {children}
+    </div>
   );
 };
 

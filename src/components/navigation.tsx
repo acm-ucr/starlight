@@ -34,15 +34,17 @@ const Navigation = () => {
   const tabs = TABS[pathname.split("/")[1]];
   const { open, toggleSidebar } = useSidebar();
   return (
-    <Sidebar collapsible="icon" className="text-white">
-      <SidebarHeader className={`${open ? "py-8" : "py-4"}`}>
-        <Image
-          src={Starlight}
-          className="mx-auto h-12 w-12"
-          alt="Starlight Logo"
-        />
+    <Sidebar
+      collapsible="icon"
+      className={`${open ? "w-2/12" : "w-2/12"} text-white`}
+    >
+      <SidebarHeader
+        className={`flex items-center ${open ? "bg-starlight-gray-primary py-8" : "bg-starlight-gray-primary py-4"}`}
+      >
+        <Image src={Starlight} className="w-5/12" alt="Starlight Logo" />
+        <p className="text-center text-lg">ACM Starlight</p>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-starlight-gray-primary">
         {Object.entries(tabs).map(([title, subTabs], index) => (
           <Collapsible
             key={index}
@@ -52,7 +54,7 @@ const Navigation = () => {
             <SidebarGroup className="pt-0">
               {open && (
                 <SidebarGroupLabel asChild className="pt-0 text-xl font-bold">
-                  <CollapsibleTrigger className="text-white">
+                  <CollapsibleTrigger className="pb-2 text-white">
                     {title}
                     <FaChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                   </CollapsibleTrigger>
@@ -91,7 +93,7 @@ const Navigation = () => {
           </Collapsible>
         ))}
       </SidebarContent>
-      <SidebarFooter className="my-1 flex flex-col p-0 pb-2 pl-1">
+      <SidebarFooter className="bg-starlight-gray-primary flex flex-col p-0 pb-2 pl-1">
         <span
           onClick={() => toggleSidebar()}
           className={`${open ? "h-7 pl-3" : "mx-auto h-6"} flex items-center text-lg hover:cursor-pointer`}
