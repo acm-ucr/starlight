@@ -13,16 +13,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React from "react";
-/* import { ColumnType } from "@/types/dashboard"; */
 import { useRef, useEffect, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
 interface TableProps<T extends keyof DashboardTypeMap = "admin"> {
-  /* page: string;
-  meta: { total: number; last: string }; */
   empty: string;
   totalDBRowCount: number;
-  /* columns: ColumnType<DashboardTypeMap[T]>[]; */
   getHeaderGroups: () => HeaderGroup<DashboardTypeMap[T]>[];
   getRowModel: () => RowModel<DashboardTypeMap[T]>;
   fetchNextPage: UseInfiniteQueryResult["fetchNextPage"];
@@ -34,12 +30,9 @@ interface TableProps<T extends keyof DashboardTypeMap = "admin"> {
 }
 
 const Table = ({
-  /* page,
-  meta, */
   getHeaderGroups,
   getRowModel,
   fetchNextPage,
-  /* columns, */
   empty,
   isLoading,
   isRefetching,

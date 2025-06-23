@@ -19,7 +19,7 @@ export const COLUMNS: ColumnType<Admin>[] = [
   generateSelect(),
   {
     accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-    id: "fullName",
+    id: "name",
     accessorKey: "name",
     header: "Name",
     enableColumnFilter: true,

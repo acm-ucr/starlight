@@ -69,13 +69,6 @@ export const GET = async (req, context) => {
 
   const { auth, message } = await authenticate(AUTH.GET[firestoreType]);
 
-  console.log("[API] AUTH result:", {
-    auth,
-    message,
-    type: params.type,
-    firestoreType,
-  });
-
   if (auth !== 200) {
     return res.json(
       { message: `Authentication Error: ${message}` },
@@ -112,7 +105,6 @@ export const GET = async (req, context) => {
 
     snapshot.forEach((doc) => {
       const data = doc.data();
-      console.log("[API] Found doc:", data);
       const element = {};
       ATTRIBUTES[firestoreType].forEach((attribute) => {
         element[attribute] = data[attribute];
