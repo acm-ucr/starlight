@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ColumnType } from "@/types/dashboard";
+/* import { ColumnType } from "@/types/dashboard"; */
 import { useRef, useEffect, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -92,7 +92,7 @@ const Table = ({
 
   return (
     <>
-      <div className="bg-white">
+      <div className="">
         <Datatable
           className="relative grid max-h-[75vh] overflow-y-scroll bg-white"
           ref={tableContainerRef}
@@ -100,7 +100,7 @@ const Table = ({
             fetchMoreOnBottomReached(e.currentTarget);
           }}
         >
-          <TableHeader className="bg-hackathon-primary sticky top-0 z-10 grid rounded-t text-white">
+          <TableHeader className="bg-starlight-gray-tertiary sticky top-0 z-10 grid  text-white">
             {getHeaderGroups().map(({ headers, id }) => (
               <TableRow key={id} className="flex w-full justify-between">
                 {headers.map(({ id, column, getContext, getSize }) => (
@@ -155,7 +155,7 @@ const Table = ({
             ) : (
               <>
                 {rows.length === 0 && (
-                  <TableRow className="w-full bg-white text-center">
+                  <TableRow className="w-full bg-starlight-gray-tertiary text-center text-white">
                     <TableCell
                       className="items-center justify-center"
                       colSpan={12}
@@ -165,12 +165,6 @@ const Table = ({
                   </TableRow>
                 )}
 
-                <div
-                  className="absolute top-0 w-full"
-                  style={{
-                    transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
-                  }}
-                >
                   {virtualItems.map((virtualRow) => {
                     const {
                       id,
@@ -186,7 +180,7 @@ const Table = ({
                         <TableRow
                           key={id}
                           data-index={virtualRow.index}
-                          className={`${getIsSelected() && "bg-hackathon-green-100"} flex justify-between`}
+                          className={`${getIsSelected() && "bg-starlight-das"} flex justify-between`}
                           ref={(node) => rowVirtualizer.measureElement(node)}
                         >
                           {getVisibleCells().map(
@@ -255,17 +249,16 @@ const Table = ({
                       </>
                     );
                   })}
-                </div>
               </>
             )}
           </TableBody>
         </Datatable>
       </div>
-      <div className="flex w-full items-center justify-end rounded-b bg-white p-4 text-lg">
+      <div className="flex w-full items-center justify-end rounded-b bg-starlight-gray-tertiary p-4 text-lg">
         {isFetchingNextPage && (
-          <Loader size={20} className="text-hackathon-blue-100 animate-spin" />
+          <Loader size={20} className="text-starlight-blue-primary animate-spin" />
         )}
-        <div className="mx-2">{getRowModel().rows.length} row(s)</div>
+        <div className="mx-2 text-white">{getRowModel().rows.length} row(s)</div>
       </div>
     </>
   );
