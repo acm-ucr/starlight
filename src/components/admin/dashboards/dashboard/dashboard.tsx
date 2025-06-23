@@ -12,10 +12,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
-
+import { RowSelectionState } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
 
 import { api } from "@/utils/api";
+import Toolbar from "./toolbar";
 
 interface DashboardProps<T extends keyof DashboardTypeMap> {
   title: string;
@@ -35,15 +36,14 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   title,
   columns,
   searchParams,
-  /*   tags, */
+  tags,
   statuses,
-  /*   dashboardType, */
 }: DashboardProps<T>) => {
   const [filters, setFilters] = useState<Filter[]>([
     { id: "status", value: Object.keys(statuses) },
   ]);
   const [data, setData] = useState<DashboardTypeMap[T][]>([]);
-  /*   const [selected, setSelected] = useState([]); */
+  const [selected, setSelected] = useState<RowSelectionState>({});
   const [expanded, setExpanded] = useState({});
   const [meta, setMeta] = useState<{ total: number; last: string }>({
     total: 0,
@@ -56,20 +56,16 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   const fetchData = async ({ pageParam }: { pageParam?: string }) => {
     const { size = 20 } = searchParams;
 
-    const res = await api({
+    return await api({
       url: `/api/dashboard/${page}?size=${size}&last=${pageParam}`,
       method: "GET",
     });
-
-    setMeta({ total: res.total, last: res.last });
-
-    return { items: res.items, last: res.last, total: res.total };
   };
 
   const {
     data: queryData,
     fetchNextPage,
-    /*     refetch, */
+    refetch,
     isFetching,
     isRefetching,
     isLoading,
@@ -84,38 +80,41 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   });
 
   useEffect(() => {
-    if (queryData) {
+    let mounted = true;
+    if (queryData && mounted) {
       const flattenedData = queryData.pages.flatMap((page) => page.items || []);
       setData(flattenedData);
+
+      const lastPage = queryData.pages[queryData.pages.length - 1];
+      setMeta({ total: lastPage.total, last: lastPage.last });
     }
+    return () => {
+      mounted = false;
+    };
   }, [queryData, isLoading, isFetching]);
 
-  const {
-    getHeaderGroups,
-    getRowModel,
-    /*     getFilteredSelectedRowModel,
-    toggleAllRowsSelected, */
-  } = useReactTable<DashboardTypeMap[T]>({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    /*     getRowCanExpand: (_row) => true,
-    onRowSelectionChange: setSelected, */
-    enableRowSelection: true,
-    onExpandedChange: setExpanded,
-    state: {
-      /*       rowSelection: selected, */
-      columnFilters: filters,
-      expanded,
-    },
-  });
+  const { getHeaderGroups, getRowModel, getFilteredSelectedRowModel } =
+    useReactTable<DashboardTypeMap[T]>({
+      data,
+      columns,
+      getCoreRowModel: getCoreRowModel(),
+      getFilteredRowModel: getFilteredRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getExpandedRowModel: getExpandedRowModel(),
+      getRowCanExpand: () => true,
+      onRowSelectionChange: setSelected,
+      enableRowSelection: true,
+      onExpandedChange: setExpanded,
+      state: {
+        rowSelection: selected,
+        columnFilters: filters,
+        expanded,
+      },
+    });
 
-  /*   const searchableItems = columns
+  const searchableItems = columns
     .filter(({ searchable }) => searchable)
-    .map(({ accessorKey }) => accessorKey); */
+    .map(({ accessorKey }) => accessorKey);
 
   return (
     <div className="bg-starlight-gray-secondary w-10/12">
@@ -129,10 +128,22 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
           setFilters={setFilters}
         />
       </div>
+      <Toolbar
+        totalDBRowCount={meta.total}
+        searchParams={searchParams}
+        page={page}
+        filters={filters}
+        setFilters={setFilters}
+        data={data}
+        setData={setData}
+        refetch={refetch}
+        tags={tags}
+        getFilteredSelectedRowModel={getFilteredSelectedRowModel}
+        setSelected={setSelected}
+        searchableItems={searchableItems}
+        setExpanded={setExpanded}
+      />
       <Table
-        /* page={page}
-          meta={meta}
-          columns={columns} */
         empty={empty}
         isLoading={isLoading}
         isRefetching={isRefetching}

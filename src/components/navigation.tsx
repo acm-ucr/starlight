@@ -41,7 +41,11 @@ const Navigation = () => {
       <SidebarHeader
         className={`flex items-center ${open ? "bg-starlight-gray-primary py-8" : "bg-starlight-gray-primary py-4"}`}
       >
-        <Image src={Starlight} className="w-5/12" alt="Starlight Logo" />
+        <Image
+          src={Starlight}
+          className="drop-shadow-yellow-secondary w-5/12"
+          alt="Starlight Logo"
+        />
         <p className="text-center text-lg">ACM Starlight</p>
       </SidebarHeader>
       <SidebarContent className="bg-starlight-gray-primary">

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -18,4 +19,33 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   );
 }
 
-export { Input };
+export interface InputWithClearProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  onClear: () => void;
+}
+
+const InputWithClear = React.forwardRef<HTMLInputElement, InputWithClearProps>(
+  ({ className, type, onClear, ...props }, ref) => {
+    return (
+      <div className="flex w-full items-center rounded border border-slate-200 bg-white px-3 py-2">
+        <input
+          type={type}
+          className={cn(
+            "flex w-full text-sm placeholder:text-slate-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+            className,
+          )}
+          ref={ref}
+          {...props}
+        />
+
+        <X
+          className="text-hackathon-gray-300 text-xl hover:cursor-pointer hover:text-red-500"
+          onClick={onClear}
+        />
+      </div>
+    );
+  },
+);
+InputWithClear.displayName = "InputWithClear";
+
+export { Input, InputWithClear };

@@ -19,7 +19,7 @@ export const COLUMNS: ColumnType<Admin>[] = [
   generateSelect(),
   {
     accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-    id: "fullName",
+    id: "name",
     accessorKey: "name",
     header: "Name",
     enableColumnFilter: true,
@@ -33,7 +33,7 @@ export const COLUMNS: ColumnType<Admin>[] = [
         }}
         className="hover:cursor-pointer"
       >
-        {row.getValue("fullName")}
+        {row.getValue("name")}
       </div>
     ),
   },

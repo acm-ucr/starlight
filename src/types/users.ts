@@ -1,11 +1,12 @@
-import { StatusMapping } from "@/data/statuses";
+import { Code } from "@/data/statuses";
 
 export type Member = {
   firstName: string;
   lastName: string;
   email: string;
   discord: string;
-  status: StatusMapping;
+  status: Code;
+  uid: number;
 };
 
 export type Admin = {
