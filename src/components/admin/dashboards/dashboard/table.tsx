@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import React from "react";
 /* import { ColumnType } from "@/types/dashboard"; */
 import { useRef, useEffect, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -91,7 +92,7 @@ const Table = ({
 
   return (
     <>
-      <div className="">
+      <div>
         <Datatable
           className="relative grid max-h-[75vh] overflow-y-scroll bg-white"
           ref={tableContainerRef}
@@ -175,9 +176,8 @@ const Table = ({
                   } = rows[virtualRow.index];
 
                   return (
-                    <>
+                    <React.Fragment key={id}>
                       <TableRow
-                        key={id}
                         data-index={virtualRow.index}
                         className={`${getIsSelected() && "bg-starlight-das"} flex justify-between`}
                         ref={(node) => rowVirtualizer.measureElement(node)}
@@ -240,7 +240,7 @@ const Table = ({
                             </TableRow>
                           </div>
                         )} */}
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </>
