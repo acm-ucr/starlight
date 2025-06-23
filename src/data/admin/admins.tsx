@@ -1,8 +1,9 @@
-import { Column, Tags } from "@/types/dashboard";
+import { Tags } from "@/types/dashboard";
 import { Admin } from "@/types/users";
-import { ColumnDef } from "@tanstack/react-table";
 import { generateSelect, generateStatus } from "./columns";
 import { STATUSES } from "@/data/statuses";
+import { ColumnType } from "@/types/dashboard";
+
 export const TAGS: Tags[] = [
   {
     text: "accept",
@@ -14,7 +15,7 @@ export const TAGS: Tags[] = [
   },
 ];
 
-export const COLUMNS: (ColumnDef<Admin, string> & Column)[] = [
+export const COLUMNS: ColumnType<Admin>[] = [
   generateSelect(),
   {
     accessorFn: (row) => `${row.firstName} ${row.lastName}`,
@@ -72,41 +73,6 @@ export const COLUMNS: (ColumnDef<Admin, string> & Column)[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "shirt",
-    header: "Shirt",
-    enableColumnFilter: true,
-    filterFn: "includesString",
-    searchable: true,
-    cell: ({ row }) => (
-      <div
-        onClick={(e) => {
-          row.getToggleSelectedHandler()(e);
-          row.getToggleExpandedHandler()();
-        }}
-        className="hover:cursor-pointer"
-      >
-        {row.getValue("shirt")}
-      </div>
-    ),
-  },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    enableColumnFilter: true,
-    filterFn: "includesString",
-    searchable: true,
-    cell: ({ row }) => (
-      <div
-        onClick={(e) => {
-          row.getToggleSelectedHandler()(e);
-          row.getToggleExpandedHandler()();
-        }}
-        className="hover:cursor-pointer"
-      >
-        {row.getValue("gender")}
-      </div>
-    ),
-  },
   generateStatus(STATUSES),
 ];
+export type AdminColumnsProps = typeof COLUMNS;

@@ -69,7 +69,7 @@ const Navigation = () => {
                           <Link key={index} href={link} target={target}>
                             <SidebarMenuItem
                               key={index}
-                              className={`flex h-6 items-center pl-3 text-lg ${link === pathname && "bg-blue-100"} rounded`}
+                              className={`flex h-6 items-center pl-3 text-lg ${link === pathname && ""} rounded`}
                             >
                               <span className={`${!open && "mx-auto"}`}>
                                 {icon}

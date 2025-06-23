@@ -1,3 +1,4 @@
+import { ColumnDef } from "@tanstack/react-table";
 export type SearchParams = {
   index: number;
   size: number;
@@ -13,4 +14,8 @@ export type Tags = {
 
 export type Column = {
   searchable: boolean;
+  accessorKey?: string;
+  id?: string;
 };
+
+export type ColumnType<T> = ColumnDef<T, string> & Column;

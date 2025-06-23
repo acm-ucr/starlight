@@ -14,3 +14,8 @@ export type Admin = {
   forge?: string;
   das?: string;
 } & Member;
+
+export type DashboardTypeMap = {
+  admin: Admin;
+  member: Member;
+};
