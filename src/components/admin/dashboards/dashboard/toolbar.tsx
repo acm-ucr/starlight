@@ -25,6 +25,7 @@ import { useState } from "react";
 import { Trash2, RotateCcw } from "lucide-react";
 import toaster from "@/utils/toaster";
 import { RowSelectionState } from "@tanstack/react-table";
+import { useEffect, useRef } from "react";
 interface ToolbarProps<T extends keyof DashboardTypeMap> {
   totalDBRowCount: number;
   searchParams: SearchParams;
@@ -56,6 +57,15 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
   setExpanded,
   setSelected,
 }: ToolbarProps<T>) => {
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const queryClient = useQueryClient();
 
   const selectedRows = getFilteredSelectedRowModel();
@@ -74,41 +84,42 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
     button: "",
   });
 
-  const handleReload = () => {
-    queryClient.resetQueries({ queryKey: [page, searchParams] });
-    setExpanded({});
-    setSelected({});
-    refetch();
-    toaster(
-      `Fetched ${page.charAt(0).toUpperCase() + page.slice(1)} Successfully`,
-      "success",
-    );
+  const handleReload = async () => {
+    await queryClient.resetQueries({ queryKey: [page, searchParams] });
+    if (isMounted.current) {
+      setExpanded({});
+      setSelected({});
+      refetch();
+      toaster(
+        `Fetched ${page.charAt(0).toUpperCase() + page.slice(1)} Successfully`,
+        "success",
+      );
+    }
   };
 
   const handleDelete = async () => {
     const ids = rows.map(({ uid }) => uid);
-
     const previousData = data;
     const keep = data.filter(({ uid }) => !ids.includes(uid));
     setData(keep);
-
     setExpanded({});
 
     try {
       await api({
         method: "DELETE",
         url: `/api/dashboard/${page}`,
-        body: rows.map(({ uid }) => ({
-          uid,
-        })),
+        body: rows.map(({ uid }) => ({ uid })),
       });
-
       queryClient.invalidateQueries({ queryKey: [page, searchParams] });
-      toaster("Successfully Deleted", "success");
-      setSelected({});
+      if (isMounted.current) {
+        toaster("Successfully Deleted", "success");
+        setSelected({});
+      }
     } catch {
-      setData(previousData);
-      toaster("Deletion Failed. Please try again", "error");
+      if (isMounted.current) {
+        setData(previousData);
+        toaster("Deletion Failed. Please try again", "error");
+      }
     }
   };
 
@@ -128,14 +139,13 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
     });
   };
 
-  const onClick = async (value) => {
+  const onClick = async (value: string) => {
     if (rows.length === 0) {
       toaster("No items selected.", "error");
       return;
     }
 
-    const notPending = rows.some((obj) => obj.status !== 0);
-
+    const notPending = rows.some((obj) => obj.status !== "0");
     if (notPending) {
       toaster("Only pending items can be changed!", "error");
       setSelected({});
@@ -144,39 +154,37 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
 
     const ids = rows.map(({ uid }) => uid);
     const previousData = data;
-    const keep = data.map((item) => {
-      if (ids.includes(item.uid)) {
-        return { ...item, status: value };
-      }
-      return item;
-    });
+    const keep = data.map((item) =>
+      ids.includes(item.uid) ? { ...item, status: value } : item,
+    );
     setData(keep);
 
     try {
       await api({
         method: "PUT",
         url: `/api/dashboard/${page}`,
-        body: {
-          objects: rows,
-          status: value,
-          attribute: "status",
-        },
+        body: { objects: rows, status: value, attribute: "status" },
       });
-
       queryClient.invalidateQueries({ queryKey: [page, searchParams] });
-      setSelected({});
-      toaster("Operation Completed", "success");
+      if (isMounted.current) {
+        setSelected({});
+        toaster("Operation Completed", "success");
+      }
     } catch {
-      setData(previousData);
-      toaster("Operation Failed", "error");
+      if (isMounted.current) {
+        setData(previousData);
+        toaster("Operation Failed", "error");
+      }
     }
   };
 
   const value = filters.find(({ id }) => id === search.search)?.value || "";
 
-  const onChange = (id, value) =>
+  const onChange = (id: string, value: string[]) =>
     setFilters((prev) =>
-      prev.filter(({ id }) => id !== search.search).concat({ id, value }),
+      prev
+        .filter((filter) => filter.id !== search.search)
+        .concat({ id, value }),
     );
   const cleanItems: string[] = searchableItems.filter(Boolean) as string[];
   return (
@@ -212,8 +220,8 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
         <InputWithClear
           placeholder="Search"
           maxLength={100}
-          onClear={() => onChange(search.search, "")}
-          onChange={(e) => onChange(search.search, e.target.value)}
+          onClear={() => onChange(search.search ?? "", [])}
+          onChange={(e) => onChange(search.search ?? "", [e.target.value])}
           value={value}
         />
 

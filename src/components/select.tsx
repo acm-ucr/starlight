@@ -16,7 +16,7 @@ type Item = string | { name: string };
 
 interface VirtualizedContentProps {
   items: Item[];
-  setSelected: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSelected: (label: string) => void;
   userFn: (item: Item) => void;
   searchable: boolean;
 }
@@ -83,12 +83,12 @@ const VirtualizedContent = ({
 
             return (
               <DropdownMenuItem
+                key={virtualRow.index}
                 className="absolute top-0 left-0 w-full capitalize"
                 style={{
                   height: `${virtualRow.size}px`,
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
-                key={virtualRow.index}
                 onClick={() => {
                   setSelected(label);
                   userFn(option);
@@ -117,6 +117,7 @@ const Select = <U extends Record<F, string | undefined>, F extends keyof U>({
   userFn = (value) => setUser({ ...user, [field]: value }),
 }: SelectProps<U, F>) => {
   const [selected, setSelected] = useState<string | undefined>(undefined);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -126,7 +127,7 @@ const Select = <U extends Record<F, string | undefined>, F extends keyof U>({
           {required && <span className="text-red-500">*</span>}
         </p>
       )}
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger className="w-full" asChild>
           <Button
             className="w-full justify-between text-left break-words whitespace-normal capitalize"
@@ -146,8 +147,13 @@ const Select = <U extends Record<F, string | undefined>, F extends keyof U>({
         <DropdownMenuPortal>
           <VirtualizedContent
             items={items}
-            setSelected={setSelected}
-            userFn={userFn}
+            setSelected={(label) => {
+              setSelected(label);
+              setOpen(false);
+            }}
+            userFn={(item) => {
+              userFn(item);
+            }}
             searchable={searchable}
           />
         </DropdownMenuPortal>

@@ -56,14 +56,10 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   const fetchData = async ({ pageParam }: { pageParam?: string }) => {
     const { size = 20 } = searchParams;
 
-    const res = await api({
+    return await api({
       url: `/api/dashboard/${page}?size=${size}&last=${pageParam}`,
       method: "GET",
     });
-
-    setMeta({ total: res.total, last: res.last });
-
-    return { items: res.items, last: res.last, total: res.total };
   };
 
   const {
@@ -84,10 +80,17 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   });
 
   useEffect(() => {
-    if (queryData) {
+    let mounted = true;
+    if (queryData && mounted) {
       const flattenedData = queryData.pages.flatMap((page) => page.items || []);
       setData(flattenedData);
+
+      const lastPage = queryData.pages[queryData.pages.length - 1];
+      setMeta({ total: lastPage.total, last: lastPage.last });
     }
+    return () => {
+      mounted = false;
+    };
   }, [queryData, isLoading, isFetching]);
 
   const { getHeaderGroups, getRowModel, getFilteredSelectedRowModel } =

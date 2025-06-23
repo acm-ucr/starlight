@@ -1,5 +1,5 @@
-type Code = "1" | "0" | "-1";
-type Status = "accepted" | "pending" | "rejected";
+export type Code = "1" | "0" | "-1";
+export type Status = "accepted" | "pending" | "rejected";
 
 export type StatusMapping = Record<Code, Status>;
 
