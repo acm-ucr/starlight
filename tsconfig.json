@@ -32,7 +32,8 @@
     "src/components/form/form/index.jsx",
     "src/components/form/form/questions.jsx",
     "src/components/select.jsx",
-    "src/app/api/dashboard.js"
+    "src/app/api/dashboard.js",
+    "src/app/api/dashboard/[type]/route.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 type keys = "admin" | "create" | "spark" | "forge" | "das";
 
 export const ATTRIBUTES: Record<keys, string[]> = {
-  admin: ["firstName", "lastName", "email", "discord", "program"],
+  admin: ["firstName", "lastName", "email", "discord", "affiliation"],
   create: ["firstName", "lastName", "email", "discord", "portfolioLink"],
   spark: ["firstName", "lastName", "email", "discord", "pastProjects"],
   forge: ["firstName", "lastName", "email", "discord", "pastProjects"],
