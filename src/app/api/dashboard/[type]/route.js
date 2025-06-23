@@ -18,7 +18,7 @@ import { authenticate } from "@/utils/auth";
 import { ATTRIBUTES, AUTH } from "@/data/admin/dashboard";
 const types = new Set(["admin", "spark", "create", "forge", "das"]);
 
-export const POST = async (req, { params }) => {
+export const POST = async (req, context) => {
   const res = NextResponse;
   const { auth, message, user } = await authenticate(AUTH.POST);
 
@@ -30,6 +30,7 @@ export const POST = async (req, { params }) => {
   }
   const body = await req.json();
   try {
+    const params = await context.params;
     if (types.has(params.type)) {
       const element = {};
       ATTRIBUTES[params.type].forEach((attribute) => {
@@ -52,7 +53,7 @@ export const POST = async (req, { params }) => {
   }
 };
 
-export const GET = async (req, { params }) => {
+export const GET = async (req, context) => {
   const size = req.nextUrl.searchParams.get("size");
   const last = req.nextUrl.searchParams.get("last");
 
@@ -69,6 +70,7 @@ export const GET = async (req, { params }) => {
   const output = [];
 
   try {
+    const params = await context.params;
     let snapshot;
     if (types.has(params.type)) {
       if (last !== "undefined") {
