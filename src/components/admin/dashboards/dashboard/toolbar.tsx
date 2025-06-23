@@ -225,18 +225,18 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
           value={value}
         />
 
-        <div>
+        <div className="text-white">
           Rows:<span className="mx-2">{totalDBRowCount}</span>
         </div>
         <RotateCcw
           size={30}
           onClick={handleReload}
-          className="text-hackathon-gray-300 duration-150 hover:cursor-pointer hover:opacity-70"
+          className="text-white duration-150 hover:cursor-pointer hover:opacity-70"
         />
         <Trash2
           onClick={confirmDelete}
           size={30}
-          className="text-hackathon-gray-300 mx-2 duration-150 hover:cursor-pointer hover:opacity-70"
+          className="mx-2 text-white duration-150 hover:cursor-pointer hover:opacity-70"
         />
       </div>
 
