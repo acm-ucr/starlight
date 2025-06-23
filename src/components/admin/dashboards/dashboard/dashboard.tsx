@@ -117,8 +117,8 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
     .map(({ accessorKey }) => accessorKey);
 
   return (
-    <div className="bg-starlight-gray-secondary w-10/12">
-      <div className="mt-8 ml-5 flex items-center gap-x-8">
+    <div className="bg-starlight-gray-secondary w-10/12 px-4">
+      <div className="mt-8 flex items-center gap-x-8">
         <Label className="text-starlight-tags-white text-2xl font-bold">
           {title}
         </Label>
