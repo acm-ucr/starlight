@@ -35,15 +35,15 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   title,
   columns,
   searchParams,
-  tags,
+  /*   tags, */
   statuses,
-  dashboardType,
+  /*   dashboardType, */
 }: DashboardProps<T>) => {
   const [filters, setFilters] = useState<Filter[]>([
     { id: "status", value: Object.keys(statuses) },
   ]);
   const [data, setData] = useState<DashboardTypeMap[T][]>([]);
-  const [selected, setSelected] = useState([]);
+  /*   const [selected, setSelected] = useState([]); */
   const [expanded, setExpanded] = useState({});
   const [meta, setMeta] = useState<{ total: number; last: string }>({
     total: 0,
@@ -69,7 +69,7 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   const {
     data: queryData,
     fetchNextPage,
-    refetch,
+    /*     refetch, */
     isFetching,
     isRefetching,
     isLoading,
@@ -93,8 +93,8 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   const {
     getHeaderGroups,
     getRowModel,
-    getFilteredSelectedRowModel,
-    toggleAllRowsSelected,
+    /*     getFilteredSelectedRowModel,
+    toggleAllRowsSelected, */
   } = useReactTable<DashboardTypeMap[T]>({
     data,
     columns,
@@ -102,20 +102,20 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getRowCanExpand: (_row) => true,
-    onRowSelectionChange: setSelected,
+    /*     getRowCanExpand: (_row) => true,
+    onRowSelectionChange: setSelected, */
     enableRowSelection: true,
     onExpandedChange: setExpanded,
     state: {
-      rowSelection: selected,
+      /*       rowSelection: selected, */
       columnFilters: filters,
       expanded,
     },
   });
 
-  const searchableItems = columns
+  /*   const searchableItems = columns
     .filter(({ searchable }) => searchable)
-    .map(({ accessorKey }) => accessorKey);
+    .map(({ accessorKey }) => accessorKey); */
 
   return (
     <div className="bg-starlight-gray-secondary w-10/12">
