@@ -80,7 +80,7 @@ export const GET = async (req, context) => {
           query(
             collection(db, "users"),
             orderBy(`roles.${params.type}`),
-            where(`roles.${params.type}`, "in", [-1, 0, 1]),
+            where(`roles.${params.type}`, "in", ["-1", "0", "1"]),
             startAfter(lastDocument),
             limit(size),
           ),
@@ -90,7 +90,7 @@ export const GET = async (req, context) => {
           query(
             collection(db, "users"),
             orderBy(`roles.${params.type}`),
-            where(`roles.${params.type}`, "in", [-1, 0, 1]),
+            where(`roles.${params.type}`, "in", ["-1", "0", "1"]),
             limit(size),
           ),
         );
@@ -115,7 +115,7 @@ export const GET = async (req, context) => {
       const countFromServer = await getCountFromServer(
         query(
           collection(db, "users"),
-          where(`roles.${params.type}`, "in", [-1, 0, 1]),
+          where(`roles.${params.type}`, "in", ["-1", "0", "1"]),
         ),
       );
 

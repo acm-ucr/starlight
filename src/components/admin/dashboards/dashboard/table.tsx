@@ -50,7 +50,7 @@ const Table = ({
   const tableContainerRef = useRef(null);
 
   const fetchMoreOnBottomReached = useCallback(
-    (containerRefElement) => {
+    (containerRefElement: HTMLDivElement | null) => {
       if (containerRefElement) {
         const { scrollTop, scrollHeight, clientHeight } = containerRefElement;
         if (
@@ -83,7 +83,6 @@ const Table = ({
     overscan: 5,
   });
 
-  // clean up for deletion of rows
   useEffect(() => {
     rowVirtualizer.measure();
   }, [rows.length]);
@@ -100,7 +99,7 @@ const Table = ({
             fetchMoreOnBottomReached(e.currentTarget);
           }}
         >
-          <TableHeader className="bg-starlight-gray-tertiary sticky top-0 z-10 grid  text-white">
+          <TableHeader className="bg-starlight-gray-tertiary sticky top-0 z-10 grid text-white">
             {getHeaderGroups().map(({ headers, id }) => (
               <TableRow key={id} className="flex w-full justify-between">
                 {headers.map(({ id, column, getContext, getSize }) => (
@@ -155,7 +154,7 @@ const Table = ({
             ) : (
               <>
                 {rows.length === 0 && (
-                  <TableRow className="w-full bg-starlight-gray-tertiary text-center text-white">
+                  <TableRow className="bg-starlight-gray-tertiary w-full text-center text-white">
                     <TableCell
                       className="items-center justify-center"
                       colSpan={12}
@@ -165,42 +164,37 @@ const Table = ({
                   </TableRow>
                 )}
 
-                  {virtualItems.map((virtualRow) => {
-                    const {
-                      id,
-                      getVisibleCells,
-                      getIsSelected,
-                      /* original,
+                {virtualItems.map((virtualRow) => {
+                  const {
+                    id,
+                    getVisibleCells,
+                    getIsSelected,
+                    /* original,
                       getIsExpanded,
                       getAllCells, */
-                    } = rows[virtualRow.index];
+                  } = rows[virtualRow.index];
 
-                    return (
-                      <>
-                        <TableRow
-                          key={id}
-                          data-index={virtualRow.index}
-                          className={`${getIsSelected() && "bg-starlight-das"} flex justify-between`}
-                          ref={(node) => rowVirtualizer.measureElement(node)}
-                        >
-                          {getVisibleCells().map(
-                            ({ id, column, getContext }) => (
-                              <TableCell
-                                key={id}
-                                className="overflow-hidden break-words whitespace-normal"
-                                style={{
-                                  width: column.getSize(),
-                                }}
-                              >
-                                {flexRender(
-                                  column.columnDef.cell,
-                                  getContext(),
-                                )}
-                              </TableCell>
-                            ),
-                          )}
-                        </TableRow>
-                        {/* {getIsExpanded() && (
+                  return (
+                    <>
+                      <TableRow
+                        key={id}
+                        data-index={virtualRow.index}
+                        className={`${getIsSelected() && "bg-starlight-das"} flex justify-between`}
+                        ref={(node) => rowVirtualizer.measureElement(node)}
+                      >
+                        {getVisibleCells().map(({ id, column, getContext }) => (
+                          <TableCell
+                            key={id}
+                            className="overflow-hidden break-words whitespace-normal"
+                            style={{
+                              width: column.getSize(),
+                            }}
+                          >
+                            {flexRender(column.columnDef.cell, getContext())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                      {/* {getIsExpanded() && (
                           <div className="flex w-full flex-col">
                             <TableRow className="flex w-full justify-between bg-hackathon-gray-100 text-xs">
                               {subcolumns?.map(({ header }, index) =>
@@ -246,19 +240,24 @@ const Table = ({
                             </TableRow>
                           </div>
                         )} */}
-                      </>
-                    );
-                  })}
+                    </>
+                  );
+                })}
               </>
             )}
           </TableBody>
         </Datatable>
       </div>
-      <div className="flex w-full items-center justify-end rounded-b bg-starlight-gray-tertiary p-4 text-lg">
+      <div className="bg-starlight-gray-tertiary flex w-full items-center justify-end rounded-b p-4 text-lg">
         {isFetchingNextPage && (
-          <Loader size={20} className="text-starlight-blue-primary animate-spin" />
+          <Loader
+            size={20}
+            className="text-starlight-blue-primary animate-spin"
+          />
         )}
-        <div className="mx-2 text-white">{getRowModel().rows.length} row(s)</div>
+        <div className="mx-2 text-white">
+          {getRowModel().rows.length} row(s)
+        </div>
       </div>
     </>
   );

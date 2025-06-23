@@ -31,18 +31,18 @@ export interface Filter {
   value: string[];
 }
 
-const Dashboard = ({
+const Dashboard = <T extends keyof DashboardTypeMap>({
   title,
   columns,
   searchParams,
   tags,
   statuses,
   dashboardType,
-}: DashboardProps) => {
+}: DashboardProps<T>) => {
   const [filters, setFilters] = useState<Filter[]>([
     { id: "status", value: Object.keys(statuses) },
   ]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DashboardTypeMap[T][]>([]);
   const [selected, setSelected] = useState([]);
   const [expanded, setExpanded] = useState({});
   const [meta, setMeta] = useState<{ total: number; last: string }>({
@@ -95,7 +95,7 @@ const Dashboard = ({
     getRowModel,
     getFilteredSelectedRowModel,
     toggleAllRowsSelected,
-  } = useReactTable({
+  } = useReactTable<DashboardTypeMap<T>>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -138,6 +138,7 @@ const Dashboard = ({
         isRefetching={isRefetching}
         isFetchingNextPage={isFetchingNextPage}
         isFetching={isFetching}
+        fetchNextPage={fetchNextPage}
         totalDBRowCount={meta.total}
         totalFetched={data.length}
         getHeaderGroups={getHeaderGroups}
