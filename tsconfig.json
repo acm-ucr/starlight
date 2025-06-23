@@ -29,7 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "postcss.config.mjs",
-    "src/components/form/form/index.jsx",
+    "src/components/form/form/index.tsx",
     "src/components/form/form/questions.jsx",
     "src/components/select.jsx",
     "src/app/api/dashboard.js",
