@@ -98,12 +98,8 @@ const Toolbar = <T extends keyof DashboardTypeMap>({
       await api({
         method: "DELETE",
         url: `/api/dashboard/${page}`,
-        body: rows.map(({ uid, shirt, diet, gender, age }) => ({
+        body: rows.map(({ uid }) => ({
           uid,
-          shirt,
-          diet,
-          gender,
-          age,
         })),
       });
 

@@ -33,7 +33,7 @@ export const COLUMNS: ColumnType<Admin>[] = [
         }}
         className="hover:cursor-pointer"
       >
-        {row.getValue("fullName")}
+        {row.getValue("name")}
       </div>
     ),
   },

@@ -6,6 +6,7 @@ export type Member = {
   email: string;
   discord: string;
   status: StatusMapping;
+  uid: number;
 };
 
 export type Admin = {
