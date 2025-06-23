@@ -128,19 +128,21 @@ const Dashboard = ({
           filters={filters}
           setFilters={setFilters}
         />
-        <Table
-          /* page={page}
+      </div>
+      <Table
+        /* page={page}
           meta={meta}
           columns={columns} */
-          empty={empty}
-          isLoading={isLoading}
-          isRefetching={isRefetching}
-          isFetchingNextPage={isFetchingNextPage}
-          isFetching={isFetching}
-          totalDBRowCount={meta.total}
-          totalFetched={data.length}
-        />
-      </div>
+        empty={empty}
+        isLoading={isLoading}
+        isRefetching={isRefetching}
+        isFetchingNextPage={isFetchingNextPage}
+        isFetching={isFetching}
+        totalDBRowCount={meta.total}
+        totalFetched={data.length}
+        getHeaderGroups={getHeaderGroups}
+        getRowModel={getRowModel}
+      />
     </div>
   );
 };
