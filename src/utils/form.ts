@@ -37,11 +37,9 @@ export const submit = async <T extends z.ZodObject<z.ZodRawShape>>({
       body: data,
     });
     toaster(`Submitted successfully!`, "success");
-    console.log("success");
     setState(2);
   } catch {
     toaster(`Internal Server Error`, "error");
-    console.log("failure");
     setState(0);
   } finally {
     setLoading(false);
