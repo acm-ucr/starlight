@@ -13,6 +13,7 @@ import {
   orderBy,
   updateDoc,
   Timestamp,
+  deleteField,
 } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { ATTRIBUTES, AUTH } from "@/data/admin/dashboard";
@@ -140,6 +141,69 @@ export const GET = async (req, context) => {
     );
   } catch (err) {
     console.error("[API] Error:", err);
+    return res.json(
+      { message: `Internal Server Error: ${err}` },
+      { status: 500 },
+    );
+  }
+};
+
+export const PUT = async (req, context) => {
+  const res = NextResponse;
+  const { objects, status } = await req.json();
+  const params = await context.params;
+  const firestoreType = typeKeyMap[params.type];
+  const { auth, message } = await authenticate(AUTH.PUT[firestoreType]);
+
+  
+  if (auth !== 200) {
+    return res.json(
+      { message: `Authentication Error: ${message}` },
+      { status: auth },
+    );
+  }
+  try {
+    if (types.has(params.type)) {
+      objects.map(async (object) => {
+        await updateDoc(doc(db, "users", object.uid), {
+          [`roles.${firestoreType}`]: status,
+        });
+      });
+    }
+    return res.json({ message: "OK" }, { status: 200 });
+  } catch (err) {
+    return res.json(
+      { message: `Internal Server Error: ${err}` },
+      { status: 500 },
+    );
+  }
+};
+
+export const DELETE = async (req, context) => {
+  const res = NextResponse;
+  const params = await context.params;
+  const firestoreType = typeKeyMap[params.type];
+  const { auth, message } = await authenticate(AUTH.DELETE[firestoreType]);
+  const objects = await req.json();
+
+  if (auth !== 200) {
+    return res.json(
+      { message: `Authentication Error: ${message}` },
+      { status: auth },
+    );
+  }
+  try {
+    if (types.has(params.type)) {
+      await Promise.all(
+        objects.map(async ({ uid }) => {
+          await updateDoc(doc(db, "users", uid), {
+            [`roles.${firestoreType}`]: deleteField(),
+          });
+        }),
+      );
+    }
+    return res.json({ message: "OK" }, { status: 200 });
+  } catch (err) {
     return res.json(
       { message: `Internal Server Error: ${err}` },
       { status: 500 },
