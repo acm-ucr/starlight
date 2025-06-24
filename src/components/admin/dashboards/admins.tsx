@@ -11,7 +11,7 @@ const Admins = ({ searchParams }: AdminProps) => {
   return (
     <Dashboard
       searchParams={searchParams}
-      title="Admins"
+      title="Admin"
       columns={COLUMNS}
       statuses={STATUSES}
       tags={TAGS}
