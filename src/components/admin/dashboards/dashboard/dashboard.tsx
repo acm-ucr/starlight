@@ -80,16 +80,18 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   });
 
   useEffect(() => {
-    let mounted = true;
-    if (queryData && mounted) {
+    let isMounted = true;
+
+    if (queryData && isMounted) {
       const flattenedData = queryData.pages.flatMap((page) => page.items || []);
-      setData(flattenedData);
+      if (isMounted) setData(flattenedData);
 
       const lastPage = queryData.pages[queryData.pages.length - 1];
-      setMeta({ total: lastPage.total, last: lastPage.last });
+      if (isMounted) setMeta({ total: lastPage.total, last: lastPage.last });
     }
+
     return () => {
-      mounted = false;
+      isMounted = false;
     };
   }, [queryData, isLoading, isFetching]);
 
