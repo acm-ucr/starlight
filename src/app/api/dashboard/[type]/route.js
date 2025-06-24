@@ -18,10 +18,10 @@ import {
 import { authenticate } from "@/utils/auth";
 import { ATTRIBUTES, AUTH } from "@/data/admin/dashboard";
 
-const types = new Set(["admins", "spark", "create", "forge", "das"]);
+const types = new Set(["admin", "spark", "create", "forge", "das"]);
 
 const typeKeyMap = {
-  admins: "admin",
+  admin: "admin",
   spark: "spark",
   create: "create",
   forge: "forge",
@@ -34,6 +34,7 @@ export const POST = async (req, context) => {
   const { auth, message, user } = await authenticate(AUTH.POST);
 
   if (auth !== 200) {
+    console.log("fail auth");
     return res.json(
       { message: `Authentication Error: ${message}` },
       { status: auth },
@@ -48,12 +49,17 @@ export const POST = async (req, context) => {
     ATTRIBUTES[params.type].forEach((attribute) => {
       element[attribute] = body[attribute];
     });
-
-    await updateDoc(doc(db, "users", user.id), {
-      ...element,
-      timestamp: Timestamp.now(),
-      [`roles.${firestoreType}`]: "0",
-    });
+    try {
+      await updateDoc(doc(db, "users", user.id), {
+        ...element,
+        timestamp: Timestamp.now(),
+        [`roles.${firestoreType}`]: "0",
+      });
+      console.log("success");
+    } catch (err) {
+      console.error("fail", err);
+      return res.json({ message: `error: ${err}` }, { status: 500 });
+    }
   }
 
   return res.json({ message: "OK" }, { status: 200 });
@@ -155,7 +161,6 @@ export const PUT = async (req, context) => {
   const firestoreType = typeKeyMap[params.type];
   const { auth, message } = await authenticate(AUTH.PUT[firestoreType]);
 
-  
   if (auth !== 200) {
     return res.json(
       { message: `Authentication Error: ${message}` },
