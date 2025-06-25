@@ -1,13 +1,34 @@
 "use client";
-
+import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import Questions from "./questions";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const Form = ({
+interface FormBase {
+  firstName: string;
+  roles: Record<string, string>;
+  form: string;
+}
+
+interface FormProps<TObj extends FormBase, TField> {
+  object: TObj;
+  setObject: Dispatch<SetStateAction<TObj>>;
+  header: string;
+  fields: TField;
+  onSubmit: (
+    setLoading: (value: boolean) => void,
+    setState: (value: number) => void,
+  ) => Promise<void> | void;
+  statuses: Record<string, string>;
+  bypass?: boolean;
+  packet?: boolean;
+  LOGO: StaticImageData;
+}
+
+const Form = <TObj extends FormBase, TField>({
   object,
   setObject,
   header,
@@ -15,9 +36,8 @@ const Form = ({
   onSubmit,
   statuses = {},
   bypass = false,
-  packet = false,
   LOGO,
-}) => {
+}: FormProps<TObj, TField>) => {
   const [loading, setLoading] = useState(false);
 
   const [state, setState] = useState(
@@ -36,7 +56,7 @@ const Form = ({
       </div>
       <div className="flex w-10/12 flex-col items-center pt-5 pb-12 md:w-1/2 xl:w-1/3">
         <Image src={LOGO} className="m-4 w-1/4" alt="Logo" />
-        <p className="bg-hackathon-green-300 m-0 w-full rounded-t px-4 py-4 text-xl font-semibold">
+        <p className="m-0 w-full rounded-t px-4 py-4 text-xl font-semibold">
           {header}
         </p>
         <div className="rounded-b bg-white p-8">
@@ -55,7 +75,6 @@ const Form = ({
                 fields={fields}
                 onSubmit={onSubmit}
                 setState={setState}
-                packet={packet}
               />
             ) : (
               <div> you filled out the form </div>

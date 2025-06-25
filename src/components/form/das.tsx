@@ -31,7 +31,7 @@ const DAS = () => {
     await submit({
       data: das,
       schema,
-      url: "/api/placeholder/das",
+      url: "/api/dashboard/das",
       setLoading,
       setState,
     });

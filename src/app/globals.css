@@ -9,6 +9,37 @@
   --color-starlight-blue-primary: #173967;
 
   --color-starlight-gray-primary: #18181e;
+  --color-starlight-gray-secondary: #1f1f25;
+  --color-starlight-gray-tertiary: #4d4d4d;
+  --color-starlight-table-accept: #cfede9;
+  --color-starlight-table-reject: #ffe8e2;
+  --color-starlight-table-pending: #fff0bb;
+  --color-starlight-table-selected: #e7f7e9;
+
+  --color-starlight-spark: #f5d166;
+  --color-starlight-create: #91b9ff;
+  --color-starlight-forge: #8e8e8e;
+  --color-starlight-das: #b889ea;
+
+  --color-starlight-tags-red-bg: #ffe9e2;
+  --color-starlight-tags-red-text: #f07167;
+  --color-starlight-tags-yellow-bg: #fff0bc;
+  --color-starlight-tags-yellow-text: #ffb81c;
+  --color-starlight-tags-green-bg: #cfedea;
+  --color-starlight-tags-green-text: #00afb9;
+  --color-starlight-tags-gray-bg: #e9e9e9;
+  --color-starlight-tags-gray-text: #969696;
+  --color-starlight-tags-purple-bg: #e6dff6;
+  --color-starlight-tags-purple-text: #825ed0;
+  --color-starlight-tags-grayblue-bg: #d3dde4;
+  --color-starlight-tags-grayblue-text: #22577a;
+  --color-starlight-tags-teal-bg: #d7eded;
+  --color-starlight-tags-teal-text: #38a3a5;
+  --color-starlight-tags-lightgreen-bg: #ddf5eb;
+  --color-starlight-tags-lightgreen-text: #57cc99;
+  --color-starlight-tags-pink-bg: #ffe3fb;
+  --color-starlight-tags-pink-text: #f583f1;
+  --color-starlight-tags-white: #fff;
 
   --drop-shadow-yellow-primary: 0 0 15px rgba(255, 232, 153, 1);
   --drop-shadow-yellow-secondary: 0 0 5px rgba(255, 232, 153, 1);

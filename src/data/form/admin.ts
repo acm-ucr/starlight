@@ -1,12 +1,12 @@
-import { Description, TextInput, RadioInput } from "@/types/forms";
-import { PROGRAMS } from "@/data/programs";
+import { Description, TextInput, CheckboxInput } from "@/types/forms";
+import { AFFLIATIONS } from "@/data/affliations";
 
 interface Attributes {
   firstName: string;
   lastName: string;
   email: string;
   discord: string;
-  program: string;
+  affiliation: string[];
 }
 
 interface Fields {
@@ -15,7 +15,7 @@ interface Fields {
   lastName: TextInput;
   email: TextInput;
   discord: TextInput;
-  program: RadioInput;
+  affiliation: CheckboxInput;
 }
 
 export const ATTRIBUTES: Attributes = {
@@ -23,7 +23,7 @@ export const ATTRIBUTES: Attributes = {
   lastName: "",
   email: "",
   discord: "",
-  program: "",
+  affiliation: [],
 };
 
 export const FIELDS: Fields = {
@@ -80,12 +80,12 @@ export const FIELDS: Fields = {
     width: 12,
     required: true,
   },
-  program: {
-    input: "radio",
-    text: "Program",
-    options: Object.values(PROGRAMS),
-    field: "program",
+  affiliation: {
+    input: "checkboxes",
     width: 12,
+    field: "affiliation",
+    text: "Affiliation",
+    options: Object.values(AFFLIATIONS),
     required: true,
     editable: true,
   },

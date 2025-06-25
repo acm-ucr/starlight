@@ -7,7 +7,7 @@ declare module "next-auth" {
     firstName?: string;
     lastName?: string;
     roles: {
-      [key: string]: number;
+      [key: string]: string;
     };
   }
 
