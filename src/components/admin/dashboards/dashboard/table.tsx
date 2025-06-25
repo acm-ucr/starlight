@@ -161,7 +161,9 @@ const Table = <T extends keyof DashboardTypeMap>({
 
   useEffect(() => {
     if (didMount.current) {
-      if (isMounted.current) setSearch({ search: searchableItems[0] ?? "" });
+      if (isMounted.current && !value) {
+        setSearch({ search: searchableItems[0] ?? "" });
+      }
     } else {
       didMount.current = true;
     }
@@ -258,10 +260,13 @@ const Table = <T extends keyof DashboardTypeMap>({
   };
 
   const value = filters.find(({ id }) => id === search.search)?.value || "";
-  const onChange = (id: string, value: string[]) =>
-    setFilters((prev) =>
-      prev.filter((f) => f.id !== search.search).concat({ id, value }),
-    );
+  const onChange = (id: string, value: string[]) => {
+    setFilters((prev) => {
+      const filtered = prev.filter((f) => f.id !== id);
+      if (value.length === 0 || value[0].trim() === "") return filtered;
+      return filtered.concat({ id, value });
+    });
+  };
   const cleanItems = searchableItems.filter(Boolean) as string[];
 
   const rows2 = getRowModel().rows;
@@ -362,7 +367,7 @@ const Table = <T extends keyof DashboardTypeMap>({
           ))}
         </TableHeader>
         <TableBody
-          className="relative grid"
+          className={`relative grid ${isLoading || isRefetching ? "min-h-[70vh]" : ""}`}
           style={{
             height:
               isLoading || isRefetching || rows2.length === 0
