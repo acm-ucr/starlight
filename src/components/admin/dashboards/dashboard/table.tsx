@@ -362,7 +362,7 @@ const Table = <T extends keyof DashboardTypeMap>({
           ))}
         </TableHeader>
         <TableBody
-          className="relative grid min-h-[70vh]"
+          className="relative grid"
           style={{
             height:
               isLoading || isRefetching || rows2.length === 0
@@ -378,7 +378,7 @@ const Table = <T extends keyof DashboardTypeMap>({
             </TableRow>
           ) : rows2.length === 0 ? (
             <TableRow className="bg-starlight-gray-tertiary w-full text-center text-white">
-              <TableCell className="items-center justify-center" colSpan={12}>
+              <TableCell className="items-center" colSpan={12}>
                 {empty}
               </TableCell>
             </TableRow>
