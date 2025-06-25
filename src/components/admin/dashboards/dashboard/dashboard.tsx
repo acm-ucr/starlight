@@ -16,7 +16,6 @@ import { RowSelectionState } from "@tanstack/react-table";
 import { useState, useEffect } from "react";
 
 import { api } from "@/utils/api";
-import Toolbar from "./toolbar";
 
 interface DashboardProps<T extends keyof DashboardTypeMap> {
   title: string;
@@ -130,21 +129,7 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
           setFilters={setFilters}
         />
       </div>
-      <Toolbar
-        totalDBRowCount={meta.total}
-        searchParams={searchParams}
-        page={page}
-        filters={filters}
-        setFilters={setFilters}
-        data={data}
-        setData={setData}
-        refetch={refetch}
-        tags={tags}
-        getFilteredSelectedRowModel={getFilteredSelectedRowModel}
-        setSelected={setSelected}
-        searchableItems={searchableItems}
-        setExpanded={setExpanded}
-      />
+
       <Table
         empty={empty}
         isLoading={isLoading}
@@ -156,6 +141,18 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
         totalFetched={data.length}
         getHeaderGroups={getHeaderGroups}
         getRowModel={getRowModel}
+        data={data}
+        setData={setData}
+        searchParams={searchParams}
+        page={page}
+        filters={filters}
+        setFilters={setFilters}
+        refetch={refetch}
+        tags={tags}
+        getFilteredSelectedRowModel={getFilteredSelectedRowModel}
+        searchableItems={searchableItems}
+        setExpanded={setExpanded}
+        setSelected={setSelected}
       />
     </div>
   );
