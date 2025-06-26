@@ -69,7 +69,6 @@ export const GET = async (req, context) => {
   const size = req.nextUrl.searchParams.get("size");
   const last = req.nextUrl.searchParams.get("last");
   const affiliation = req.nextUrl.searchParams.get("affiliation");
-  console.log(affiliation);
   const res = NextResponse;
 
   const params = await context.params;
@@ -152,12 +151,20 @@ export const GET = async (req, context) => {
       });
     });
 
-    const countFromServer = await getCountFromServer(
-      query(
-        collection(db, "users"),
-        where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
-      ),
-    );
+    const countFromServer = affiliation
+      ? await getCountFromServer(
+          query(
+            collection(db, "users"),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+            where(`affiliation`, `array-contains`, affiliation),
+          ),
+        )
+      : await getCountFromServer(
+          query(
+            collection(db, "users"),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+          ),
+        );
 
     const total = countFromServer.data().count;
     const lastDoc = output.length > 0 ? output[output.length - 1].uid : "";
