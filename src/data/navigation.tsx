@@ -68,19 +68,19 @@ export const TABS: Tabs = {
         },
         {
           name: "DAS",
-          link: "/admin/dashboard/create",
+          link: "/admin/dashboard/dasapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
         },
         {
           name: "Forge",
-          link: "/admin/dashboard/das",
+          link: "/admin/dashboard/forgeapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
         },
         {
           name: "Spark",
-          link: "/admin/dashboard/forge",
+          link: "/admin/dashboard/sparkapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
         },
