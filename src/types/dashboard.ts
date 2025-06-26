@@ -5,6 +5,7 @@ export type SearchParams = {
   first: string;
   last: string;
   direction: "prev" | "next";
+  affiliation?: string;
 };
 
 export type Tags = {

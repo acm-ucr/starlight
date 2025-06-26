@@ -2,22 +2,23 @@
 import { SearchParams } from "@/types/dashboard";
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
-import { TAGS, COLUMNS } from "@/data/admin/forge";
+import { TAGS, COLUMNS } from "@/data/admin/admins";
 interface ForgeProps {
   searchParams: SearchParams;
 }
 
-const Forge = ({ searchParams }: ForgeProps) => {
+const Create = ({ searchParams }: ForgeProps) => {
+  const paramsWithAffiliation = { ...searchParams, affiliation: "Forge" };
   return (
     <Dashboard
-      searchParams={searchParams}
-      title="Forge"
+      searchParams={paramsWithAffiliation}
+      title="Admin"
       columns={COLUMNS}
       statuses={STATUSES}
       tags={TAGS}
-      dashboardType="member"
+      dashboardType="admin"
     />
   );
 };
 
-export default Forge;
+export default Create;

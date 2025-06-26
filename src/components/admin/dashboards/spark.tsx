@@ -2,22 +2,23 @@
 import { SearchParams } from "@/types/dashboard";
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
-import { TAGS, COLUMNS } from "@/data/admin/spark";
+import { TAGS, COLUMNS } from "@/data/admin/admins";
 interface SparkProps {
   searchParams: SearchParams;
 }
 
-const Spark = ({ searchParams }: SparkProps) => {
+const Create = ({ searchParams }: SparkProps) => {
+  const paramsWithAffiliation = { ...searchParams, affiliation: "Spark" };
   return (
     <Dashboard
-      searchParams={searchParams}
-      title="Spark"
+      searchParams={paramsWithAffiliation}
+      title="Admin"
       columns={COLUMNS}
       statuses={STATUSES}
       tags={TAGS}
-      dashboardType="member"
+      dashboardType="admin"
     />
   );
 };
 
-export default Spark;
+export default Create;

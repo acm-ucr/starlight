@@ -68,6 +68,8 @@ export const POST = async (req, context) => {
 export const GET = async (req, context) => {
   const size = req.nextUrl.searchParams.get("size");
   const last = req.nextUrl.searchParams.get("last");
+  const affiliation = req.nextUrl.searchParams.get("affiliation");
+  console.log(affiliation);
   const res = NextResponse;
 
   const params = await context.params;
@@ -89,25 +91,49 @@ export const GET = async (req, context) => {
     let snapshot;
     if (last !== "undefined") {
       const lastDocument = await getDoc(doc(db, "users", last));
-
-      snapshot = await getDocs(
-        query(
-          collection(db, "users"),
-          orderBy(`roles.${firestoreType}`),
-          where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
-          startAfter(lastDocument),
-          limit(size),
-        ),
-      );
+      if (firestoreType === "admin" && affiliation) {
+        snapshot = await getDocs(
+          query(
+            collection(db, "users"),
+            orderBy(`roles.${firestoreType}`),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+            where(`affiliation`, `array-contains`, affiliation),
+            startAfter(lastDocument),
+            limit(size),
+          ),
+        );
+      } else {
+        snapshot = await getDocs(
+          query(
+            collection(db, "users"),
+            orderBy(`roles.${firestoreType}`),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+            startAfter(lastDocument),
+            limit(size),
+          ),
+        );
+      }
     } else {
-      snapshot = await getDocs(
-        query(
-          collection(db, "users"),
-          orderBy(`roles.${firestoreType}`),
-          where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
-          limit(size),
-        ),
-      );
+      if (firestoreType === "admin" && affiliation) {
+        snapshot = await getDocs(
+          query(
+            collection(db, "users"),
+            orderBy(`roles.${firestoreType}`),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+            where(`affiliation`, `array-contains`, affiliation),
+            limit(size),
+          ),
+        );
+      } else {
+        snapshot = await getDocs(
+          query(
+            collection(db, "users"),
+            orderBy(`roles.${firestoreType}`),
+            where(`roles.${firestoreType}`, "in", ["-1", "0", "1"]),
+            limit(size),
+          ),
+        );
+      }
     }
 
     snapshot.forEach((doc) => {

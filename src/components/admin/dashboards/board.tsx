@@ -3,12 +3,12 @@ import { SearchParams } from "@/types/dashboard";
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
 import { TAGS, COLUMNS } from "@/data/admin/admins";
-interface DASProps {
+interface BoardProps {
   searchParams: SearchParams;
 }
 
-const Create = ({ searchParams }: DASProps) => {
-  const paramsWithAffiliation = { ...searchParams, affiliation: "DAS" };
+const Board = ({ searchParams }: BoardProps) => {
+  const paramsWithAffiliation = { ...searchParams, affiliation: "ACM Board" };
   return (
     <Dashboard
       searchParams={paramsWithAffiliation}
@@ -21,4 +21,4 @@ const Create = ({ searchParams }: DASProps) => {
   );
 };
 
-export default Create;
+export default Board;

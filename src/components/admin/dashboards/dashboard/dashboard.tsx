@@ -53,10 +53,13 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   const empty = `No ${title} Available`;
 
   const fetchData = async ({ pageParam }: { pageParam?: string }) => {
-    const { size = 20 } = searchParams;
-
+    const { size = 20, affiliation } = searchParams;
+    let url = `/api/dashboard/${page}?size=${size}&last=${pageParam}`;
+    if (affiliation) {
+      url += `&affiliation=${encodeURIComponent(affiliation)}`;
+    }
     return await api({
-      url: `/api/dashboard/${page}?size=${size}&last=${pageParam}`,
+      url,
       method: "GET",
     });
   };

@@ -22,12 +22,12 @@ interface Tabs {
 
 export const TABS: Tabs = {
   admin: {
-    Dashboards: {
+    Admins: {
       expand: true,
       tabs: [
         {
-          name: "Admins",
-          link: "/admin/dashboard/admins",
+          name: "ACM Board",
+          link: "/admin/dashboard/board",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
         },
@@ -52,6 +52,35 @@ export const TABS: Tabs = {
         {
           name: "Spark",
           link: "/admin/dashboard/spark",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+      ],
+    },
+    Applications: {
+      expand: true,
+      tabs: [
+        {
+          name: "Create",
+          link: "/admin/dashboard/createapplications",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+        {
+          name: "DAS",
+          link: "/admin/dashboard/create",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+        {
+          name: "Forge",
+          link: "/admin/dashboard/das",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+        {
+          name: "Spark",
+          link: "/admin/dashboard/forge",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
         },

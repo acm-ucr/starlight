@@ -2,22 +2,22 @@
 import { SearchParams } from "@/types/dashboard";
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
-import { TAGS, COLUMNS } from "@/data/admin/admins";
-interface AdminProps {
+import { TAGS, COLUMNS } from "@/data/admin/create";
+interface CreateProps {
   searchParams: SearchParams;
 }
 
-const Admins = ({ searchParams }: AdminProps) => {
+const Create = ({ searchParams }: CreateProps) => {
   return (
     <Dashboard
       searchParams={searchParams}
-      title="Admin"
+      title="Create"
       columns={COLUMNS}
       statuses={STATUSES}
       tags={TAGS}
-      dashboardType="admin"
+      dashboardType="member"
     />
   );
 };
 
-export default Admins;
+export default Create;

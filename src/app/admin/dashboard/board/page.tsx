@@ -1,9 +1,9 @@
 import { SearchParams } from "@/types/dashboard";
-import Admins from "@/components/admin/dashboards/admins";
+import Board from "@/components/admin/dashboards/board";
 import { parseSearchParams } from "@/utils/parseSearchParams";
 
 export const metadata = {
-  title: "Admin | Admins",
+  title: "ACM Board",
 };
 
 interface RawSearchParams {
@@ -20,7 +20,7 @@ const Page = async ({ searchParams }: PageProps) => {
     : {};
   const parsedSearchParams: SearchParams =
     parseSearchParams(resolvedSearchParams);
-  return <Admins searchParams={parsedSearchParams} />;
+  return <Board searchParams={parsedSearchParams} />;
 };
 
 export default Page;
