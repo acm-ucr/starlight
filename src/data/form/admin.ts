@@ -1,4 +1,9 @@
-import { Description, TextInput, CheckboxInput } from "@/types/forms";
+import {
+  Description,
+  TextInput,
+  CheckboxInput,
+  BaseFields,
+} from "@/types/forms";
 import { AFFLIATIONS } from "@/data/affliations";
 
 interface Attributes {
@@ -9,7 +14,7 @@ interface Attributes {
   affiliation: string[];
 }
 
-interface Fields {
+interface Fields extends BaseFields {
   description: Description;
   firstName: TextInput;
   lastName: TextInput;

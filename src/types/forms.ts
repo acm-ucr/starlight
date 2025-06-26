@@ -58,3 +58,12 @@ export type TextareaInput = Input & {
   title: string;
   placeholder: string;
 };
+
+type Field =
+  | Description
+  | TextInput
+  | RadioInput
+  | CheckboxInput
+  | TextareaInput;
+
+export type BaseFields = Record<string, Field>;

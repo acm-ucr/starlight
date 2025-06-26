@@ -5,29 +5,20 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Description,
   TextInput,
   RadioInput,
   CheckboxInput,
   TextareaInput,
+  BaseFields,
 } from "@/types/forms";
 import { Dispatch, SetStateAction } from "react";
 
-type Field =
-  | Description
-  | TextInput
-  | RadioInput
-  | CheckboxInput
-  | TextareaInput;
-
-type Fields = Record<string, Field>;
-
-type FormObject = {
+export type FormObject = {
   [key: string]: string | string[] | boolean | undefined;
 };
 
 interface QuestionsProps<T extends FormObject> {
-  fields: Fields;
+  fields: BaseFields;
   object: T;
   setObject: Dispatch<SetStateAction<T>>;
   onSubmit: (
