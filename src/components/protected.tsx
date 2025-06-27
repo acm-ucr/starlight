@@ -54,7 +54,7 @@ const ProtectedPage = async ({
     <div className="flex">
       {navigation && (
         <SidebarProvider>
-          <Navigation />
+          <Navigation session={session} />
         </SidebarProvider>
       )}
       {children}

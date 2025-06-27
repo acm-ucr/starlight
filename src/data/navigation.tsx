@@ -5,6 +5,7 @@ interface Tab {
   link: string;
   icon: ReactElement;
   target: string;
+  affiliation?: string[];
 }
 
 const iconStyle = "text-xl";
@@ -65,24 +66,28 @@ export const TABS: Tabs = {
           link: "/admin/dashboard/createapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
+          affiliation: ["Create", "ACM Board"],
         },
         {
           name: "DAS",
           link: "/admin/dashboard/dasapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
+          affiliation: ["DAS", "ACM Board"],
         },
         {
           name: "Forge",
           link: "/admin/dashboard/forgeapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
+          affiliation: ["Forge", "ACM Board"],
         },
         {
           name: "Spark",
           link: "/admin/dashboard/sparkapplications",
           icon: <FaLock className={iconStyle} />,
           target: "_self",
+          affiliation: ["Spark", "ACM Board"],
         },
       ],
     },

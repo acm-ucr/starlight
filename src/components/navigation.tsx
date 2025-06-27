@@ -2,6 +2,7 @@
 import Starlight from "@/public/logos/starlight.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { Session as SessionType } from "next-auth";
 import { TABS } from "@/data/navigation";
 import { usePathname } from "next/navigation";
 import { CiLogout } from "react-icons/ci";
@@ -28,9 +29,13 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 
-const Navigation = () => {
-  const pathname = usePathname();
+interface NavigationProps {
+  session: SessionType;
+}
 
+const Navigation = ({ session }: NavigationProps) => {
+  const pathname = usePathname();
+  const userAffiliations = session?.user?.affiliation ?? [];
   const tabs = TABS[pathname.split("/")[1]];
   const { open, toggleSidebar } = useSidebar();
   return (
@@ -68,8 +73,14 @@ const Navigation = () => {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {subTabs.tabs &&
-                      subTabs.tabs.map(
-                        ({ name, icon, link, target }, index) => (
+                      subTabs.tabs
+                        .filter((tab) => {
+                          if (!tab.affiliation) return true;
+                          return tab.affiliation.some((aff) =>
+                            userAffiliations.includes(aff),
+                          );
+                        })
+                        .map(({ name, icon, link, target }, index) => (
                           <Link key={index} href={link} target={target}>
                             <SidebarMenuItem
                               key={index}
@@ -88,8 +99,7 @@ const Navigation = () => {
                               )}
                             </SidebarMenuItem>
                           </Link>
-                        ),
-                      )}
+                        ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </CollapsibleContent>
