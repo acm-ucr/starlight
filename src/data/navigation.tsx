@@ -91,5 +91,17 @@ export const TABS: Tabs = {
         },
       ],
     },
+    Teams: {
+      expand: true,
+      tabs: [
+        {
+          name: "Spark",
+          link: "/admin/dashboard/spark/teams",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+          affiliation: ["Spark", "ACM Board"],
+        },
+      ],
+    },
   },
 };
