@@ -1,4 +1,4 @@
-import { Description, TextInput } from "@/types/forms";
+import { Description, TextInput, BaseFields } from "@/types/forms";
 
 interface Attributes {
   firstName: string;
@@ -8,7 +8,7 @@ interface Attributes {
   portfolioLink: string;
 }
 
-interface Fields {
+interface Fields extends BaseFields {
   description: Description;
   firstName: TextInput;
   lastName: TextInput;

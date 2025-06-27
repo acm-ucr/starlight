@@ -3,14 +3,15 @@ import { SearchParams } from "@/types/dashboard";
 import { STATUSES } from "@/data/statuses";
 import Dashboard from "@/components/admin/dashboards/dashboard/dashboard";
 import { TAGS, COLUMNS } from "@/data/admin/admins";
-interface AdminProps {
+interface DASProps {
   searchParams: SearchParams;
 }
 
-const Admins = ({ searchParams }: AdminProps) => {
+const Create = ({ searchParams }: DASProps) => {
+  const paramsWithAffiliation = { ...searchParams, affiliation: "DAS" };
   return (
     <Dashboard
-      searchParams={searchParams}
+      searchParams={paramsWithAffiliation}
       title="Admin"
       columns={COLUMNS}
       statuses={STATUSES}
@@ -20,4 +21,4 @@ const Admins = ({ searchParams }: AdminProps) => {
   );
 };
 
-export default Admins;
+export default Create;

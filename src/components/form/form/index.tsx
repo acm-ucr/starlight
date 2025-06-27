@@ -6,14 +6,22 @@ import { signOut } from "next-auth/react";
 import Image, { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FormObject } from "@/components/form/form/questions";
+import { BaseFields } from "@/types/forms";
 
 interface FormBase {
   firstName: string;
   roles: Record<string, string>;
   form: string;
+  [key: string]:
+    | string
+    | string[]
+    | boolean
+    | Record<string, string>
+    | undefined;
 }
 
-interface FormProps<TObj extends FormBase, TField> {
+interface FormProps<TObj extends FormBase, TField extends BaseFields> {
   object: TObj;
   setObject: Dispatch<SetStateAction<TObj>>;
   header: string;
@@ -28,7 +36,7 @@ interface FormProps<TObj extends FormBase, TField> {
   LOGO: StaticImageData;
 }
 
-const Form = <TObj extends FormBase, TField>({
+const Form = <TObj extends FormBase, TField extends BaseFields>({
   object,
   setObject,
   header,
@@ -70,8 +78,10 @@ const Form = <TObj extends FormBase, TField>({
               <Questions
                 loading={loading}
                 setLoading={setLoading}
-                object={object}
-                setObject={setObject}
+                object={object as FormObject}
+                setObject={
+                  setObject as React.Dispatch<React.SetStateAction<FormObject>>
+                }
                 fields={fields}
                 onSubmit={onSubmit}
                 setState={setState}
