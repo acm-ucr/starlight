@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
 import type { Table as TableInstance } from "@tanstack/react-table";
+import toaster from "@/utils/toaster";
 interface CardProps {
   program: string;
 }
@@ -59,12 +60,14 @@ const Card = ({ program }: CardProps) => {
 
       if (!res.ok) {
         const json = await res.json();
+        toaster("Failed to add project", "error");
         throw new Error(json.message || "Failed to add project");
       }
-
+      toaster(`${projectName} added!`, "success");
       setProjectName("");
       refetch();
     } catch (err) {
+      toaster("Error: " + (err as Error).message, "error");
       console.error("Error:", err);
     }
   };

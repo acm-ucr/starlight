@@ -75,7 +75,7 @@ const ProjectTable = <TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="text-center text-white pt-2"
+                className="pt-2 text-center text-white"
               >
                 No results.
               </TableCell>
