@@ -12,7 +12,10 @@ interface DASProps {
 
 const DAS = ({ searchParams }: DASProps) => {
   const session = useSession();
-  if (session?.data?.user?.affiliation?.includes("DAS")) {
+  if (
+    session?.data?.user?.affiliation?.includes("DAS") ||
+    session?.data?.user?.affiliation?.includes("ACM Board")
+  ) {
     return (
       <Dashboard
         searchParams={searchParams}
