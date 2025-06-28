@@ -28,7 +28,6 @@ const send = async ({
     to: [email],
     subject: subject,
     text: `Hello ${name},\n\nYour track: ${track}\nPreview: ${preview}`,
-    // eslint-disable-next-line new-cap
     react: Email({ id, name, track, preview }),
   });
 

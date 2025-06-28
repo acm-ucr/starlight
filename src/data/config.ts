@@ -15,9 +15,10 @@ const data: config = {
   email: "contact.acmucr@gmail.com",
   description: "ACM's official project application and management portal",
   domain: "https://www.placeholder.com",
-  instagram: "https://www.instagram.com",
-  linkedin: "https://www.linkedin.com",
-  discord: "https://www.discord.com",
+  instagram: "https://www.instagram.com/acm_ucr",
+  linkedin: "https://www.linkedin.com/company/acm-ucr",
+  discord: "https://discord.gg/qsHw6dhmmY",
+  //   this is just the acm discord not starlight
 };
 
 export default data;
