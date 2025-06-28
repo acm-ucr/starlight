@@ -31,7 +31,7 @@ export const COLUMNS: ColumnType<Member>[] = [
           row.getToggleSelectedHandler()(e);
           row.getToggleExpandedHandler()();
         }}
-        className="hover:cursor-pointer"
+        className="p-2 hover:cursor-pointer"
       >
         {row.getValue("name")}
       </div>

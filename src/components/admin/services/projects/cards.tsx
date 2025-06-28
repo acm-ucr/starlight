@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 const Cards = () => {
   return (
     <div className="bg-starlight-gray-secondary min-h-screen w-10/12 px-4">
-      <Label className="text-starlight-tags-white mt-8 text-2xl font-bold">
+      <Label className="text-starlight-tags-white my-8 text-2xl font-bold">
         Projects
       </Label>
       <div className="grid grid-cols-2 gap-8">

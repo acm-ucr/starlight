@@ -15,12 +15,17 @@ export const GET = async (req: Request) => {
     );
   }
 
-  try {
-    const { program }: { program: string } = await req.json();
-    if (!program) {
-      return res.json({ message: "Invalid request body" }, { status: 400 });
-    }
+  const url = new URL(req.url);
+  const program = url.searchParams.get("program");
 
+  if (!program) {
+    return res.json(
+      { message: "Missing `program` query parameter" },
+      { status: 400 },
+    );
+  }
+
+  try {
     const docSnap = await getDoc(doc(db, "projects", program));
     if (!docSnap.exists()) {
       return res.json(
@@ -60,7 +65,8 @@ export const POST = async (req: Request) => {
     const docRef = doc(db, "projects", program);
     await updateDoc(docRef, {
       projects: arrayUnion(project),
-    })
+    });
+    return res.json({ message: "Project added successfully" }, { status: 200 });
   } catch (err) {
     return res.json(
       { message: `Internal Server Error: ${err}` },
