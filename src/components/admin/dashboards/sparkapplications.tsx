@@ -12,7 +12,10 @@ interface SparkProps {
 
 const Spark = ({ searchParams }: SparkProps) => {
   const session = useSession();
-  if (session?.data?.user?.affiliation?.includes("Spark")) {
+  if (
+    session?.data?.user?.affiliation?.includes("Spark") ||
+    session?.data?.user?.affiliation?.includes("ACM Board")
+  ) {
     return (
       <Dashboard
         searchParams={searchParams}
