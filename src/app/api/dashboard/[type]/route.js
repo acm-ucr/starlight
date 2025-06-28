@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { ATTRIBUTES, AUTH } from "@/data/admin/dashboard";
+import send from "@/utils/email";
 
 const types = new Set(["admin", "spark", "create", "forge", "das"]);
 
@@ -34,7 +35,6 @@ export const POST = async (req, context) => {
   const { auth, message, user } = await authenticate(AUTH.POST);
 
   if (auth !== 200) {
-    console.log("fail auth");
     return res.json(
       { message: `Authentication Error: ${message}` },
       { status: auth },
@@ -55,9 +55,15 @@ export const POST = async (req, context) => {
         timestamp: Timestamp.now(),
         [`roles.${firestoreType}`]: "0",
       });
-      console.log("success");
+      send({
+        email: user.email,
+        id: "confirmation",
+        name: user.firstName,
+        track: params.type,
+        subject: `ACM ${params.type} Thank you for applying!`,
+        preview: `Thank you for applying to ACM ${params.type}`,
+      });
     } catch (err) {
-      console.error("fail", err);
       return res.json({ message: `error: ${err}` }, { status: 500 });
     }
   }

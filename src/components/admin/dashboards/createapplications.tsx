@@ -12,7 +12,10 @@ interface CreateProps {
 
 const Create = ({ searchParams }: CreateProps) => {
   const session = useSession();
-  if (session?.data?.user?.affiliation?.includes("Create")) {
+  if (
+    session?.data?.user?.affiliation?.includes("Create") ||
+    session?.data?.user?.affiliation?.includes("ACM Board")
+  ) {
     return (
       <Dashboard
         searchParams={searchParams}
