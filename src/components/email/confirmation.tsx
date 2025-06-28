@@ -1,4 +1,6 @@
 import { tracks } from "@/utils/email";
+import Template from "./template";
+import { Text } from "@react-email/components";
 
 interface ConfirmationProps {
   name: string;
@@ -8,11 +10,15 @@ interface ConfirmationProps {
 
 const Confirmation = ({ name, track, preview }: ConfirmationProps) => {
   return (
-    <div>
-      {name}
-      {track}
-      {preview}
-    </div>
+    <Template name={name} preview={preview}>
+      <Text>
+        Thank you for applying to <strong>ACM {track}</strong>!
+      </Text>
+      <Text>
+        please make sure to schedule an interview and keep an eye out for an
+        email regarding your application soon.
+      </Text>
+    </Template>
   );
 };
 

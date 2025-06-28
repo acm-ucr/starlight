@@ -1,4 +1,3 @@
-import info from "@/data/config";
 import Email from "@/components/email";
 import { Resend, CreateEmailResponse } from "resend";
 
@@ -25,7 +24,7 @@ const send = async ({
   preview,
 }: params): Promise<CreateEmailResponse> => {
   const { data, error } = await resend.emails.send({
-    from: info.email,
+    from: "starlight@ucrhighlanders.org",
     to: [email],
     subject: subject,
     text: `Hello ${name},\n\nYour track: ${track}\nPreview: ${preview}`,

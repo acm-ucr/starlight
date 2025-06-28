@@ -46,9 +46,9 @@ const Template = ({ children, name, preview }: props) => {
             {children}
             <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
             <Text>
-              Visit {data.domain} to track your application status and follow us
-              on {data.instagram} and {data.linkedin} for up to date information
-              and announcements.
+              Visit {data.domain} to track your ACM Project applications and
+              follow us on {data.instagram} and {data.linkedin} for up to date
+              information and announcements.
             </Text>
             <Text className="text-xs leading-[24px] text-[#666666]">
               This invitation was intended for{" "}
