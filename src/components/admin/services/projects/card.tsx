@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Table from "@/components/admin/services/projects/table";
 import COLUMNS from "@/data/admin/projects";
-import { CiSquarePlus } from "react-icons/ci";
+import { CiSquarePlus, CiTrash } from "react-icons/ci";
 import {
   Dialog,
   DialogContent,
@@ -16,12 +16,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-
+import { useRef, useState } from "react";
+import type { Table as TableInstance } from "@tanstack/react-table";
 interface CardProps {
   program: string;
 }
 
+interface RowData {
+  project: string;
+}
 const fetchProjects = async (program: string) => {
   const res = await fetch(`/api/projects?program=${program}`);
   const json = await res.json();
@@ -31,7 +34,7 @@ const fetchProjects = async (program: string) => {
 
 const Card = ({ program }: CardProps) => {
   const [projectName, setProjectName] = useState("");
-
+  const tableRef = useRef<TableInstance<RowData> | null>(null);
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["projects", program],
     queryFn: () => fetchProjects(program.toLowerCase()),
@@ -66,46 +69,83 @@ const Card = ({ program }: CardProps) => {
     }
   };
 
+  const handleDeleteSelected = async () => {
+    const table = tableRef.current;
+    if (!table) return;
+
+    const selected = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original.project);
+
+    if (!selected.length) return;
+
+    try {
+      const res = await fetch("/api/projects", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          program: program.toLowerCase(),
+          projects: selected,
+        }),
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message);
+      }
+
+      refetch();
+    } catch (err) {
+      console.error("Failed to delete:", err);
+    }
+  };
+
   const tableData = (data ?? []).map((project) => ({ project }));
 
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
         <p className="text-left text-3xl text-white">{program}</p>
+        <div className="flex items-center text-3xl text-white">
+          <Dialog>
+            <DialogTrigger asChild>
+              <CiSquarePlus className="cursor-pointer" />
+            </DialogTrigger>
 
-        <Dialog>
-          <DialogTrigger asChild>
-            <CiSquarePlus className="cursor-pointer text-3xl text-white" />
-          </DialogTrigger>
-
-          <DialogContent className="sm:max-w-[425px]">
-            <form onSubmit={addProject}>
-              <DialogHeader>
-                <DialogTitle>Add Project</DialogTitle>
-                <DialogDescription>
-                  Ex: ACM Atlas, CSA, Drones, SWE-Agent, etc.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-3">
-                <Label htmlFor="project-1">Project Name</Label>
-                <Input
-                  id="project-1"
-                  name="project"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                />
-              </div>
-              <DialogFooter className="pt-6">
-                <DialogClose asChild>
-                  <Button variant="outline" type="button">
-                    Cancel
-                  </Button>
-                </DialogClose>
-                <Button type="submit">Add Project</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
+            <DialogContent className="sm:max-w-[425px]">
+              <form onSubmit={addProject}>
+                <DialogHeader>
+                  <DialogTitle>Add Project</DialogTitle>
+                  <DialogDescription>
+                    Ex: ACM Atlas, CSA, Drones, SWE-Agent, etc.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-3">
+                  <Label htmlFor="project-1">Project Name</Label>
+                  <Input
+                    id="project-1"
+                    name="project"
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
+                  />
+                </div>
+                <DialogFooter className="pt-6">
+                  <DialogClose asChild>
+                    <Button variant="outline" type="button">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <Button type="submit">Add Project</Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+          <CiTrash
+            onClick={handleDeleteSelected}
+            className="ml-4 cursor-pointer text-white hover:text-red-400"
+          />
+        </div>
       </div>
 
       {isLoading ? (
@@ -113,7 +153,11 @@ const Card = ({ program }: CardProps) => {
       ) : error ? (
         <p className="text-red-500">Error: {(error as Error).message}</p>
       ) : (
-        <Table columns={COLUMNS} data={tableData} />
+        <Table
+          columns={COLUMNS}
+          data={tableData}
+          onTableReady={(table) => (tableRef.current = table)}
+        />
       )}
     </div>
   );

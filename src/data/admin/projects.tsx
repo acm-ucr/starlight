@@ -35,9 +35,7 @@ const COLUMNS: ColumnDef<Project>[] = [
   {
     accessorKey: "project",
     header: () => (
-      <div className="bg-purple-500 pt-2 pb-1 text-center text-white">
-        Project
-      </div>
+      <div className="pt-2 pb-1 text-center text-white">Project</div>
     ),
     cell: ({ row }) => (
       <div className="text-center text-white">{row.getValue("project")}</div>

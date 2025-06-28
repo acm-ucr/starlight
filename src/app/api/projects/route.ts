@@ -106,6 +106,10 @@ export const DELETE = async (req: Request) => {
     await updateDoc(docRef, {
       projects: updatedProjects,
     });
+    return res.json(
+      { message: "Project(s) deleted successfully" },
+      { status: 200 },
+    );
   } catch (err) {
     return res.json(
       { message: `Internal Server Error: ${err}` },

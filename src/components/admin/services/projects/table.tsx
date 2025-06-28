@@ -1,9 +1,11 @@
+// ProjectTable.tsx
 "use client";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  Table as TableInstance,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -13,49 +15,54 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { useEffect } from "react";
 interface ProjectTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onTableReady?: (table: TableInstance<TData>) => void;
 }
 
 const ProjectTable = <TData, TValue>({
   columns,
   data,
+  onTableReady,
 }: ProjectTableProps<TData, TValue>) => {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: true,
   });
+
+  useEffect(() => {
+    if (onTableReady) onTableReady(table);
+  }, [onTableReady, table]);
+
   return (
     <div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </TableHead>
-                );
-              })}
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-                className={row.getIsSelected() ? "!bg-purple-300" : ""}
+                className={row.getIsSelected() ? "bg-purple-300" : ""}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -68,7 +75,7 @@ const ProjectTable = <TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="text-center text-white"
+                className="text-center text-white pt-2"
               >
                 No results.
               </TableCell>
