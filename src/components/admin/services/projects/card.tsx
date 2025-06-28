@@ -65,7 +65,8 @@ const Card = ({ program }: CardProps) => {
       }
       toaster(`${projectName} added!`, "success");
       setProjectName("");
-      refetch();
+      await refetch();
+      tableRef.current?.resetRowSelection();
     } catch (err) {
       toaster("Error: " + (err as Error).message, "error");
       console.error("Error:", err);
@@ -99,7 +100,8 @@ const Card = ({ program }: CardProps) => {
         throw new Error(json.message);
       }
       toaster(`${selected.join(", ")} deleted!`, "success");
-      refetch();
+      await refetch();
+      tableRef.current?.resetRowSelection();
     } catch (err) {
       toaster("Error: " + (err as Error).message, "error");
       console.error("Failed to delete:", err);
