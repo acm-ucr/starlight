@@ -95,11 +95,13 @@ const Card = ({ program }: CardProps) => {
 
       if (!res.ok) {
         const json = await res.json();
+        toaster("Failed to delete project", "error");
         throw new Error(json.message);
       }
-
+      toaster(`${selected.join(", ")} deleted!`, "success");
       refetch();
     } catch (err) {
+      toaster("Error: " + (err as Error).message, "error");
       console.error("Failed to delete:", err);
     }
   };
