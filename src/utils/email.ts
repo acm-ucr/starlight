@@ -1,7 +1,7 @@
 import Email from "@/components/email";
 import { Resend, CreateEmailResponse } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY as string);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export type ids = "confirmation" | "acceptance" | "rejection";
 export type tracks = "Spark" | "Forge" | "DAS" | "Create";
