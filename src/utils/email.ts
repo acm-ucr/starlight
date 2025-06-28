@@ -1,8 +1,6 @@
 import Email from "@/components/email";
 import { Resend, CreateEmailResponse } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export type ids = "confirmation" | "acceptance" | "rejection";
 export type tracks = "Spark" | "Forge" | "DAS" | "Create";
 
@@ -23,6 +21,7 @@ const send = async ({
   subject,
   preview,
 }: params): Promise<CreateEmailResponse> => {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { data, error } = await resend.emails.send({
     from: "starlight@ucrhighlanders.org",
     to: [email],
