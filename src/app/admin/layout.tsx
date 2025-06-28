@@ -11,7 +11,7 @@ const AdminLayout = async ({ children }: FormProps) => {
   return (
     <Providers session={session}>
       <Toaster />
-      <ProtectedPage session={session} restrictions={{ admin: "1" }}>
+      <ProtectedPage session={session} restrictions={{ admin: ["1"] }}>
         {children}
       </ProtectedPage>
     </Providers>

@@ -6,7 +6,7 @@ import { AUTH } from "@/data/admin/dashboard";
 
 export const GET = async (req: Request) => {
   const res = NextResponse;
-  const { auth, message } = await authenticate(AUTH.POST);
+  const { auth, message } = await authenticate(AUTH.GET);
 
   if (auth !== 200) {
     return res.json(

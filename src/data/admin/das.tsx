@@ -49,7 +49,7 @@ export const COLUMNS: ColumnType<Member>[] = [
           row.getToggleSelectedHandler()(e);
           row.getToggleExpandedHandler()();
         }}
-        className="hover:cursor-pointer"
+        className="p-2 hover:cursor-pointer"
       >
         {row.getValue("email")}
       </div>
@@ -67,7 +67,7 @@ export const COLUMNS: ColumnType<Member>[] = [
           row.getToggleSelectedHandler()(e);
           row.getToggleExpandedHandler()();
         }}
-        className="hover:cursor-pointer"
+        className="p-2 hover:cursor-pointer"
       >
         {row.getValue("discord")}
       </div>
@@ -85,7 +85,7 @@ export const COLUMNS: ColumnType<Member>[] = [
           row.getToggleSelectedHandler()(e);
           row.getToggleExpandedHandler()();
         }}
-        className="hover:cursor-pointer"
+        className="p-2 hover:cursor-pointer"
       >
         {row.getValue("discord")}
       </div>
@@ -103,7 +103,7 @@ export const COLUMNS: ColumnType<Member>[] = [
           row.getToggleSelectedHandler()(e);
           row.getToggleExpandedHandler()();
         }}
-        className="hover:cursor-pointer"
+        className="p-2 hover:cursor-pointer"
       >
         {row.getValue("pastProjects")}
       </div>

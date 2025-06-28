@@ -8,24 +8,28 @@ export const generateSelect = <TData extends object>() => ({
   searchable: false,
   size: 50,
   header: ({ table }: { table: Table<TData> }) => (
-    <Checkbox
-      id="select-all"
-      checked={table.getIsAllRowsSelected()}
-      onClick={(e) => {
-        table.getToggleAllRowsSelectedHandler()(e);
-        table.getToggleAllRowsExpandedHandler()(e);
-      }}
-    />
+    <div className="p-2">
+      <Checkbox
+        id="select-all"
+        checked={table.getIsAllRowsSelected()}
+        onClick={(e) => {
+          table.getToggleAllRowsSelectedHandler()(e);
+          table.getToggleAllRowsExpandedHandler()(e);
+        }}
+      />
+    </div>
   ),
   cell: ({ row }: { row: Row<TData> }) => (
-    <Checkbox
-      id="select-one"
-      checked={row.getIsSelected()}
-      onClick={(e) => {
-        row.getToggleSelectedHandler()(e);
-        row.getToggleExpandedHandler()();
-      }}
-    />
+    <div className="p-2">
+      <Checkbox
+        id="select-one"
+        checked={row.getIsSelected()}
+        onClick={(e) => {
+          row.getToggleSelectedHandler()(e);
+          row.getToggleExpandedHandler()();
+        }}
+      />
+    </div>
   ),
 });
 
@@ -43,9 +47,11 @@ export const generateStatus = <TData extends object>(
     },
 
     cell: ({ row }: CellContext<TData, string>) => (
-      <Badge type={row.getValue("status") as ColorKeys}>
-        {statuses[row.getValue("status") as keyof typeof statuses]}
-      </Badge>
+      <div className="p-2">
+        <Badge type={row.getValue("status") as ColorKeys}>
+          {statuses[row.getValue("status") as keyof typeof statuses]}
+        </Badge>
+      </div>
     ),
   };
 };

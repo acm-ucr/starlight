@@ -7,7 +7,7 @@ import Navigation from "@/components/navigation";
 import { SidebarProvider } from "./ui/sidebar";
 interface ProtectedPageProps {
   children: React.ReactNode;
-  restrictions: Record<string, string>;
+  restrictions: Record<string, string[]>;
   session: SessionType | null;
 }
 
@@ -35,7 +35,13 @@ const ProtectedPage = async ({
   }
 
   const authorized = Object.entries(restrictions).some(
-    ([key, allowedValue]) => session?.user?.roles?.[key] === allowedValue,
+    ([key, allowedValues]) => {
+      const userRole = session.user.roles?.[key];
+      if (Array.isArray(userRole)) {
+        return userRole.some((role) => allowedValues.includes(role));
+      }
+      return allowedValues.includes(userRole ?? "");
+    },
   );
 
   if (!authorized && Object.keys(restrictions).length > 0) {
