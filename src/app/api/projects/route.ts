@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { AUTH } from "@/data/admin/dashboard";
 
@@ -58,14 +58,9 @@ export const POST = async (req: Request) => {
     }
 
     const docRef = doc(db, "projects", program);
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      return res.json(
-        { message: `Document "${program}" not found` },
-        { status: 404 },
-      );
-    }
+    await updateDoc(docRef, {
+      projects: arrayUnion(project),
+    })
   } catch (err) {
     return res.json(
       { message: `Internal Server Error: ${err}` },
