@@ -48,7 +48,7 @@ export const getAuthOptions: NextAuthOptions = {
   },
 };
 
-type Restrictions = Record<string, number[]>;
+type Restrictions = Record<string, string[]>;
 
 export const authenticate = async (restrictions: Restrictions = {}) => {
   const session: Session | null = await getServerSession(getAuthOptions);
@@ -58,7 +58,7 @@ export const authenticate = async (restrictions: Restrictions = {}) => {
   }
 
   const authorized = Object.entries(restrictions).some(([key, allowedValues]) =>
-    allowedValues.includes(+session?.user?.roles[key]),
+    allowedValues.includes(session?.user?.roles[key]),
   );
 
   if (!authorized && Object.keys(restrictions).length > 0) {

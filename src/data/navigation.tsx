@@ -91,5 +91,22 @@ export const TABS: Tabs = {
         },
       ],
     },
+    Services: {
+      expand: true,
+      tabs: [
+        {
+          name: "Projects",
+          link: "/admin/services/projects",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+        {
+          name: "Email Templating",
+          link: "/admin/services/emailtemplating",
+          icon: <FaLock className={iconStyle} />,
+          target: "_self",
+        },
+      ],
+    },
   },
 };

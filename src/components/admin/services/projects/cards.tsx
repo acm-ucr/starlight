@@ -1,0 +1,19 @@
+import Card from "./card";
+import { Label } from "@/components/ui/label";
+const Cards = () => {
+  return (
+    <div className="bg-starlight-gray-secondary min-h-screen w-10/12 px-4">
+      <Label className="text-starlight-tags-white mt-8 text-2xl font-bold">
+        Projects
+      </Label>
+      <div className="grid grid-cols-2 gap-8">
+        <Card program="Spark" />
+        <Card program="Create" />
+        <Card program="Forge" />
+        <Card program="DAS" />
+      </div>
+    </div>
+  );
+};
+
+export default Cards;
