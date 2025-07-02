@@ -1,5 +1,7 @@
+import Cards from "@/components/admin/services/emailtemplating/cards";
+
 const Page = () => {
-  return <div>yaba yaba doo</div>;
+  return <Cards />;
 };
 
 export default Page;

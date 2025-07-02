@@ -77,7 +77,7 @@ const ProjectTable = <TData, TValue>({
                 colSpan={columns.length}
                 className="pt-2 text-center text-white"
               >
-                No results.
+                No current projects available.
               </TableCell>
             </TableRow>
           )}
