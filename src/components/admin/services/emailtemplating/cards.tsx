@@ -8,9 +8,6 @@ const Cards = () => {
       </Label>
       <div className="grid grid-cols-2 gap-8">
         <Card program="Spark" />
-        <Card program="Create" />
-        <Card program="Forge" />
-        <Card program="DAS" />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ interface CardProps {
 }
 
 const Card = ({ program }: CardProps) => {
-  return <div></div>;
+  return <div className="text-white">this is a test</div>;
 };
 
 export default Card;
