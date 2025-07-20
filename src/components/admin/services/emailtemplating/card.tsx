@@ -46,7 +46,7 @@ const Card = ({ program }: CardProps) => {
     queryKey: ["templates", program],
     queryFn: () => fetchEmailTemplates(program.toLowerCase()),
   });
-  
+
   const tableData = data ?? [];
 
   return (
