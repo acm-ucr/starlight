@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Table from "@/components/admin/services/emailtemplating/table";
 import COLUMNS, { EmailTemplate } from "@/data/admin/services/columns";
 import { Button } from "@/components/ui/button";
-import { CiSquarePlus, CiTrash } from "react-icons/ci";
+/* import { CiSquarePlus, CiTrash } from "react-icons/ci"; */
 import {
   Dialog,
   DialogClose,
@@ -22,11 +22,10 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselDialogNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import type { Table as TableInstance } from "@tanstack/react-table";
-import toaster from "@/utils/toaster";
+/* import toaster from "@/utils/toaster"; */
 interface CardProps {
   program: string;
 }
@@ -42,7 +41,7 @@ const fetchEmailTemplates = async (program: string) => {
 
 const Card = ({ program }: CardProps) => {
   const tableRef = useRef<TableInstance<EmailTemplate> | null>(null);
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error /* , refetch */ } = useQuery({
     queryKey: ["templates", program],
     queryFn: () => fetchEmailTemplates(program.toLowerCase()),
   });
