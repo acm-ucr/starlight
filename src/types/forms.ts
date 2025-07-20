@@ -59,11 +59,19 @@ export type TextareaInput = Input & {
   placeholder: string;
 };
 
+export type DateInput = Input & {
+  input: "date";
+  title: string;
+  placeholder: string;
+};
+
 type Field =
   | Description
   | TextInput
   | RadioInput
   | CheckboxInput
-  | TextareaInput;
+  | TextareaInput
+  | SelectInput
+  | DateInput;
 
 export type BaseFields = Record<string, Field>;

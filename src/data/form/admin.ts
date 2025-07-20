@@ -4,7 +4,7 @@ import {
   CheckboxInput,
   BaseFields,
 } from "@/types/forms";
-import { AFFLIATIONS } from "@/data/affliations";
+import { AFFLIATIONS } from "@/data/information";
 
 interface Attributes {
   firstName: string;
