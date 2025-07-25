@@ -3,8 +3,9 @@
 import { LOCATIONS, SEASONS, STATUSES } from "@/data/information";
 import {
   BaseFields,
-  /*   DateInput,
-  Description, */
+  DateInput,
+
+  /*   Description, */
   RadioInput,
   TextInput,
   /*   SelectInput, */
@@ -17,9 +18,9 @@ interface Attributes {
   location: string;
   timeful: string;
   repo: string;
-  /*
   beginningWeekOf: string;
-  contactForHelpBy: string;
+
+  /*contactForHelpBy: string;
   emailBanner: StaticImageData;
   linkedinBanner: StaticImageData;*/
 }
@@ -31,8 +32,9 @@ export const ATTRIBUTES: Attributes = {
   location: "",
   timeful: "",
   repo: "",
-  /* 
   beginningWeekOf: "",
+  /* 
+
   contactForHelpBy: "", 
   emailBanner: StaticImageData;
   linkedinBanner: StaticImageData;*/
@@ -45,9 +47,8 @@ interface Fields extends BaseFields {
   location: RadioInput;
   timeful: TextInput;
   repo: TextInput;
-  /* 
-    beginningWeekOf: DateInput;
-    contactForHelpBy: DateInput;
+  beginningWeekOf: DateInput;
+  /*contactForHelpBy: DateInput;
     emailBanner: UploadInput;
     linkedinBanner: UploadInput;*/
 }
@@ -110,6 +111,6 @@ export const Fields: Fields = {
     width: 12,
     editable: true,
     required: true,
-    placeholder: "eg. https://github.com/acm-ucr/acm-atlas",
+    placeholder: "eg. https://github.com/acm-ucr/starlight",
   },
 };
