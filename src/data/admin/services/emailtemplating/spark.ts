@@ -113,4 +113,12 @@ export const Fields: Fields = {
     required: true,
     placeholder: "eg. https://github.com/acm-ucr/starlight",
   },
+  beginningWeekOf: {
+    input: "date",
+    name: "Beginning Week Of",
+    title: "Beginning Week Of",
+    width: 12,
+    editable: true,
+    required: true,
+  },
 };

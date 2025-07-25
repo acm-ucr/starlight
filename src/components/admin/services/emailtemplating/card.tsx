@@ -23,9 +23,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi, // 1. Import CarouselApi type
+  type CarouselApi,
 } from "@/components/ui/carousel";
-import { useRef, useState, useEffect, useMemo } from "react"; // 1. Import more hooks
+import { useRef, useState, useEffect, useMemo } from "react";
 import type { Table as TableInstance } from "@tanstack/react-table";
 import toaster from "@/utils/toaster";
 import {
@@ -33,9 +33,8 @@ import {
   ATTRIBUTES,
 } from "@/data/admin/services/emailtemplating/spark";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { BaseFields, RadioInput, TextInput, Field } from "@/types/forms";
+import { BaseFields, RadioInput, TextInput, Field, DateInput } from "@/types/forms";
 
-// ... (RenderField and DynamicFormRenderer components remain unchanged) ...
 interface RenderFieldProps<T> {
   fieldName: string;
   fieldConfig: Field;
@@ -84,6 +83,24 @@ const RenderField = <T,>({
       <div className="grid gap-3">
         <Label htmlFor={fieldName} className="font-semibold">
           {(fieldConfig as TextInput).title}
+        </Label>
+        <Input
+          id={fieldName}
+          name={fieldName}
+          value={formData[key] as string}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, [key]: e.target.value }))
+          }
+          placeholder={(fieldConfig as TextInput).placeholder}
+        />
+      </div>
+    );
+  }
+  if (fieldConfig.input === "dateinput") {
+    return (
+      <div className="grid gap-3">
+        <Label htmlFor={fieldName} className="font-semibold">
+          {(fieldConfig as DateInput).title}
         </Label>
         <Input
           id={fieldName}
