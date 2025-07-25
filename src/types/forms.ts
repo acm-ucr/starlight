@@ -7,7 +7,7 @@ export interface Description {
   input: string;
   width: number;
   texts: string[];
-  required: boolean;
+  required?: boolean;
 }
 export type TextInput = Input & {
   input: "input";

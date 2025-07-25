@@ -1,6 +1,6 @@
 /* import { StaticImageData } from "next/image"; */
 
-import { SEASONS, STATUSES } from "@/data/information";
+import { LOCATIONS, SEASONS, STATUSES } from "@/data/information";
 import {
   BaseFields,
   /*   DateInput,
@@ -14,44 +14,42 @@ interface Attributes {
   season: "";
   year: string;
   status: "";
-  projectName: string;
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; 
-  projectName: string;
+  location: string;
   timeful: string;
   repo: string;
+  /*
   beginningWeekOf: string;
-  location: string;
-  contactForHelpBy: string;*/
+  contactForHelpBy: string;
+  emailBanner: StaticImageData;
+  linkedinBanner: StaticImageData;*/
 }
 
 export const ATTRIBUTES: Attributes = {
   season: "",
   year: "",
   status: "",
-  projectName: "",
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData;
-  projectName: "",
+  location: "",
   timeful: "",
   repo: "",
+  /* 
   beginningWeekOf: "",
-  location: "",
-  contactForHelpBy: "", */
+  contactForHelpBy: "", 
+  emailBanner: StaticImageData;
+  linkedinBanner: StaticImageData;*/
 };
 
 interface Fields extends BaseFields {
   year: TextInput;
   season: RadioInput;
-  projectName: TextInput;
-  /* emailBanner: UploadInput;
-    linkedinBanner: UploadInput;
-    timeful: TextInput;
-    repo: TextInput;
+  status: RadioInput;
+  location: RadioInput;
+  timeful: TextInput;
+  repo: TextInput;
+  /* 
     beginningWeekOf: DateInput;
-    location: TextInput;
     contactForHelpBy: DateInput;
-    status: SelectInput; */
+    emailBanner: UploadInput;
+    linkedinBanner: UploadInput;*/
 }
 export const Fields: Fields = {
   season: {
@@ -83,15 +81,35 @@ export const Fields: Fields = {
     required: true,
     editable: true,
   },
-  projectName: {
-    input: "input",
-    editable: true,
-    name: "projectName",
-    type: "text",
-    title: "Project Name",
-    placeholder: "ie. Atlas, CSA, WITL",
-    maxLength: 50,
+  location: {
+    input: "radio",
+    text: "Meeting Location",
+    options: LOCATIONS,
+    field: "location",
     width: 12,
     required: true,
+    editable: true,
+  },
+  timeful: {
+    input: "input",
+    name: "Timeful",
+    type: "text",
+    title: "Timeful",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. https://timeful.app/e/ST4NL3Y",
+  },
+  repo: {
+    input: "input",
+    name: "Repo",
+    type: "text",
+    title: "Repo",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. https://github.com/acm-ucr/acm-atlas",
   },
 };
