@@ -1,6 +1,6 @@
 /* import { StaticImageData } from "next/image"; */
 
-import { SEASONS } from "@/data/information";
+import { SEASONS, STATUSES } from "@/data/information";
 import {
   BaseFields,
   /*   DateInput,
@@ -11,54 +11,50 @@ import {
 } from "@/types/forms";
 
 interface Attributes {
-  currentSeason: "Fall" | "Winter" | "Summer" | "Spring";
-  currentYear: string;
+  season: "";
+  year: string;
+  status: "";
+  projectName: string;
   /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; */
+  linkedinBanner: StaticImageData; 
   projectName: string;
   timeful: string;
   repo: string;
   beginningWeekOf: string;
   location: string;
-  contactForHelpBy: string;
-  lead1: string;
-  lead2: string;
-  status: "accept" | "reject" | "interview";
+  contactForHelpBy: string;*/
 }
 
 export const ATTRIBUTES: Attributes = {
-  currentSeason: "Fall",
-  currentYear: "",
+  season: "",
+  year: "",
+  status: "",
+  projectName: "",
   /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; */
+  linkedinBanner: StaticImageData;
   projectName: "",
   timeful: "",
   repo: "",
   beginningWeekOf: "",
   location: "",
-  contactForHelpBy: "",
-  lead1: "",
-  lead2: "",
-  status: "accept",
+  contactForHelpBy: "", */
 };
 
 interface Fields extends BaseFields {
-  currentYear: TextInput;
-  currentSeason: RadioInput;
+  year: TextInput;
+  season: RadioInput;
+  projectName: TextInput;
   /* emailBanner: UploadInput;
     linkedinBanner: UploadInput;
-    projectName: TextInput;
     timeful: TextInput;
     repo: TextInput;
     beginningWeekOf: DateInput;
     location: TextInput;
     contactForHelpBy: DateInput;
-    lead1: SelectInput;
-    lead2: SelectInput;
     status: SelectInput; */
 }
 export const Fields: Fields = {
-  currentSeason: {
+  season: {
     input: "radio",
     text: "Season",
     options: SEASONS,
@@ -67,15 +63,35 @@ export const Fields: Fields = {
     required: true,
     editable: true,
   },
-  currentYear: {
+  year: {
     input: "input",
-    name: "currentYear",
+    name: "Year",
     type: "text",
-    title: "Current Year",
+    title: "Year",
     maxLength: 50,
     width: 12,
     editable: true,
     required: true,
     placeholder: "eg. 2005",
+  },
+  status: {
+    input: "radio",
+    text: "Status",
+    options: STATUSES,
+    field: "status",
+    width: 12,
+    required: true,
+    editable: true,
+  },
+  projectName: {
+    input: "input",
+    editable: true,
+    name: "projectName",
+    type: "text",
+    title: "Project Name",
+    placeholder: "ie. Atlas, CSA, WITL",
+    maxLength: 50,
+    width: 12,
+    required: true,
   },
 };

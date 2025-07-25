@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Table from "@/components/admin/services/emailtemplating/table";
 import COLUMNS, { EmailTemplate } from "@/data/admin/services/columns";
 import { Button } from "@/components/ui/button";
-/* import { CiSquarePlus, CiTrash } from "react-icons/ci"; */
+import { CiSquarePlus, CiTrash } from "react-icons/ci";
 import {
   Dialog,
   DialogClose,
@@ -21,14 +21,123 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselDialogNext,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi, // 1. Import CarouselApi type
 } from "@/components/ui/carousel";
-import { useRef } from "react";
+import { useRef, useState, useEffect, useMemo } from "react"; // 1. Import more hooks
 import type { Table as TableInstance } from "@tanstack/react-table";
-/* import toaster from "@/utils/toaster"; */
+import toaster from "@/utils/toaster";
+import {
+  Fields,
+  ATTRIBUTES,
+} from "@/data/admin/services/emailtemplating/spark";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { BaseFields, RadioInput, TextInput, Field } from "@/types/forms";
+
+// ... (RenderField and DynamicFormRenderer components remain unchanged) ...
+interface RenderFieldProps<T> {
+  fieldName: string;
+  fieldConfig: Field;
+  formData: T;
+  setFormData: React.Dispatch<React.SetStateAction<T>>;
+}
+
 interface CardProps {
   program: string;
 }
+
+const RenderField = <T,>({
+  fieldName,
+  fieldConfig,
+  formData,
+  setFormData,
+}: RenderFieldProps<T>) => {
+  const key = fieldName as keyof T;
+
+  if (fieldConfig.input === "radio") {
+    return (
+      <div className="grid gap-3">
+        <Label className="font-semibold">
+          {(fieldConfig as RadioInput).text}
+        </Label>
+        <RadioGroup
+          value={formData[key] as string}
+          onValueChange={(value) =>
+            setFormData((prev) => ({ ...prev, [key]: value }))
+          }
+          className="grid grid-cols-2 gap-2"
+        >
+          {Object.values((fieldConfig as RadioInput).options).map((option) => (
+            <div key={option} className="flex items-center space-x-2">
+              <RadioGroupItem value={option} id={`${fieldName}-${option}`} />
+              <Label htmlFor={`${fieldName}-${option}`}>{option}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
+    );
+  }
+
+  if (fieldConfig.input === "input") {
+    return (
+      <div className="grid gap-3">
+        <Label htmlFor={fieldName} className="font-semibold">
+          {(fieldConfig as TextInput).title}
+        </Label>
+        <Input
+          id={fieldName}
+          name={fieldName}
+          value={formData[key] as string}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, [key]: e.target.value }))
+          }
+          placeholder={(fieldConfig as TextInput).placeholder}
+        />
+      </div>
+    );
+  }
+  return null;
+};
+
+interface DynamicFormRendererProps<T> {
+  fields: BaseFields;
+  formData: T;
+  setFormData: React.Dispatch<React.SetStateAction<T>>;
+}
+
+const DynamicFormRenderer = <T,>({
+  fields,
+  formData,
+  setFormData,
+}: DynamicFormRendererProps<T>) => {
+  const allFields = Object.entries(fields);
+
+  const chunkedFields = [];
+  for (let i = 0; i < allFields.length; i += 3) {
+    chunkedFields.push(allFields.slice(i, i + 3));
+  }
+
+  return (
+    <CarouselContent>
+      {chunkedFields.map((chunk, index) => (
+        <CarouselItem key={index}>
+          <div className="flex flex-col gap-6 p-1">
+            {chunk.map(([fieldName, fieldConfig]) => (
+              <RenderField
+                key={fieldName}
+                fieldName={fieldName}
+                fieldConfig={fieldConfig}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            ))}
+          </div>
+        </CarouselItem>
+      ))}
+    </CarouselContent>
+  );
+};
 
 const fetchEmailTemplates = async (program: string) => {
   const res = await fetch(`/api/emailtemplating?program=${program}`);
@@ -40,54 +149,154 @@ const fetchEmailTemplates = async (program: string) => {
 };
 
 const Card = ({ program }: CardProps) => {
+  const [newTemplate, setNewTemplate] = useState(ATTRIBUTES);
   const tableRef = useRef<TableInstance<EmailTemplate> | null>(null);
-  const { data, isLoading, error /* , refetch */ } = useQuery({
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["templates", program],
     queryFn: () => fetchEmailTemplates(program.toLowerCase()),
   });
 
+  const isFormValid = useMemo(() => {
+    return Object.entries(Fields).every(([key, config]) => {
+      if (!config.required) return true;
+      const value = newTemplate[key as keyof typeof newTemplate];
+      return !!value;
+    });
+  }, [newTemplate]);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    const handleSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    api.on("select", handleSelect);
+
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
+
+  const isOnLastPage = current === count - 1;
+
+  const addTemplate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isFormValid || !isOnLastPage) return;
+
+    try {
+      const res = await fetch("/api/emailtemplating", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          program: program.toLowerCase(),
+          ...newTemplate,
+        }),
+      });
+
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message || "Failed to add template");
+      }
+      toaster(`Template added!`, "success");
+      setNewTemplate(ATTRIBUTES);
+      await refetch();
+    } catch (err) {
+      toaster("Error: " + (err as Error).message, "error");
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    const table = tableRef.current;
+    if (!table) return;
+
+    const selectedIds = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original);
+
+    if (!selectedIds.length) return;
+
+    try {
+      const res = await fetch("/api/emailtemplates", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          program: program.toLowerCase(),
+          templateIds: selectedIds,
+        }),
+      });
+
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message);
+      }
+      toaster(`${selectedIds.length} template(s) deleted!`, "success");
+      await refetch();
+      table.resetRowSelection();
+    } catch (err) {
+      toaster("Error: " + (err as Error).message, "error");
+    }
+  };
+
   const tableData = data ?? [];
 
   return (
-    <div className="">
-      <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button variant="outline">Open Dialog</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Create Email Template</DialogTitle>
-              <DialogDescription>
-                Fill in the specified information.
-              </DialogDescription>
-            </DialogHeader>
-            <Carousel className="w-full max-w-xs">
-              <CarouselContent>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem key={index}>
-                    <div className="grid gap-3">
-                      <Label htmlFor="username-1">Username</Label>
-                      <Input
-                        id="username-1"
-                        name="username"
-                        defaultValue="@peduarte"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselDialogNext />
-            </Carousel>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <Button type="submit">Save changes</Button>
-            </DialogFooter>
-          </DialogContent>
-        </form>
-      </Dialog>
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <p className="text-left text-3xl text-white">{program}</p>
+        <div className="flex items-center text-3xl text-white">
+          <Dialog onOpenChange={(open) => !open && setNewTemplate(ATTRIBUTES)}>
+            <DialogTrigger asChild>
+              <CiSquarePlus className="cursor-pointer hover:text-blue-400" />
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <form onSubmit={addTemplate}>
+                <DialogHeader>
+                  <DialogTitle>Create Email Template</DialogTitle>
+                  <DialogDescription>
+                    Step through the fields to create a new template.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <Carousel className="mx-auto w-full max-w-xs" setApi={setApi}>
+                  <DynamicFormRenderer
+                    fields={Fields}
+                    formData={newTemplate}
+                    setFormData={setNewTemplate}
+                  />
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
+
+                <DialogFooter className="pt-4">
+                  <DialogClose asChild>
+                    <Button variant="outline" type="button">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <Button
+                    type="submit"
+                    disabled={!isFormValid || !isOnLastPage}
+                  >
+                    Create Template
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+          <CiTrash
+            onClick={handleDeleteSelected}
+            className="ml-4 cursor-pointer text-white hover:text-red-400"
+          />
+        </div>
+      </div>
       {isLoading ? (
         <p className="text-white">Loading...</p>
       ) : error ? (

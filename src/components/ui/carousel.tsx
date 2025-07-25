@@ -250,7 +250,29 @@ function CarouselDialogNext({
       {...props}
     >
       Next
-      <span className="sr-only">Next slide</span>
+    </Button>
+  );
+}
+
+function CarouselDialogPrevious({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { /* orientation, */ scrollPrev, canScrollPrev } = useCarousel();
+
+  return (
+    <Button
+      data-slot="carousel-previous"
+      variant={variant}
+      size={size}
+      className={cn("px-8", className)}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      Previous
     </Button>
   );
 }
@@ -263,4 +285,5 @@ export {
   CarouselPrevious,
   CarouselNext,
   CarouselDialogNext,
+  CarouselDialogPrevious,
 };

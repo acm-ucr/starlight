@@ -36,25 +36,19 @@ const COLUMNS: ColumnDef<EmailTemplate>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "currentSeason",
+    accessorKey: "season",
     header: () => (
-      <div className="pt-2 pb-1 text-center text-white">Current Season</div>
+      <div className="pt-2 pb-1 text-center text-white">Season</div>
     ),
     cell: ({ row }) => (
-      <div className="text-center text-white">
-        {row.getValue("currentSeason")}
-      </div>
+      <div className="text-center text-white">{row.getValue("season")}</div>
     ),
   },
   {
-    accessorKey: "currentYear",
-    header: () => (
-      <div className="pt-2 pb-1 text-center text-white">Current Year</div>
-    ),
+    accessorKey: "year",
+    header: () => <div className="pt-2 pb-1 text-center text-white">Year</div>,
     cell: ({ row }) => (
-      <div className="text-center text-white">
-        {row.getValue("currentYear")}
-      </div>
+      <div className="text-center text-white">{row.getValue("year")}</div>
     ),
   },
   {
