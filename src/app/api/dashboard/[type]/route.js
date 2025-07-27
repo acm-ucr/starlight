@@ -154,6 +154,7 @@ export const GET = async (req, context) => {
         status: data.roles[firestoreType],
         selected: false,
         hidden: false,
+        interviewNotes: data.interviewNotes?.[firestoreType] ?? "",
       });
     });
 

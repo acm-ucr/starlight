@@ -103,8 +103,9 @@ export const COLUMNS: ColumnType<Member>[] = [
       <div className="p-2 hover:cursor-pointer">
         <InterviewNotes
           uid={row.original.uid}
-          currentNotes={row.original.interviewNotes?.spark}
+          currentNotes={row.getValue("interviewNotes")}
           status={row.getValue("status")}
+          track="spark"
         />
       </div>
     ),

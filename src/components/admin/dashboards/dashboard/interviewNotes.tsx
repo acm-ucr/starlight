@@ -11,24 +11,32 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface InterviewNotesTypes {
   uid: number;
   currentNotes: string;
   status: string;
+  track: string
 }
 
-const InterviewNotes = ({ uid, currentNotes, status }: InterviewNotesTypes) => {
+const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesTypes) => {
   const [notes, setNotes] = useState(currentNotes ?? "");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setNotes(currentNotes ?? "");
+    }
+  }, [open, currentNotes]);
 
   const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("form submitted");
     setLoading(true);
     try {
-      const res = await fetch(`/api/dashboard/spark`, {
+      const res = await fetch(`/api/dashboard/${track}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -44,7 +52,7 @@ const InterviewNotes = ({ uid, currentNotes, status }: InterviewNotesTypes) => {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Edit Interview Notes</Button>
       </DialogTrigger>
@@ -67,9 +75,9 @@ const InterviewNotes = ({ uid, currentNotes, status }: InterviewNotesTypes) => {
               />
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-2">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
             </DialogClose>
             <Button type="submit" disabled={loading}>
               Save changes
