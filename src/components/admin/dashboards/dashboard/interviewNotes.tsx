@@ -17,10 +17,15 @@ interface InterviewNotesTypes {
   uid: number;
   currentNotes: string;
   status: string;
-  track: string
+  track: string;
 }
 
-const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesTypes) => {
+const InterviewNotes = ({
+  uid,
+  currentNotes,
+  status,
+  track,
+}: InterviewNotesTypes) => {
   const [notes, setNotes] = useState(currentNotes ?? "");
   const [loading, setLoading] = useState(false);
 
@@ -46,42 +51,42 @@ const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesType
   };
   return (
     <div className="grid grid-cols-2">
+      <p>{notes}</p>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Edit</Button>
+        </DialogTrigger>
 
-    <p>{notes}</p>
-    <Dialog >
-      <DialogTrigger asChild>
-        <Button variant="outline">Edit</Button>
-      </DialogTrigger>
-
-      <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={handleSaveChanges}>
-          <DialogHeader>
-            <DialogTitle>Edit Interview Notes</DialogTitle>
-            <DialogDescription>
-              update interview notes here, press save changes when you are done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Notes</Label>
-              <Textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                disabled={loading}
-              />
+        <DialogContent className="sm:max-w-[425px]">
+          <form onSubmit={handleSaveChanges}>
+            <DialogHeader>
+              <DialogTitle>Edit Interview Notes</DialogTitle>
+              <DialogDescription>
+                update interview notes here, press save changes when you are
+                done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="username-1">Notes</Label>
+                <Textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  disabled={loading}
+                />
+              </div>
             </div>
-          </div>
-          <DialogFooter className="mt-2">
-            <DialogClose asChild>
-              <Button variant="outline" >Cancel</Button>
-            </DialogClose>
-            <Button type="submit" disabled={loading}>
-              Save changes
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            <DialogFooter className="mt-2">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" disabled={loading}>
+                Save changes
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
