@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface InterviewNotesTypes {
   uid: number;
@@ -23,13 +23,6 @@ interface InterviewNotesTypes {
 const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesTypes) => {
   const [notes, setNotes] = useState(currentNotes ?? "");
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (open) {
-      setNotes(currentNotes ?? "");
-    }
-  }, [open, currentNotes]);
 
   const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,9 +45,12 @@ const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesType
     }
   };
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <div className="grid grid-cols-2">
+
+    <p>{notes}</p>
+    <Dialog >
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Interview Notes</Button>
+        <Button variant="outline">Edit</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
@@ -77,7 +73,7 @@ const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesType
           </div>
           <DialogFooter className="mt-2">
             <DialogClose asChild>
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="outline" >Cancel</Button>
             </DialogClose>
             <Button type="submit" disabled={loading}>
               Save changes
@@ -86,6 +82,7 @@ const InterviewNotes = ({ uid, currentNotes, status, track }: InterviewNotesType
         </form>
       </DialogContent>
     </Dialog>
+    </div>
   );
 };
 
