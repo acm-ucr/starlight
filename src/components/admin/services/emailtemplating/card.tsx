@@ -111,9 +111,7 @@ const RenderField = <T,>({
   }
   if (fieldConfig.input === "date") {
     const [open, setOpen] = React.useState(false);
-    const [date, setDate] = React.useState<Date | undefined>(
-      new Date(2025, 8, 2),
-    );
+    const [date, setDate] = React.useState<Date | undefined>(undefined);
     return (
       <div className="grid gap-3">
         <Label htmlFor={fieldName} className="font-semibold">
