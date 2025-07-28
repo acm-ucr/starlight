@@ -214,7 +214,7 @@ const Card = ({ program }: CardProps) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
-
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["templates", program],
     queryFn: () => fetchEmailTemplates(program.toLowerCase()),
@@ -268,6 +268,7 @@ const Card = ({ program }: CardProps) => {
       toaster(`Template added!`, "success");
       setNewTemplate(ATTRIBUTES);
       await refetch();
+      setDialogOpen(false);
     } catch (err) {
       toaster("Error: " + (err as Error).message, "error");
     }
@@ -312,9 +313,18 @@ const Card = ({ program }: CardProps) => {
       <div className="mb-2 flex items-center justify-between">
         <p className="text-left text-3xl text-white">{program}</p>
         <div className="flex items-center text-3xl text-white">
-          <Dialog onOpenChange={(open) => !open && setNewTemplate(ATTRIBUTES)}>
+          <Dialog
+            open={dialogOpen}
+            onOpenChange={(open) => {
+              setDialogOpen(open);
+              if (!open) setNewTemplate(ATTRIBUTES);
+            }}
+          >
             <DialogTrigger asChild>
-              <CiSquarePlus className="cursor-pointer hover:text-blue-400" />
+              <CiSquarePlus
+                className="cursor-pointer hover:text-blue-400"
+                onClick={() => setDialogOpen(true)}
+              />
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <form onSubmit={addTemplate}>
