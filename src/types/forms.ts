@@ -63,7 +63,6 @@ export type TextareaInput = Input & {
 export type DateInput = Input & {
   input: "date";
   title: string;
-  placeholder: string;
 };
 
 export type Field =

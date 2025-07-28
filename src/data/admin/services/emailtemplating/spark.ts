@@ -115,7 +115,6 @@ export const Fields: Fields = {
   },
   beginningWeekOf: {
     input: "date",
-    name: "Beginning Week Of",
     title: "Beginning Week Of",
     width: 12,
     editable: true,
