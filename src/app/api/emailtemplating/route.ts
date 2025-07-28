@@ -91,31 +91,30 @@ export const POST = async (req: Request) => {
 
   try {
     const body = (await req.json()) as Partial<TemplatePayload>;
-console.log("Incoming POST body:", body); // ← useful for debugging
 
-const {
-  program,
-  season,
-  year,
-  status,
-  location,
-  timeful,
-  repo,
-  beginningWeekOf,
-} = body;
+    const {
+      program,
+      season,
+      year,
+      status,
+      location,
+      timeful,
+      repo,
+      beginningWeekOf,
+    } = body;
 
-if (
-  !program ||
-  !season ||
-  !year ||
-  !status ||
-  !location ||
-  !timeful ||
-  !repo ||
-  !beginningWeekOf
-) {
-  return res.json({ message: "Invalid request body" }, { status: 400 });
-}
+    if (
+      !program ||
+      !season ||
+      !year ||
+      !status ||
+      !location ||
+      !timeful ||
+      !repo ||
+      !beginningWeekOf
+    ) {
+      return res.json({ message: "Invalid request body" }, { status: 400 });
+    }
 
     const programDocRef = doc(db, "templates", program.toLowerCase());
     await setDoc(programDocRef, { merge: true });
@@ -125,15 +124,15 @@ if (
     const docRef = doc(collectionRef, docId);
 
     const data = {
-  program: program.toLowerCase(),
-  season,
-  year,
-  status,
-  location,
-  timeful,
-  repo,
-  beginningWeekOf: new Date(beginningWeekOf), // <- important
-};
+      program: program.toLowerCase(),
+      season,
+      year,
+      status,
+      location,
+      timeful,
+      repo,
+      beginningWeekOf: new Date(beginningWeekOf),
+    };
 
     await setDoc(docRef, data);
 
