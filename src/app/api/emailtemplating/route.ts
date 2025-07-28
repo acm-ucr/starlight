@@ -4,6 +4,18 @@ import { getDoc, doc, collection, getDocs, setDoc } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { AUTH } from "@/data/admin/dashboard";
 
+type TemplatePayload = {
+  program: string;
+  season: string;
+  year: string;
+  status: string;
+  projectName: string;
+  location: string;
+  timeful: string;
+  repo: string;
+  beginningWeekOf: string; // comes in as string
+};
+
 export const GET = async (req: Request) => {
   const res = NextResponse;
   const { auth, message } = await authenticate(AUTH.GET);
@@ -78,38 +90,50 @@ export const POST = async (req: Request) => {
   }
 
   try {
-    const {
-      program,
-      season,
-      year,
-      status,
-      projectName,
-    }: {
-      program: string;
-      season: string;
-      year: string;
-      status: string;
-      projectName: string;
-    } = await req.json();
+    const body = (await req.json()) as Partial<TemplatePayload>;
+console.log("Incoming POST body:", body); // ← useful for debugging
 
-    if (!program || !season || !year || !status || !projectName) {
-      return res.json({ message: "Invalid request body" }, { status: 400 });
-    }
+const {
+  program,
+  season,
+  year,
+  status,
+  location,
+  timeful,
+  repo,
+  beginningWeekOf,
+} = body;
+
+if (
+  !program ||
+  !season ||
+  !year ||
+  !status ||
+  !location ||
+  !timeful ||
+  !repo ||
+  !beginningWeekOf
+) {
+  return res.json({ message: "Invalid request body" }, { status: 400 });
+}
 
     const programDocRef = doc(db, "templates", program.toLowerCase());
-    await setDoc(programDocRef, { initialized: true }, { merge: true });
+    await setDoc(programDocRef, { merge: true });
 
     const collectionRef = collection(programDocRef, status.toLowerCase());
     const docId = `${season.toLowerCase()}${year}`;
     const docRef = doc(collectionRef, docId);
 
     const data = {
-      program: program.toLowerCase(),
-      season,
-      year,
-      status,
-      projectName,
-    };
+  program: program.toLowerCase(),
+  season,
+  year,
+  status,
+  location,
+  timeful,
+  repo,
+  beginningWeekOf: new Date(beginningWeekOf), // <- important
+};
 
     await setDoc(docRef, data);
 

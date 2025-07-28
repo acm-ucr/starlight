@@ -1,9 +1,10 @@
 "use client";
+import { CiSquarePlus, CiTrash } from "react-icons/ci";
+import { ChevronDownIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Table from "@/components/admin/services/emailtemplating/table";
 import COLUMNS, { EmailTemplate } from "@/data/admin/services/columns";
 import { Button } from "@/components/ui/button";
-import { CiSquarePlus, CiTrash } from "react-icons/ci";
 import {
   Dialog,
   DialogClose,
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import * as React from "react";
 import {
@@ -57,24 +57,6 @@ interface RenderFieldProps<T> {
 
 interface CardProps {
   program: string;
-}
-
-function formatDate(date: Date | undefined) {
-  if (!date) {
-    return "";
-  }
-  return date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function isValidDate(date: Date | undefined) {
-  if (!date) {
-    return false;
-  }
-  return !isNaN(date.getTime());
 }
 
 const RenderField = <T,>({
@@ -132,60 +114,40 @@ const RenderField = <T,>({
     const [date, setDate] = React.useState<Date | undefined>(
       new Date(2025, 8, 2),
     );
-    const [month, setMonth] = React.useState<Date | undefined>(date);
-    const [value, setValue] = React.useState(formatDate(date));
     return (
       <div className="grid gap-3">
         <Label htmlFor={fieldName} className="font-semibold">
           {(fieldConfig as DateInput).title}
         </Label>
         <div className="relative flex gap-2">
-          <Input
-            id="date"
-            value={value}
-            placeholder="September 02, 2025"
-            className="bg-background pr-10"
-            onChange={(e) => {
-              const date = new Date(e.target.value);
-              setValue(e.target.value);
-              if (isValidDate(date)) {
-                setDate(date);
-                setMonth(date);
-              }
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                setOpen(true);
-              }
-            }}
-          />
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
-                id="date-picker"
-                variant="ghost"
-                className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
+                variant="outline"
+                id="date"
+                className="w-48 justify-between font-normal"
               >
-                <CalendarIcon className="size-3.5" />
-                <span className="sr-only">Select date</span>
+                {date ? date.toLocaleDateString() : "Select date"}
+                <ChevronDownIcon />
               </Button>
             </PopoverTrigger>
             <PopoverContent
               className="w-auto overflow-hidden p-0"
-              align="end"
-              alignOffset={-8}
-              sideOffset={10}
+              align="start"
             >
               <Calendar
                 mode="single"
                 selected={date}
                 captionLayout="dropdown"
-                month={month}
-                onMonthChange={setMonth}
-                onSelect={(date) => {
-                  setDate(date);
-                  setValue(formatDate(date));
+                onSelect={(selectedDate) => {
+                  if (selectedDate) {
+                    selectedDate.setHours(0, 0, 0, 0);
+                    setDate(selectedDate);
+                    setFormData((prev) => ({
+                      ...prev,
+                      [key]: selectedDate.toISOString().split("T")[0],
+                    }));
+                  }
                   setOpen(false);
                 }}
               />
