@@ -28,6 +28,7 @@ const InterviewNotes = ({
 }: InterviewNotesTypes) => {
   const [notes, setNotes] = useState(currentNotes ?? "");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSaveChanges = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +44,7 @@ const InterviewNotes = ({
         }),
       });
       if (res.ok) {
-        console.log("good");
+        setOpen(false);
       }
     } finally {
       setLoading(false);
@@ -51,10 +52,12 @@ const InterviewNotes = ({
   };
   return (
     <div className="grid grid-cols-2">
-      <p>{notes}</p>
-      <Dialog>
+      <p className="truncate">{notes}</p>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit</Button>
+          <Button variant="outline" onClick={() => setOpen(true)}>
+            Edit
+          </Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[425px]">
