@@ -12,7 +12,10 @@ interface ForgeProps {
 
 const Forge = ({ searchParams }: ForgeProps) => {
   const session = useSession();
-  if (session?.data?.user?.affiliation?.includes("Forge")) {
+  if (
+    session?.data?.user?.affiliation?.includes("Forge") ||
+    session?.data?.user?.affiliation?.includes("ACM Board")
+  ) {
     return (
       <Dashboard
         searchParams={searchParams}

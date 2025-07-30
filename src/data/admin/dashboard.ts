@@ -12,25 +12,25 @@ interface auth {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   POST: {};
   GET: {
-    admins: string[];
+    admin: string[];
   };
   PUT: {
-    admins: string[];
+    admin: string[];
   };
   DELETE: {
-    admins: string[];
+    admin: string[];
   };
 }
 
 export const AUTH: auth = {
   POST: {},
   GET: {
-    admins: ["1"],
+    admin: ["1"],
   },
   PUT: {
-    admins: ["1"],
+    admin: ["1"],
   },
   DELETE: {
-    admins: ["1"],
+    admin: ["1"],
   },
 };
