@@ -19,9 +19,8 @@ interface Attributes {
   timeful: string;
   repo: string;
   beginningWeekOf: string;
-
-  /*contactForHelpBy: string;
-  emailBanner: StaticImageData;
+  contactForHelpBy: string;
+  /*emailBanner: StaticImageData;
   linkedinBanner: StaticImageData;*/
 }
 
@@ -33,10 +32,8 @@ export const ATTRIBUTES: Attributes = {
   timeful: "",
   repo: "",
   beginningWeekOf: "",
-  /* 
-
   contactForHelpBy: "", 
-  emailBanner: StaticImageData;
+  /* emailBanner: StaticImageData;
   linkedinBanner: StaticImageData;*/
 };
 
@@ -48,8 +45,8 @@ interface Fields extends BaseFields {
   timeful: TextInput;
   repo: TextInput;
   beginningWeekOf: DateInput;
-  /*contactForHelpBy: DateInput;
-    emailBanner: UploadInput;
+  contactForHelpBy: DateInput;
+   /* emailBanner: UploadInput;
     linkedinBanner: UploadInput;*/
 }
 export const Fields: Fields = {
@@ -116,6 +113,13 @@ export const Fields: Fields = {
   beginningWeekOf: {
     input: "date",
     title: "Beginning Week Of",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+  contactForHelpBy: {
+    input: "date",
+    title: "Contact for help by",
     width: 12,
     editable: true,
     required: true,

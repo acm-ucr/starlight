@@ -2,8 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export interface EmailTemplate {
-  currentSeason: string;
-  currentYear: string;
+  season: string;
+  year: string;
   status: "accept" | "reject" | "interview";
 }
 

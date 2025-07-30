@@ -1,16 +1,16 @@
 /* import { StaticImageData } from "next/image"; */
 
 export interface reject {
-  currentYear: string;
-  currentSeason: string;
+  year: string;
+  season: string;
   nextYear: string;
   nextSeason: string;
   status: "reject";
 }
 
 export interface sparkAccept {
-  currentYear: string;
-  currentSeason: string;
+  year: string;
+  season: string;
   /* emailBanner: StaticImageData;
   linkedinBanner: StaticImageData; */
   projectName: string;
@@ -25,8 +25,8 @@ export interface sparkAccept {
 }
 
 export interface createAccept {
-  currentYear: string;
-  currentSeason: string;
+  year: string;
+  season: string;
   /* emailBanner: StaticImageData;
   linkedinBanner: StaticImageData; */
   beginningWeekOf: string;
@@ -34,8 +34,8 @@ export interface createAccept {
 }
 
 export interface forgeAccept {
-  currentYear: string;
-  currentSeason: string;
+  year: string;
+  season: string;
   /* emailBanner: StaticImageData;
   linkedinBanner: StaticImageData; */
   projectName: string;

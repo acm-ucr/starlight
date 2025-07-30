@@ -278,7 +278,7 @@ const Card = ({ program }: CardProps) => {
 
     const selectedIds = table
       .getSelectedRowModel()
-      .rows.map((row) => row.original);
+      .rows.map((row) => `${row.original.season.toLowerCase()}${row.original.year}`);
 
     if (!selectedIds.length) return;
 
@@ -294,6 +294,7 @@ const Card = ({ program }: CardProps) => {
 
       if (!res.ok) {
         const json = await res.json();
+        toaster("Failed to delete template(s)", "error");
         throw new Error(json.message);
       }
       toaster(`${selectedIds.length} template(s) deleted!`, "success");

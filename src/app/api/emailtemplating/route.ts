@@ -13,7 +13,8 @@ type TemplatePayload = {
   location: string;
   timeful: string;
   repo: string;
-  beginningWeekOf: string; // comes in as string
+  beginningWeekOf: string;
+  contactForHelpBy: string;
 };
 
 export const GET = async (req: Request) => {
@@ -101,6 +102,7 @@ export const POST = async (req: Request) => {
       timeful,
       repo,
       beginningWeekOf,
+      contactForHelpBy,
     } = body;
 
     if (
@@ -112,6 +114,7 @@ export const POST = async (req: Request) => {
       !timeful ||
       !repo ||
       !beginningWeekOf
+      || !contactForHelpBy
     ) {
       return res.json({ message: "Invalid request body" }, { status: 400 });
     }
@@ -157,6 +160,8 @@ export const POST = async (req: Request) => {
     );
   }
   try{
-    
+    const {program, status, season, year}: { program: string; status: string; season: string; year: string } = await req.json();
+    if(!program || !status || !Array.isArray)
   }
-} */
+}
+ */
