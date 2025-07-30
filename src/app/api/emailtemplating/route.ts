@@ -113,8 +113,8 @@ export const POST = async (req: Request) => {
       !location ||
       !timeful ||
       !repo ||
-      !beginningWeekOf
-      || !contactForHelpBy
+      !beginningWeekOf ||
+      !contactForHelpBy
     ) {
       return res.json({ message: "Invalid request body" }, { status: 400 });
     }

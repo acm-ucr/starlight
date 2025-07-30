@@ -278,7 +278,9 @@ const Card = ({ program }: CardProps) => {
 
     const selectedIds = table
       .getSelectedRowModel()
-      .rows.map((row) => `${row.original.season.toLowerCase()}${row.original.year}`);
+      .rows.map(
+        (row) => `${row.original.season.toLowerCase()}${row.original.year}`,
+      );
 
     if (!selectedIds.length) return;
 

@@ -32,7 +32,7 @@ export const ATTRIBUTES: Attributes = {
   timeful: "",
   repo: "",
   beginningWeekOf: "",
-  contactForHelpBy: "", 
+  contactForHelpBy: "",
   /* emailBanner: StaticImageData;
   linkedinBanner: StaticImageData;*/
 };
@@ -46,7 +46,7 @@ interface Fields extends BaseFields {
   repo: TextInput;
   beginningWeekOf: DateInput;
   contactForHelpBy: DateInput;
-   /* emailBanner: UploadInput;
+  /* emailBanner: UploadInput;
     linkedinBanner: UploadInput;*/
 }
 export const Fields: Fields = {
