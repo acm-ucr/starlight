@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
-import { getDoc, doc, collection, getDocs, setDoc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  collection,
+  getDocs,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { AUTH } from "@/data/admin/dashboard";
 
@@ -123,7 +130,7 @@ export const POST = async (req: Request) => {
     await setDoc(programDocRef, { merge: true });
 
     const collectionRef = collection(programDocRef, status.toLowerCase());
-    const docId = `${season.toLowerCase()}${year}`;
+    const docId = `${program}${season.toLowerCase()}${year}${status.toLowerCase()}`;
     const docRef = doc(collectionRef, docId);
 
     const data = {
@@ -150,18 +157,63 @@ export const POST = async (req: Request) => {
     );
   }
 };
-/* export const DELETE = async (req: Request) => {
+export const DELETE = async (req: Request) => {
   const res = NextResponse;
-  const { auth, message} = await authenticate (AUTH.DELETE);
+  const { auth, message } = await authenticate(AUTH.DELETE);
   if (auth !== 200) {
     return res.json(
       { message: `Authentication Error: ${message}` },
       { status: auth },
     );
   }
-  try{
-    const {program, status, season, year}: { program: string; status: string; season: string; year: string } = await req.json();
-    if(!program || !status || !Array.isArray)
+  try {
+    const { program, templateIds }: { program: string; templateIds: string[] } =
+      await req.json();
+    if (!program || !templateIds || !templateIds.length) {
+      return res.json({ message: "Invalid request body" }, { status: 400 });
+    }
+
+    const programRef = doc(db, "templates", program);
+    const programSnap = await getDoc(programRef);
+
+    if (!programSnap.exists()) {
+      return res.json(
+        { message: `Program "${program}" not found` },
+        { status: 404 },
+      );
+    }
+
+    const deletedFrom: string[] = [];
+    const statusNames = ["accept", "reject", "interview"];
+
+    for (const templateId of templateIds) {
+      for (const status of statusNames) {
+        const statusColRef = collection(db, "templates", program, status);
+        const docRef = doc(statusColRef, templateId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          await deleteDoc(docRef);
+          deletedFrom.push(`${status}:${templateId}`);
+        }
+      }
+    }
+
+    if (deletedFrom.length === 0) {
+      return res.json(
+        { message: `No templates found with the provided IDs` },
+        { status: 404 },
+      );
+    }
+
+    return res.json(
+      { message: `Deleted templates from: ${deletedFrom.join(", ")}` },
+      { status: 200 },
+    );
+  } catch (err) {
+    return res.json(
+      { message: `Internal Server Error: ${(err as Error).message}` },
+      { status: 500 },
+    );
   }
-}
- */
+};

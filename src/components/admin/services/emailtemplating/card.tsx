@@ -279,13 +279,14 @@ const Card = ({ program }: CardProps) => {
     const selectedIds = table
       .getSelectedRowModel()
       .rows.map(
-        (row) => `${row.original.season.toLowerCase()}${row.original.year}`,
+        (row) =>
+          `${program.toLowerCase()}${row.original.season.toLowerCase()}${row.original.year}${row.original.status.toLowerCase()}`,
       );
-
+    console.log("Attempting to delete these IDs:", selectedIds);
     if (!selectedIds.length) return;
 
     try {
-      const res = await fetch("/api/emailtemplates", {
+      const res = await fetch("/api/emailtemplating", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
