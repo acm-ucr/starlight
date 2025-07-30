@@ -7,6 +7,7 @@ export type Member = {
   discord: string;
   status: Code;
   uid: number;
+  team: string;
 };
 
 export type Admin = {
