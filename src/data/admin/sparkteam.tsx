@@ -5,13 +5,7 @@ import { Member } from "@/types/users";
 import { generateSelect, generateStatus } from "./columns";
 import { STATUSES } from "@/data/statuses";
 import { ColumnType } from "@/types/dashboard";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import TeamSelect from "@/components/admin/dashboards/dashboard/teamSelect";
 
 export const TAGS: Tags[] = [
   {
@@ -106,42 +100,22 @@ export const COLUMNS: ColumnType<Member>[] = [
     enableColumnFilter: true,
     filterFn: "includesString",
     searchable: true,
-    cell: ({ row }) => {
-      const [team, setTeam] = useState("Select a Team");
-
-      function handleSelect(projectTeam: string) {
-        setTeam(projectTeam);
-      }
-
-      return (
-        <div
-          onClick={(e) => {
-            row.getToggleSelectedHandler()(e);
-            row.getToggleExpandedHandler()();
-          }}
-          className="hover:cursor-pointer"
-        >
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="bg-starlight-table-selected cursor-pointer rounded-lg border-2 border-black px-2 text-center">
-                {team}
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onSelect={() => handleSelect("ULA")}>
-                ULA
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => handleSelect("TSU")}>
-                TSU
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => handleSelect("AISC")}>
-                AISC
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
+    cell: ({ row }) => (
+      <div
+        onClick={(e) => {
+          row.getToggleSelectedHandler()(e);
+          row.getToggleExpandedHandler()();
+        }}
+        className="hover:cursor-pointer"
+      >
+        <TeamSelect
+          uid={row.original.uid}
+          currentTeam={row.getValue("team")}
+          status={row.getValue("status")}
+          track="spark"
+        />
+      </div>
+    ),
   },
 
   generateStatus(STATUSES),

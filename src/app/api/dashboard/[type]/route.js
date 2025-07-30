@@ -155,6 +155,7 @@ export const GET = async (req, context) => {
         selected: false,
         hidden: false,
         interviewNotes: data.interviewNotes?.[firestoreType] ?? "",
+        team: data.team?.[firestoreType] ?? "",
       });
     });
 
@@ -207,24 +208,33 @@ export const PUT = async (req, context) => {
       { status: auth },
     );
   }
+
   try {
     if (types.has(params.type)) {
-      objects.map(async (object) => {
-        await updateDoc(doc(db, "users", object.uid), {
-          [`roles.${firestoreType}`]: status,
-          [`interviewNotes.${params.type}`]: object.interviewNotes,
-        });
-      });
+      await Promise.all(
+        objects.map(async (object) => {
+          const updateData = {
+            [`roles.${firestoreType}`]: status,
+          };
+          if (object.interviewNotes !== undefined) {
+            updateData[`interviewNotes.${params.type}`] = object.interviewNotes;
+          }
+          if (object.team !== undefined) {
+            updateData[`team.${params.type}`] = object.team;
+          }
+          await updateDoc(doc(db, "users", object.uid), updateData);
+        }),
+      );
     }
     return res.json({ message: "OK" }, { status: 200 });
   } catch (err) {
+    console.error("PUT Error:", err);
     return res.json(
       { message: `Internal Server Error: ${err}` },
       { status: 500 },
     );
   }
 };
-
 export const DELETE = async (req, context) => {
   const res = NextResponse;
   const params = await context.params;

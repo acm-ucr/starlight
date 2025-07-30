@@ -13,6 +13,12 @@ export type Member = {
     create: string;
     das: string;
   };
+  team: {
+    spark: string;
+    forge: string;
+    create: string;
+    das: string;
+  };
 };
 
 export type Admin = {
