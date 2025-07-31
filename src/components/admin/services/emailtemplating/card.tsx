@@ -219,7 +219,6 @@ const Card = ({ program }: CardProps) => {
   const tableRef = useRef<TableInstance<EmailTemplate> | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["templates", program],
@@ -261,7 +260,6 @@ const Card = ({ program }: CardProps) => {
   useEffect(() => {
     if (!api) return;
 
-    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap());
 
     const handleSelect = () => {
