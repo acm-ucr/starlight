@@ -77,7 +77,7 @@ const TeamSelect = ({ uid, status, currentTeam, track }: teamSelectTypes) => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="bg-starlight-table-selected cursor-pointer rounded-lg border-2 border-black px-2 text-center">
-            {newTeam}
+            {newTeam || "TBD"}
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
