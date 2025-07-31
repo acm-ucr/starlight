@@ -19,7 +19,6 @@ const Spark = () => {
     email: session?.user.email || "",
     roles: session?.user.roles || {},
     form: "spark",
-    team: "undefined",
   });
 
   if (!session?.user) return null;
