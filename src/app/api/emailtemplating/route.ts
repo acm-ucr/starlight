@@ -102,7 +102,7 @@ export const POST = async (req: Request) => {
 
     let data: TemplateFields;
 
-    if (status.toLowerCase() === "accept") {
+    if (status.toLowerCase() === "accept" && program === "spark") {
       data = {
         program: program.toLowerCase(),
         season,
@@ -113,6 +113,34 @@ export const POST = async (req: Request) => {
         repo: body.repo,
         beginningWeekOf: new Date(body.beginningWeekOf),
         contactForHelpBy: new Date(body.contactForHelpBy),
+      };
+    } else if (status.toLowerCase() === "accept" && program === "forge") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        timeful: body.timeful,
+        beginningWeekOf: new Date(body.beginningWeekOf),
+        completeBy: new Date(body.completeBy),
+      };
+    } else if (status.toLowerCase() === "accept" && program === "create") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        beginningWeekOf: new Date(body.beginningWeekOf),
+      };
+    } else if (status.toLowerCase() === "accept" && program === "das") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        timeful: body.timeful,
+        beginningWeekOf: new Date(body.beginningWeekOf),
+        completeBy: new Date(body.completeBy),
       };
     } else if (status.toLowerCase() === "reject") {
       data = {

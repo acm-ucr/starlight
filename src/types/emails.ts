@@ -15,55 +15,36 @@ export interface SparkAcceptTemplateFields extends CoreTemplateFields {
   contactForHelpBy: Date;
 }
 
+export interface ForgeAcceptTemplateFields extends CoreTemplateFields {
+  timeful: string;
+  beginningWeekOf: Date;
+  completeBy: Date;
+}
+
+export interface CreateAcceptTemplateFields extends CoreTemplateFields {
+  beginningWeekOf: Date;
+}
+
+export interface DasAcceptTemplateFields extends CoreTemplateFields {
+  timeful: string;
+  beginningWeekOf: Date;
+  completeBy: Date;
+}
+
 export interface RejectTemplateFields extends CoreTemplateFields {
   nextYear: string;
   nextSeason: string;
 }
 
-export interface SparkInterviewTemplateFields extends CoreTemplateFields {
+export interface InterviewTemplateFields extends CoreTemplateFields {
   calendly: string;
   completeBy: Date;
 }
 
 export type TemplateFields =
   | SparkAcceptTemplateFields
+  | ForgeAcceptTemplateFields
+  | CreateAcceptTemplateFields
+  | DasAcceptTemplateFields
   | RejectTemplateFields
-  | SparkInterviewTemplateFields;
-
-export interface sparkAccept {
-  year: string;
-  season: string;
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; */
-  projectName: string;
-  timeful: string;
-  repo: string;
-  beginningWeekOf: string;
-  location: string;
-  contactForHelpBy: string;
-  lead1: string;
-  lead2: string;
-  status: "accept";
-}
-
-export interface createAccept {
-  year: string;
-  season: string;
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; */
-  beginningWeekOf: string;
-  status: "accept";
-}
-
-export interface forgeAccept {
-  year: string;
-  season: string;
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData; */
-  projectName: string;
-  projectSubname?: string;
-  timeful: string;
-  beginningWeekOf: string;
-  deadline: string;
-  status: "accept";
-}
+  | InterviewTemplateFields;

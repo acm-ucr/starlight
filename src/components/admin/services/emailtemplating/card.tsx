@@ -40,11 +40,17 @@ import {
   COREATTRIBUTES,
   SPARKACCEPTFIELDS,
   SPARKACCEPTATTRIBUTES,
+  CREATEACCEPTATTRIBUTES,
+  CREATEACCEPTFIELDS,
+  FORGEACCEPTFIELDS,
+  FORGEACCEPTATTRIBUTES,
+  DASACCEPTATTRIBUTES,
+  DASACCEPTFIELDS,
   REJECTFIELDS,
   REJECTATTRIBUTES,
-  SPARKINTERVIEWFIELDS,
-  SPARKINTERVIEWATTRIBUTES,
-} from "@/data/admin/services/emailtemplating/spark";
+  INTERVIEWFIELDS,
+  INTERVIEWATTRIBUTES,
+} from "@/data/admin/services/emailtemplating/questions";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   BaseFields,
@@ -227,27 +233,44 @@ const Card = ({ program }: CardProps) => {
   useEffect(() => {
     if (newTemplate.status) {
       setStatusSelected(true);
-      switch (newTemplate.status.toLowerCase()) {
-        case "accept":
-          setCurrentFields({ ...COREFIELDS, ...SPARKACCEPTFIELDS });
-          setNewTemplate((prev) => ({ ...prev, ...SPARKACCEPTATTRIBUTES }));
-          break;
-        case "reject":
-          setCurrentFields({ ...COREFIELDS, ...REJECTFIELDS });
-          setNewTemplate((prev) => ({ ...prev, ...REJECTATTRIBUTES }));
-          break;
-        case "interview":
-          setCurrentFields({ ...COREFIELDS, ...SPARKINTERVIEWFIELDS });
-          setNewTemplate((prev) => ({ ...prev, ...SPARKINTERVIEWATTRIBUTES }));
-          break;
-        default:
-          setCurrentFields(COREFIELDS);
+      const status = newTemplate.status.toLowerCase();
+      const programName = program.toLowerCase();
+
+      if (status === "accept") {
+        switch (programName) {
+          case "spark":
+            setCurrentFields({ ...COREFIELDS, ...SPARKACCEPTFIELDS });
+            setNewTemplate((prev) => ({ ...prev, ...SPARKACCEPTATTRIBUTES }));
+            break;
+          case "forge":
+            setCurrentFields({ ...COREFIELDS, ...FORGEACCEPTFIELDS });
+            setNewTemplate((prev) => ({ ...prev, ...FORGEACCEPTATTRIBUTES }));
+            break;
+          case "das":
+            setCurrentFields({ ...COREFIELDS, ...DASACCEPTFIELDS });
+            setNewTemplate((prev) => ({ ...prev, ...DASACCEPTATTRIBUTES }));
+            break;
+          case "create":
+            setCurrentFields({ ...COREFIELDS, ...CREATEACCEPTFIELDS });
+            setNewTemplate((prev) => ({ ...prev, ...CREATEACCEPTATTRIBUTES }));
+            break;
+          default:
+            setCurrentFields(COREFIELDS);
+        }
+      } else if (status === "reject") {
+        setCurrentFields({ ...COREFIELDS, ...REJECTFIELDS });
+        setNewTemplate((prev) => ({ ...prev, ...REJECTATTRIBUTES }));
+      } else if (status === "interview") {
+        setCurrentFields({ ...COREFIELDS, ...INTERVIEWFIELDS });
+        setNewTemplate((prev) => ({ ...prev, ...INTERVIEWATTRIBUTES }));
+      } else {
+        setCurrentFields(COREFIELDS);
       }
     } else {
       setStatusSelected(false);
       setCurrentFields(COREFIELDS);
     }
-  }, [newTemplate.status]);
+  }, [newTemplate.status, program]);
 
   const isFormValid = useMemo(() => {
     return Object.entries(currentFields).every(([key, config]) => {

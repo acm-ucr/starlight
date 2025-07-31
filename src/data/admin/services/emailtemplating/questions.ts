@@ -172,21 +172,21 @@ export const REJECTFIELDS: RejectFields = {
     editable: true,
   },
 };
-interface SparkInterviewAttributes {
+interface InterviewAttributes {
   calendly: string;
   completeBy: string;
 }
 
-export const SPARKINTERVIEWATTRIBUTES: SparkInterviewAttributes = {
+export const INTERVIEWATTRIBUTES: InterviewAttributes = {
   calendly: "",
   completeBy: "",
 };
 
-interface SparkInterviewFields extends BaseFields {
+interface InterviewFields extends BaseFields {
   calendly: TextInput;
   completeBy: DateInput;
 }
-export const SPARKINTERVIEWFIELDS: SparkInterviewFields = {
+export const INTERVIEWFIELDS: InterviewFields = {
   calendly: {
     input: "input",
     name: "Calendly",
@@ -201,6 +201,123 @@ export const SPARKINTERVIEWFIELDS: SparkInterviewFields = {
   completeBy: {
     input: "date",
     title: "Complete Interview By",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+};
+
+interface CreateAcceptAttributes {
+  beginningWeekOf: string;
+}
+
+export const CREATEACCEPTATTRIBUTES: CreateAcceptAttributes = {
+  beginningWeekOf: "",
+};
+
+interface CreateAcceptFields extends BaseFields {
+  beginningWeekOf: DateInput;
+  /* emailBanner: UploadInput;
+    linkedinBanner: UploadInput;*/
+}
+export const CREATEACCEPTFIELDS: CreateAcceptFields = {
+  beginningWeekOf: {
+    input: "date",
+    title: "Beginning Week Of",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+};
+
+interface ForgeAcceptAttributes {
+  timeful: string;
+  beginningWeekOf: string;
+  completeBy: string;
+  emailBanner?: StaticImageData;
+  linkedinBanner?: StaticImageData;
+}
+export const FORGEACCEPTATTRIBUTES: ForgeAcceptAttributes = {
+  timeful: "",
+  beginningWeekOf: "",
+  completeBy: "",
+};
+interface ForgeAcceptFields extends BaseFields {
+  timeful: TextInput;
+  beginningWeekOf: DateInput;
+  completeBy: DateInput;
+  /* emailBanner: UploadInput;
+    linkedinBanner: UploadInput;*/
+}
+export const FORGEACCEPTFIELDS: ForgeAcceptFields = {
+  timeful: {
+    input: "input",
+    name: "Timeful",
+    type: "text",
+    title: "Timeful",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. https://timeful.app/e/ST4NL3Y",
+  },
+  beginningWeekOf: {
+    input: "date",
+    title: "Beginning Week Of",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+  completeBy: {
+    input: "date",
+    title: "Complete Schej & Intent to Participate By",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+};
+
+interface DasAcceptAttributes {
+  timeful: string;
+  beginningWeekOf: string;
+  completeBy: string;
+  emailBanner?: StaticImageData;
+  linkedinBanner?: StaticImageData;
+}
+export const DASACCEPTATTRIBUTES: DasAcceptAttributes = {
+  timeful: "",
+  beginningWeekOf: "",
+  completeBy: "",
+};
+interface DasAcceptFields extends BaseFields {
+  timeful: TextInput;
+  beginningWeekOf: DateInput;
+  completeBy: DateInput;
+  /* emailBanner: UploadInput;
+    linkedinBanner: UploadInput;*/
+}
+export const DASACCEPTFIELDS: DasAcceptFields = {
+  timeful: {
+    input: "input",
+    name: "Timeful",
+    type: "text",
+    title: "Timeful",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. https://timeful.app/e/ST4NL3Y",
+  },
+  beginningWeekOf: {
+    input: "date",
+    title: "Beginning Week Of",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+  completeBy: {
+    input: "date",
+    title: "Complete Schej & Intent to Participate By",
     width: 12,
     editable: true,
     required: true,
