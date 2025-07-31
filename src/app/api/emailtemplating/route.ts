@@ -10,19 +10,7 @@ import {
 } from "firebase/firestore";
 import { authenticate } from "@/utils/auth";
 import { AUTH } from "@/data/admin/dashboard";
-
-type TemplatePayload = {
-  program: string;
-  season: string;
-  year: string;
-  status: string;
-  projectName: string;
-  location: string;
-  timeful: string;
-  repo: string;
-  beginningWeekOf: string;
-  contactForHelpBy: string;
-};
+import { TemplateFields } from "@/types/emails";
 
 export const GET = async (req: Request) => {
   const res = NextResponse;
@@ -98,32 +86,11 @@ export const POST = async (req: Request) => {
   }
 
   try {
-    const body = (await req.json()) as Partial<TemplatePayload>;
+    const body = await req.json();
+    const { program, season, year, status } = body;
 
-    const {
-      program,
-      season,
-      year,
-      status,
-      location,
-      timeful,
-      repo,
-      beginningWeekOf,
-      contactForHelpBy,
-    } = body;
-
-    if (
-      !program ||
-      !season ||
-      !year ||
-      !status ||
-      !location ||
-      !timeful ||
-      !repo ||
-      !beginningWeekOf ||
-      !contactForHelpBy
-    ) {
-      return res.json({ message: "Invalid request body" }, { status: 400 });
+    if (!program || !season || !year || !status) {
+      return res.json({ message: "Missing required fields" }, { status: 400 });
     }
 
     const programDocRef = doc(db, "templates", program.toLowerCase());
@@ -133,16 +100,44 @@ export const POST = async (req: Request) => {
     const docId = `${program}${season.toLowerCase()}${year}${status.toLowerCase()}`;
     const docRef = doc(collectionRef, docId);
 
-    const data = {
-      program: program.toLowerCase(),
-      season,
-      year,
-      status,
-      location,
-      timeful,
-      repo,
-      beginningWeekOf: new Date(beginningWeekOf),
-    };
+    let data: TemplateFields;
+
+    if (status.toLowerCase() === "accept") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        location: body.location,
+        timeful: body.timeful,
+        repo: body.repo,
+        beginningWeekOf: new Date(body.beginningWeekOf),
+        contactForHelpBy: new Date(body.contactForHelpBy),
+      };
+    } else if (status.toLowerCase() === "reject") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        nextYear: body.nextYear,
+        nextSeason: body.nextSeason,
+      };
+    } else if (status.toLowerCase() === "interview") {
+      data = {
+        program: program.toLowerCase(),
+        season,
+        year,
+        status,
+        calendly: body.calendly,
+        completeBy: new Date(body.completeBy),
+      };
+    } else {
+      return res.json(
+        { message: `Invalid status: ${status}` },
+        { status: 400 },
+      );
+    }
 
     await setDoc(docRef, data);
 
@@ -157,6 +152,7 @@ export const POST = async (req: Request) => {
     );
   }
 };
+
 export const DELETE = async (req: Request) => {
   const res = NextResponse;
   const { auth, message } = await authenticate(AUTH.DELETE);

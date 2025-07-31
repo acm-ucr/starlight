@@ -1,55 +1,32 @@
-/* import { StaticImageData } from "next/image"; */
-
+import { StaticImageData } from "next/image";
 import { LOCATIONS, SEASONS, STATUSES } from "@/data/information";
 import {
   BaseFields,
   DateInput,
-
-  /*   Description, */
   RadioInput,
   TextInput,
-  /*   SelectInput, */
+  /* SelectInput, */
 } from "@/types/forms";
 
-interface Attributes {
-  season: "";
+interface CoreAttributes {
+  season: string;
   year: string;
-  status: "";
-  location: string;
-  timeful: string;
-  repo: string;
-  beginningWeekOf: string;
-  contactForHelpBy: string;
-  /*emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData;*/
+  status: string;
 }
 
-export const ATTRIBUTES: Attributes = {
+export const COREATTRIBUTES: CoreAttributes = {
   season: "",
   year: "",
   status: "",
-  location: "",
-  timeful: "",
-  repo: "",
-  beginningWeekOf: "",
-  contactForHelpBy: "",
-  /* emailBanner: StaticImageData;
-  linkedinBanner: StaticImageData;*/
 };
 
-interface Fields extends BaseFields {
-  year: TextInput;
+interface CoreFields extends BaseFields {
   season: RadioInput;
+  year: TextInput;
   status: RadioInput;
-  location: RadioInput;
-  timeful: TextInput;
-  repo: TextInput;
-  beginningWeekOf: DateInput;
-  contactForHelpBy: DateInput;
-  /* emailBanner: UploadInput;
-    linkedinBanner: UploadInput;*/
 }
-export const Fields: Fields = {
+
+export const COREFIELDS: CoreFields = {
   season: {
     input: "radio",
     text: "Season",
@@ -79,6 +56,39 @@ export const Fields: Fields = {
     required: true,
     editable: true,
   },
+};
+
+interface SparkAcceptAttributes {
+  location: string;
+  timeful: string;
+  repo: string;
+  beginningWeekOf: string;
+  contactForHelpBy: string;
+  emailBanner?: StaticImageData;
+  linkedinBanner?: StaticImageData;
+  lead1: string;
+  lead2?: string;
+}
+
+export const SPARKACCEPTATTRIBUTES: SparkAcceptAttributes = {
+  location: "",
+  timeful: "",
+  repo: "",
+  beginningWeekOf: "",
+  contactForHelpBy: "",
+  lead1: "",
+};
+
+interface SparkAcceptFields extends BaseFields {
+  location: RadioInput;
+  timeful: TextInput;
+  repo: TextInput;
+  beginningWeekOf: DateInput;
+  contactForHelpBy: DateInput;
+  /* emailBanner: UploadInput;
+    linkedinBanner: UploadInput;*/
+}
+export const SPARKACCEPTFIELDS: SparkAcceptFields = {
   location: {
     input: "radio",
     text: "Meeting Location",
@@ -120,6 +130,77 @@ export const Fields: Fields = {
   contactForHelpBy: {
     input: "date",
     title: "Contact for help by",
+    width: 12,
+    editable: true,
+    required: true,
+  },
+};
+interface RejectAttributes {
+  nextYear: string;
+  nextSeason: string;
+}
+
+export const REJECTATTRIBUTES: RejectAttributes = {
+  nextYear: "",
+  nextSeason: "",
+};
+
+interface RejectFields extends BaseFields {
+  nextYear: TextInput;
+  nextSeason: RadioInput;
+}
+
+export const REJECTFIELDS: RejectFields = {
+  nextYear: {
+    input: "input",
+    name: "Next Year",
+    type: "text",
+    title: "Next Year",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. 2024",
+  },
+  nextSeason: {
+    input: "radio",
+    text: "Next Season",
+    options: SEASONS,
+    field: "nextSeason",
+    width: 12,
+    required: true,
+    editable: true,
+  },
+};
+interface SparkInterviewAttributes {
+  calendly: string;
+  completeBy: string;
+}
+
+export const SPARKINTERVIEWATTRIBUTES: SparkInterviewAttributes = {
+  calendly: "",
+  completeBy: "",
+};
+
+interface SparkInterviewFields extends BaseFields {
+  calendly: TextInput;
+  completeBy: DateInput;
+}
+export const SPARKINTERVIEWFIELDS: SparkInterviewFields = {
+  calendly: {
+    input: "input",
+    name: "Calendly",
+    type: "text",
+    title: "Calendly Interview Link",
+    maxLength: 50,
+    width: 12,
+    editable: true,
+    required: true,
+    placeholder: "eg. calendly.com/acmucr/acm-spark-summer-25",
+  },
+  completeBy: {
+    input: "date",
+    title: "Complete Interview By",
     width: 12,
     editable: true,
     required: true,

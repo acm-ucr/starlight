@@ -36,8 +36,14 @@ import { useRef, useState, useEffect, useMemo } from "react";
 import type { Table as TableInstance } from "@tanstack/react-table";
 import toaster from "@/utils/toaster";
 import {
-  Fields,
-  ATTRIBUTES,
+  COREFIELDS,
+  COREATTRIBUTES,
+  SPARKACCEPTFIELDS,
+  SPARKACCEPTATTRIBUTES,
+  REJECTFIELDS,
+  REJECTATTRIBUTES,
+  SPARKINTERVIEWFIELDS,
+  SPARKINTERVIEWATTRIBUTES,
 } from "@/data/admin/services/emailtemplating/spark";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -207,7 +213,9 @@ const fetchEmailTemplates = async (program: string) => {
 };
 
 const Card = ({ program }: CardProps) => {
-  const [newTemplate, setNewTemplate] = useState(ATTRIBUTES);
+  const [newTemplate, setNewTemplate] = useState(COREATTRIBUTES);
+  const [currentFields, setCurrentFields] = useState(COREFIELDS);
+  const [statusSelected, setStatusSelected] = useState(false);
   const tableRef = useRef<TableInstance<EmailTemplate> | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -217,14 +225,38 @@ const Card = ({ program }: CardProps) => {
     queryKey: ["templates", program],
     queryFn: () => fetchEmailTemplates(program.toLowerCase()),
   });
+  useEffect(() => {
+    if (newTemplate.status) {
+      setStatusSelected(true);
+      switch (newTemplate.status.toLowerCase()) {
+        case "accept":
+          setCurrentFields({ ...COREFIELDS, ...SPARKACCEPTFIELDS });
+          setNewTemplate((prev) => ({ ...prev, ...SPARKACCEPTATTRIBUTES }));
+          break;
+        case "reject":
+          setCurrentFields({ ...COREFIELDS, ...REJECTFIELDS });
+          setNewTemplate((prev) => ({ ...prev, ...REJECTATTRIBUTES }));
+          break;
+        case "interview":
+          setCurrentFields({ ...COREFIELDS, ...SPARKINTERVIEWFIELDS });
+          setNewTemplate((prev) => ({ ...prev, ...SPARKINTERVIEWATTRIBUTES }));
+          break;
+        default:
+          setCurrentFields(COREFIELDS);
+      }
+    } else {
+      setStatusSelected(false);
+      setCurrentFields(COREFIELDS);
+    }
+  }, [newTemplate.status]);
 
   const isFormValid = useMemo(() => {
-    return Object.entries(Fields).every(([key, config]) => {
+    return Object.entries(currentFields).every(([key, config]) => {
       if (!config.required) return true;
       const value = newTemplate[key as keyof typeof newTemplate];
       return !!value;
     });
-  }, [newTemplate]);
+  }, [newTemplate, currentFields]);
 
   useEffect(() => {
     if (!api) return;
@@ -243,7 +275,10 @@ const Card = ({ program }: CardProps) => {
     };
   }, [api]);
 
-  const isOnLastPage = current === count - 1;
+  const isOnLastPage = useMemo(() => {
+    if (!api) return false;
+    return current === api.scrollSnapList().length - 1;
+  }, [current, api, currentFields]);
 
   const addTemplate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -264,7 +299,9 @@ const Card = ({ program }: CardProps) => {
         throw new Error(json.message || "Failed to add template");
       }
       toaster(`Template added!`, "success");
-      setNewTemplate(ATTRIBUTES);
+      setNewTemplate(COREATTRIBUTES);
+      setCurrentFields(COREFIELDS);
+      setStatusSelected(false);
       await refetch();
       setDialogOpen(false);
     } catch (err) {
@@ -319,7 +356,11 @@ const Card = ({ program }: CardProps) => {
             open={dialogOpen}
             onOpenChange={(open) => {
               setDialogOpen(open);
-              if (!open) setNewTemplate(ATTRIBUTES);
+              if (!open) {
+                setNewTemplate(COREATTRIBUTES);
+                setCurrentFields(COREFIELDS);
+                setStatusSelected(false);
+              }
             }}
           >
             <DialogTrigger asChild>
@@ -339,7 +380,7 @@ const Card = ({ program }: CardProps) => {
 
                 <Carousel className="mx-auto w-full max-w-xs" setApi={setApi}>
                   <DynamicFormRenderer
-                    fields={Fields}
+                    fields={currentFields}
                     formData={newTemplate}
                     setFormData={setNewTemplate}
                   />
@@ -355,7 +396,7 @@ const Card = ({ program }: CardProps) => {
                   </DialogClose>
                   <Button
                     type="submit"
-                    disabled={!isFormValid || !isOnLastPage}
+                    disabled={!isFormValid || (!statusSelected && isOnLastPage)}
                   >
                     Create Template
                   </Button>
