@@ -6,7 +6,6 @@ interface Attributes {
   email: string;
   discord: string;
   pastProjects: string;
-  team: string;
 }
 
 interface Fields extends BaseFields {
@@ -24,7 +23,6 @@ export const ATTRIBUTES: Attributes = {
   email: "",
   discord: "",
   pastProjects: "",
-  team: "Unassigned",
 };
 
 export const FIELDS: Fields = {
