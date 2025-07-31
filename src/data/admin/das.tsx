@@ -3,6 +3,7 @@ import { Member } from "@/types/users";
 import { generateSelect, generateStatus } from "./columns";
 import { STATUSES } from "@/data/statuses";
 import { ColumnType } from "@/types/dashboard";
+import InterviewNotes from "@/components/admin/dashboards/dashboard/interviewNotes";
 
 export const TAGS: Tags[] = [
   {
@@ -110,5 +111,22 @@ export const COLUMNS: ColumnType<Member>[] = [
     ),
   },
   generateStatus(STATUSES),
+  {
+    accessorKey: "interviewNotes",
+    header: "Interview Notes",
+    enableColumnFilter: false,
+    filterFn: "includesString",
+    searchable: true,
+    cell: ({ row }) => (
+      <div className="p-2 hover:cursor-pointer">
+        <InterviewNotes
+          uid={row.original.uid}
+          currentNotes={row.getValue("interviewNotes")}
+          status={row.getValue("status")}
+          track="das"
+        />
+      </div>
+    ),
+  },
 ];
 export type DASColumnsProps = typeof COLUMNS;

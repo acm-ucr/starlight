@@ -154,6 +154,7 @@ export const GET = async (req, context) => {
         status: data.roles[firestoreType],
         selected: false,
         hidden: false,
+        interviewNotes: data.interviewNotes?.[firestoreType] ?? "",
       });
     });
 
@@ -211,6 +212,7 @@ export const PUT = async (req, context) => {
       objects.map(async (object) => {
         await updateDoc(doc(db, "users", object.uid), {
           [`roles.${firestoreType}`]: status,
+          [`interviewNotes.${params.type}`]: object.interviewNotes,
         });
       });
     }
