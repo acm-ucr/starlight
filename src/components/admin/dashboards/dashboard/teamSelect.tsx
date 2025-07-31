@@ -1,22 +1,9 @@
-// import { Button } from "@/components/ui/button";
-// import {
-//   Dialog,
-//   DialogClose,
-//   DialogContent,
-//   DialogDescription,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-// import { Label } from "@/components/ui/label";
-// import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
@@ -39,7 +26,6 @@ const TeamSelect = ({ uid, status, currentTeam, track }: teamSelectTypes) => {
 
       if (docSnap.exists()) {
         const sparkData = docSnap.data();
-        console.log("Spark:", sparkData.projects);
         setSparkProjects(sparkData.projects);
       } else {
         console.log("No spark projects!");
@@ -65,7 +51,6 @@ const TeamSelect = ({ uid, status, currentTeam, track }: teamSelectTypes) => {
       });
       if (res.ok) {
         setNewTeam(teamName);
-        console.log(res);
       }
     } catch (err) {
       console.error("Failed to update team", err);
@@ -76,7 +61,7 @@ const TeamSelect = ({ uid, status, currentTeam, track }: teamSelectTypes) => {
     <div className="hover:cursor-pointer">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className="bg-starlight-table-selected cursor-pointer rounded-lg border-2 border-black px-2 text-center">
+          <div className="bg-starlight-table-selected mt-2 cursor-pointer rounded-lg border-none px-2 text-center">
             {newTeam || "TBD"}
           </div>
         </DropdownMenuTrigger>

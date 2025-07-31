@@ -228,13 +228,13 @@ export const PUT = async (req, context) => {
     }
     return res.json({ message: "OK" }, { status: 200 });
   } catch (err) {
-    console.error("PUT Error:", err);
     return res.json(
       { message: `Internal Server Error: ${err}` },
       { status: 500 },
     );
   }
 };
+
 export const DELETE = async (req, context) => {
   const res = NextResponse;
   const params = await context.params;
