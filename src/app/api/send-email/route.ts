@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import { AUTH } from "@/data/admin/dashboard"; */
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
-import { Rejection } from "@/components/email/rejection";
+import Rejection from "@/components/email/rejection";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 interface RejectionProps {
   nextSeason: string;
   nextYear: string;
@@ -11,7 +9,7 @@ function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function Rejection({ nextSeason, nextYear, program }: RejectionProps) {
+const Rejection = ({ nextSeason, nextYear, program }: RejectionProps) => {
   return (
     <div>
       Hello, Thank you for taking the time to interview with us for ACM{" "}
@@ -34,3 +32,4 @@ export function Rejection({ nextSeason, nextYear, program }: RejectionProps) {
     </div>
   );
 }
+export default Rejection;
