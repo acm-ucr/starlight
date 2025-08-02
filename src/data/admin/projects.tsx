@@ -41,5 +41,12 @@ const COLUMNS: ColumnDef<Project>[] = [
       <div className="text-center text-white">{row.getValue("project")}</div>
     ),
   },
+  {
+    accessorKey: "Email",
+    header: () => <div className="pt-2 pb-1 text-center text-white">Email</div>,
+    cell: ({ row }) => (
+      <div className="text-center text-white">{row.getValue("project")}</div>
+    ),
+  },
 ];
 export default COLUMNS;

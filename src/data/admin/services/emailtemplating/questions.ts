@@ -172,6 +172,7 @@ export const REJECTFIELDS: RejectFields = {
     editable: true,
   },
 };
+
 interface InterviewAttributes {
   calendly: string;
   completeBy: string;
@@ -220,6 +221,7 @@ interface CreateAcceptFields extends BaseFields {
   /* emailBanner: UploadInput;
     linkedinBanner: UploadInput;*/
 }
+
 export const CREATEACCEPTFIELDS: CreateAcceptFields = {
   beginningWeekOf: {
     input: "date",
