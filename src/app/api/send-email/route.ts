@@ -5,13 +5,8 @@ import { AUTH } from "@/data/admin/dashboard"; */
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import Rejection from "@/components/email/rejection";
-
+import capitalize from "@/utils/capitalize";
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-function capitalizeFirstLetter(str: string): string {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 export const POST = async (req: Request) => {
   try {
@@ -20,7 +15,7 @@ export const POST = async (req: Request) => {
 
     const recipientList = recipients || ["contact.acmucr@gmail.com"];
 
-    const subject = `[ACM ${capitalizeFirstLetter(program)}] Application Status Update`;
+    const subject = `[ACM ${capitalize(program)}] Application Status Update`;
     if (status.toLowerCase() === "accept") {
       console.log("Sending acceptance email");
     } else if (status.toLowerCase() === "reject") {
