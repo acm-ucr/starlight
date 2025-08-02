@@ -31,5 +31,5 @@ const Rejection = ({ nextSeason, nextYear, program }: RejectionProps) => {
       you again for considering joining ACM {capitalizeFirstLetter(program)}.
     </div>
   );
-}
+};
 export default Rejection;
