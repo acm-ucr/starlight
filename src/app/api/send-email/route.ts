@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 /* import { authenticate } from "@/utils/auth";
 import { AUTH } from "@/data/admin/dashboard"; */
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import Rejection from "@/components/email/rejection";
 import capitalize from "@/utils/capitalize";
+import SparkInterview from "@/components/email/interview/sparkinterview";
+import ForgeInterview from "@/components/email/interview/forgeinterview";
+import CreateInterview from "@/components/email/interview/createinterview";
+import DasInterview from "@/components/email/interview/dasinterview";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (req: Request) => {
@@ -15,37 +19,28 @@ export const POST = async (req: Request) => {
 
     const recipientList = recipients || ["contact.acmucr@gmail.com"];
 
-    const subject = `[ACM ${capitalize(program)}] Application Status Update`;
+    const docRef = doc(
+      db,
+      "templates",
+      program.toLowerCase(),
+      status.toLowerCase(),
+      templateId,
+    );
+
+    const snapshot = await getDoc(docRef);
+
+    if (!snapshot.exists()) {
+      throw new Error("No such template document found");
+    }
+    const data = snapshot.data();
+
     if (status.toLowerCase() === "accept") {
       console.log("Sending acceptance email");
     } else if (status.toLowerCase() === "reject") {
-      const docRef = doc(
-        db,
-        "templates",
-        program.toLowerCase(),
-        status.toLowerCase(),
-        templateId,
-      );
-      const snapshot = await getDoc(docRef);
-
-      if (!snapshot.exists()) {
-        console.log(
-          "No such document! Here is the templateId:",
-          templateId,
-          "Here is the program:",
-          program,
-          "and here is the status:",
-          status,
-        );
-        throw new Error("No such template document found");
-      }
-
-      const data = snapshot.data();
-
       await resend.emails.send({
         from: "starlight@ucrhighlanders.org",
         to: recipientList,
-        subject,
+        subject: `[ACM ${capitalize(data.program)}] Application Status Update`,
         react: Rejection({
           program: data.program,
           nextSeason: data.nextSeason,
@@ -53,7 +48,56 @@ export const POST = async (req: Request) => {
         }),
       });
     } else if (status.toLowerCase() === "interview") {
-      console.log("Sending interview email");
+      switch (data.program.toLowerCase()) {
+        case "spark":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] ${data.season} ${data.year} Program Interview`,
+            react: SparkInterview({
+              program: data.program,
+              calendly: data.calendly,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+            }),
+          });
+          break;
+        case "forge":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] ${data.season} ${data.year} Program Interview`,
+            react: ForgeInterview({
+              program: data.program,
+              calendly: data.calendly,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+            }),
+          });
+          break;
+        case "create":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] ${data.season} ${data.year} Program Interview`,
+            react: CreateInterview({
+              program: data.program,
+              calendly: data.calendly,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+            }),
+          });
+          break;
+        case "das":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] ${data.season} ${data.year} Program Interview`,
+            react: DasInterview({
+              program: data.program,
+              calendly: data.calendly,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+            }),
+          });
+          break;
+      }
     }
 
     return NextResponse.json(

@@ -8,7 +8,10 @@ interface RejectionProps {
 const Rejection = ({ nextSeason, nextYear, program }: RejectionProps) => {
   return (
     <div>
-      Hello, Thank you for taking the time to interview with us for ACM{" "}
+      Hello,
+      <br />
+      <br />
+      Thank you for taking the time to interview with us for ACM{" "}
       {capitalize(program)}. We greatly appreciate your interest in the position
       and the effort you've put into the application process.
       <br />
@@ -23,7 +26,7 @@ const Rejection = ({ nextSeason, nextYear, program }: RejectionProps) => {
       <br /> This decision was not a reflection of your abilities or potential
       and we recognize your dedication and enthusiasm for our projects. Feel
       free to be on the lookout for our {nextSeason} {nextYear} ACM{" "}
-      {capitalize(program)} applications in the near future. Thank you again for
+      {capitalize(program)} application in the near future. Thank you again for
       considering joining ACM {capitalize(program)}.
     </div>
   );
