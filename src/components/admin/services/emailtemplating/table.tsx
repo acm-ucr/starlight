@@ -22,7 +22,7 @@ interface ProjectTableProps<TData, TValue> {
   onTableReady?: (table: TableInstance<TData>) => void;
 }
 
-const ProjectTable = <TData, TValue>({
+const EmailTemplateTable = <TData, TValue>({
   columns,
   data,
   onTableReady,
@@ -77,7 +77,7 @@ const ProjectTable = <TData, TValue>({
                 colSpan={columns.length}
                 className="pt-2 text-center text-white"
               >
-                No current projects available.
+                No email templates available.
               </TableCell>
             </TableRow>
           )}
@@ -87,4 +87,4 @@ const ProjectTable = <TData, TValue>({
   );
 };
 
-export default ProjectTable;
+export default EmailTemplateTable;

@@ -7,6 +7,7 @@ export interface Description {
   input: string;
   width: number;
   texts: string[];
+  required?: boolean;
 }
 export type TextInput = Input & {
   input: "input";
@@ -59,11 +60,18 @@ export type TextareaInput = Input & {
   placeholder: string;
 };
 
-type Field =
+export type DateInput = Input & {
+  input: "date";
+  title: string;
+};
+
+export type Field =
   | Description
   | TextInput
   | RadioInput
   | CheckboxInput
-  | TextareaInput;
+  | TextareaInput
+  | SelectInput
+  | DateInput;
 
 export type BaseFields = Record<string, Field>;

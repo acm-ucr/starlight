@@ -117,7 +117,7 @@ const Card = ({ program }: CardProps) => {
         <div className="flex items-center text-3xl text-white">
           <Dialog>
             <DialogTrigger asChild>
-              <CiSquarePlus className="cursor-pointer" />
+              <CiSquarePlus className="cursor-pointer hover:text-blue-400" />
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">

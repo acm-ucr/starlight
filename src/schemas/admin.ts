@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AFFLIATIONS } from "@/data/affliations";
+import { AFFLIATIONS } from "@/data/information";
 
 export const schema = z.object({
   firstName: z.string().min(1, { message: "Last name is invalid" }),
