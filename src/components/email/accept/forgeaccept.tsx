@@ -43,12 +43,12 @@ const ForgeAccept = ({
       channel!
       <br />
       <br />
-      We highly recommend updating your LinkedIn profile, as it serves as your
+      {/* We highly recommend updating your LinkedIn profile, as it serves as your
       professional portfolio, which recruiters and industry professionals will
       view. Below, we have provided an acceptance banner that you can post on
       LinkedIn to show that you work with ACM@UCR.
       <br />
-      <br />
+      <br /> */}
       Furthermore, please fill out this form to let us know about your intent to
       participate.
       <br />

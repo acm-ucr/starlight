@@ -13,6 +13,7 @@ import DasInterview from "@/components/email/interview/dasinterview";
 import SparkAccept from "@/components/email/accept/sparkaccept";
 import CreateAccept from "@/components/email/accept/createaccept";
 import ForgeAccept from "@/components/email/accept/forgeaccept";
+import DasAccept from "@/components/email/accept/dasaccept";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (req: Request) => {
@@ -69,13 +70,25 @@ export const POST = async (req: Request) => {
           await resend.emails.send({
             from: "starlight@ucrhighlanders.org",
             to: recipientList,
-            subject: `🎉 [ACM ${capitalize(data.program)}] 🎉`,
+            subject: `🎉 ACM ${capitalize(data.program)} 🎉`,
             react: CreateAccept({
               beginningWeekOf: (data.beginningWeekOf as Timestamp).toDate(),
             }),
           });
           break;
         case "das":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] 🎉 ${projectName} 🎉`,
+            react: DasAccept({
+              project: projectName,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+              timeful: data.timeful,
+              beginningWeekOf: (data.beginningWeekOf as Timestamp).toDate(),
+            }),
+          });
+          break;
           break;
       }
     } else if (status.toLowerCase() === "reject") {
