@@ -1,4 +1,4 @@
-interface AcceptProps {
+interface SparkAcceptProps {
   project: string;
   location: string;
   repo: string;
@@ -12,7 +12,7 @@ const SparkAccept = ({
   repo,
   timeful,
   beginningWeekOf,
-}: AcceptProps) => {
+}: SparkAcceptProps) => {
   return (
     <div>
       Congratulations 🎊!
@@ -30,7 +30,7 @@ const SparkAccept = ({
       <br />
       Your project will begin on the week of{" "}
       <strong>{beginningWeekOf.toLocaleDateString()}</strong> (the exact day
-      depends on your project team's availability in the schej) and from that
+      depends on your project team's availability in the timeful) and from that
       week on, the project duration will last for approximately ten weeks.
       Unless announced otherwise, there will be one weekly {location} project
       check-in meeting, during which your lead will cover material related to

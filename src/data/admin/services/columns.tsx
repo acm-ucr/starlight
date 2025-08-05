@@ -118,13 +118,15 @@ const COLUMNS: ColumnDef<EmailTemplate>[] = [
               <DialogHeader>
                 <DialogTitle>Send Email</DialogTitle>
                 <DialogDescription>
-                  {isAcceptTemplate
+                  {isAcceptTemplate &&
+                  template.program.toLowerCase() !== "create"
                     ? "Enter the project name to include in the email."
                     : "Enter recipient email(s), separated by commas."}
                 </DialogDescription>
               </DialogHeader>
               <div className="py-4">
-                {isAcceptTemplate ? (
+                {isAcceptTemplate &&
+                template.program.toLowerCase() !== "create" ? (
                   <div className="grid gap-2">
                     <Label htmlFor="projectName">Project Name</Label>
                     <Input

@@ -12,6 +12,7 @@ import CreateInterview from "@/components/email/interview/createinterview";
 import DasInterview from "@/components/email/interview/dasinterview";
 import SparkAccept from "@/components/email/accept/sparkaccept";
 import CreateAccept from "@/components/email/accept/createaccept";
+import ForgeAccept from "@/components/email/accept/forgeaccept";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (req: Request) => {
@@ -52,6 +53,17 @@ export const POST = async (req: Request) => {
           });
           break;
         case "forge":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] 🎉 ${projectName} 🎉`,
+            react: ForgeAccept({
+              project: projectName,
+              completeBy: (data.completeBy as Timestamp).toDate(),
+              timeful: data.timeful,
+              beginningWeekOf: (data.beginningWeekOf as Timestamp).toDate(),
+            }),
+          });
           break;
         case "create":
           await resend.emails.send({

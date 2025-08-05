@@ -272,7 +272,7 @@ export const FORGEACCEPTFIELDS: ForgeAcceptFields = {
   },
   completeBy: {
     input: "date",
-    title: "Complete Schej & Intent to Participate By",
+    title: "Complete Timeful & Intent to Participate By",
     width: 12,
     editable: true,
     required: true,
@@ -319,7 +319,7 @@ export const DASACCEPTFIELDS: DasAcceptFields = {
   },
   completeBy: {
     input: "date",
-    title: "Complete Schej & Intent to Participate By",
+    title: "Complete Timeful & Intent to Participate By",
     width: 12,
     editable: true,
     required: true,
