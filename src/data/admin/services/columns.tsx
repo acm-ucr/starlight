@@ -96,7 +96,7 @@ const COLUMNS: ColumnDef<EmailTemplate>[] = [
               program: template.program,
               status: template.status,
               recipients: recipients.split(",").map((e) => e.trim()),
-              ...(isAcceptTemplate && { projectName }),
+              projectName: isAcceptTemplate ? projectName : "",
             }),
           });
           if (!res.ok) throw new Error("Failed to send email");

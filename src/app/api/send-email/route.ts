@@ -10,13 +10,14 @@ import SparkInterview from "@/components/email/interview/sparkinterview";
 import ForgeInterview from "@/components/email/interview/forgeinterview";
 import CreateInterview from "@/components/email/interview/createinterview";
 import DasInterview from "@/components/email/interview/dasinterview";
+import SparkAccept from "@/components/email/accept/sparkaccept";
+import CreateAccept from "@/components/email/accept/createaccept";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    const { templateId, program, status, recipients } = body;
-
+    const { templateId, program, status, recipients, projectName } = body;
     const recipientList = recipients || ["contact.acmucr@gmail.com"];
 
     const docRef = doc(
@@ -35,7 +36,36 @@ export const POST = async (req: Request) => {
     const data = snapshot.data();
 
     if (status.toLowerCase() === "accept") {
-      console.log("Sending acceptance email");
+      switch (data.program.toLowerCase()) {
+        case "spark":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `[ACM ${capitalize(data.program)}] 🎉 ${projectName} 🎉`,
+            react: SparkAccept({
+              project: projectName,
+              location: data.location,
+              repo: data.repo,
+              timeful: data.timeful,
+              beginningWeekOf: (data.beginningWeekOf as Timestamp).toDate(),
+            }),
+          });
+          break;
+        case "forge":
+          break;
+        case "create":
+          await resend.emails.send({
+            from: "starlight@ucrhighlanders.org",
+            to: recipientList,
+            subject: `🎉 [ACM ${capitalize(data.program)}] 🎉`,
+            react: CreateAccept({
+              beginningWeekOf: (data.beginningWeekOf as Timestamp).toDate(),
+            }),
+          });
+          break;
+        case "das":
+          break;
+      }
     } else if (status.toLowerCase() === "reject") {
       await resend.emails.send({
         from: "starlight@ucrhighlanders.org",
