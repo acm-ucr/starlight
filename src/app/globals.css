@@ -7,6 +7,7 @@
   --color-starlight-yellow-primary: #ffe899;
 
   --color-starlight-blue-primary: #173967;
+  --color-starlight-blue-secondary: #0c203c;
 
   --color-starlight-gray-primary: #18181e;
   --color-starlight-gray-secondary: #1f1f25;
@@ -18,7 +19,7 @@
 
   --color-starlight-spark: #f5d166;
   --color-starlight-create: #91b9ff;
-  --color-starlight-forge: #8e8e8e;
+  --color-starlight-forge: #ffffff;
   --color-starlight-das: #b889ea;
 
   --color-starlight-tags-red-bg: #ffe9e2;
@@ -43,6 +44,10 @@
 
   --drop-shadow-yellow-primary: 0 0 15px rgba(255, 232, 153, 1);
   --drop-shadow-yellow-secondary: 0 0 5px rgba(255, 232, 153, 1);
+
+  --default-font-family: "Lexend", var(--font-lexend);
+  --font-lexend: "Lexend";
+  --font-league: "League_Spartan";
 }
 
 @theme inline {
@@ -158,5 +163,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .shadow-b {
+    box-shadow: 0 20px 15px -15px var(--tw-shadow-color);
   }
 }

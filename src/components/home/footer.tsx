@@ -1,21 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import Starlight from "@/public/logos/starlight.svg";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
-    <div className="border-starlight-blue-primary flex flex-col items-center border-t-8 text-3xl text-white">
-      <Image
-        src={Starlight}
-        alt="Starlight"
-        className="drop-shadow-yellow-primary w-3/12 pt-12 pb-6 md:w-1/12"
-      />
-      <p>ACM @ UCR</p>
-      <div className="flex gap-x-4 pt-4 pb-8">
+    <footer className="bg-starlight-blue-secondary flex flex-row items-center py-4 text-white">
+      <Image src={Starlight} alt="Starlight" className="mx-8 w-16" />
+      <p className="mr-8 text-2xl font-bold">Starlight</p>
+      <p className="text-lg">© 2025 Starlight. Made with 💙 from Starlight.</p>
+      <div className="mr-12 ml-auto flex gap-x-4 text-4xl">
         <Link
           href="https://github.com/acm-ucr"
           target="_blank"
           rel="noopener noreferrer"
+          className="transition-all hover:scale-105 hover:opacity-90"
         >
           <FaGithub />
         </Link>
@@ -23,11 +21,20 @@ const Footer = () => {
           href="https://www.linkedin.com/company/acm-ucr"
           target="_blank"
           rel="noopener noreferrer"
+          className="transition-all hover:scale-105 hover:opacity-90"
         >
           <FaLinkedin />
         </Link>
+        <Link
+          href="https://discord.gg/ghhbez7A"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-all hover:scale-105 hover:opacity-90"
+        >
+          <FaDiscord />
+        </Link>
       </div>
-    </div>
+    </footer>
   );
 };
 

@@ -13,7 +13,7 @@
 
 ## Figma
 
-[ACM UCR Website Template Figma Design File](https://www.figma.com/)
+[ACM Starlight Figma Design File](https://www.figma.com/design/ZenHMxTp3HNKN2mjRXAZwy/ACM-Starlight?node-id=0-1&t=dVzoiRZ4CkoV3E94-1)
 
 ## Node.js
 

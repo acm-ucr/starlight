@@ -8,7 +8,11 @@ interface Track {
   name: string;
   logo: StaticImageData;
   focus: string;
-  color: string;
+  color:
+    | "starlight-spark"
+    | "starlight-create"
+    | "starlight-forge"
+    | "starlight-das";
   url: string;
 }
 
@@ -17,28 +21,28 @@ const Tracks: Track[] = [
     name: "Spark",
     logo: Spark,
     focus: "Web Development",
-    color: "text-starlight-spark",
+    color: "starlight-spark",
     url: "/apply/spark",
   },
   {
     name: "Create",
     logo: Create,
     focus: "UI/UX",
-    color: "text-starlight-create",
+    color: "starlight-create",
     url: "/apply/create",
   },
   {
     name: "Forge",
     logo: Forge,
     focus: "Embedded & Mechanics",
-    color: "text-starlight-forge",
+    color: "starlight-forge",
     url: "/apply/forge",
   },
   {
     name: "DAS",
     logo: DAS,
-    focus: "Data Science & Statistics",
-    color: "text-starlight-das",
+    focus: "Data Science & AI",
+    color: "starlight-das",
     url: "/apply/das",
   },
 ];
