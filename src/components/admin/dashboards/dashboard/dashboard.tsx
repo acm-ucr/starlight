@@ -24,6 +24,7 @@ interface DashboardProps<T extends keyof DashboardTypeMap> {
   columns: ColumnType<DashboardTypeMap[T]>[];
   tags: Tags[];
   dashboardType: T;
+  displayFilter?: (item: DashboardTypeMap[T]) => boolean;
 }
 
 export interface Filter {
@@ -37,6 +38,7 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
   searchParams,
   tags,
   statuses,
+  displayFilter,
 }: DashboardProps<T>) => {
   const [filters, setFilters] = useState<Filter[]>([
     { id: "status", value: Object.keys(statuses) },
@@ -86,7 +88,10 @@ const Dashboard = <T extends keyof DashboardTypeMap>({
 
     if (queryData && isMounted) {
       const flattenedData = queryData.pages.flatMap((page) => page.items || []);
-      if (isMounted) setData(flattenedData);
+      const filteredData = displayFilter
+        ? flattenedData.filter(displayFilter)
+        : flattenedData;
+      if (isMounted) setData(filteredData);
 
       const lastPage = queryData.pages[queryData.pages.length - 1];
       if (isMounted) setMeta({ total: lastPage.total, last: lastPage.last });
